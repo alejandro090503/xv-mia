@@ -7,7 +7,7 @@
 <meta name="description" content="Invitación digital a los XV Años de Mia F. Correa — 19 de diciembre de 2026, Hyannis, Massachusetts">
 <meta property="og:title" content="XV Años de Mia F. Correa">
 <meta property="og:description" content="19 de diciembre de 2026 · Hyannis, Massachusetts">
-<meta property="og:image" content="https://xv-mia.vercel.app/og.jpg">
+<meta property="og:image" content="https://xv-mia-psi.vercel.app/og.jpg">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -185,6 +185,7 @@ section{padding:62px 26px;position:relative;}
 .tl-time{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--accent);line-height:1.05;}
 .tl-ev{font-family:'Lato',sans-serif;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-soft);margin-top:2px;line-height:1.35;}
 .tl-desc{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:var(--ink-soft);line-height:1.4;margin-top:3px;opacity:.85;}
+.tl-desc.tl-en{opacity:.6;margin-top:5px;padding-top:5px;border-top:1px solid var(--hair,rgba(0,86,214,.15));}
 .tl-fin .tl-icon{position:relative;}
 .tl-gracias{font-family:'Great Vibes',cursive;font-size:24px;color:var(--accent);}
 
@@ -311,6 +312,54 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
 @keyframes hintPulse{0%,100%{opacity:.4;width:32px;}50%{opacity:1;width:54px;}}
 
 .rv{will-change:transform,opacity;}
+
+/* ============ CRECIENDO — LÍNEA DE TIEMPO FOTOGRÁFICA ============ */
+.saga{padding:min(14vh,120px) 0 min(8vh,60px);overflow:hidden;position:relative;}
+.saga .gallery-head{margin-bottom:24px;text-align:center;padding:0 26px;}
+.gallery-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--dark);margin-top:2px;}
+.saga-stage{position:relative;height:100svh;min-height:600px;display:flex;align-items:center;overflow:hidden}
+.saga-viewport{position:relative;width:100%;height:100%;display:flex;align-items:center;overflow:hidden}
+.saga-thread{position:absolute;left:0;right:0;top:50%;height:2px;transform:translateY(-1px);
+  background:linear-gradient(to right,transparent 0%,rgba(0,86,214,.12) 5%,rgba(0,86,214,.55) 50%,rgba(0,86,214,.12) 95%,transparent 100%);
+  box-shadow:0 0 16px rgba(0,86,214,.35);pointer-events:none;z-index:1}
+.saga-spark{position:absolute;top:50%;left:0;width:15px;height:15px;border-radius:50%;transform:translate(-50%,-50%);
+  background:radial-gradient(circle,#ffffff 0%,#cbf0ff 42%,rgba(0,86,214,0) 72%);
+  box-shadow:0 0 20px 5px rgba(0,86,214,.5);pointer-events:none;z-index:2}
+.saga-track{position:relative;display:flex;align-items:center;gap:clamp(16px,3vw,38px);
+  padding:0 50vw;height:100%;will-change:transform;z-index:2}
+.saga-photo{position:relative;flex:0 0 auto;width:clamp(158px,44vw,214px);aspect-ratio:3/4;
+  border-radius:14px;overflow:hidden;background:var(--paper);margin:0;
+  border:2px solid rgba(0,86,214,.28);
+  box-shadow:0 12px 34px rgba(0,26,86,.22);
+  transform:translateY(var(--off,0)) scale(.82);opacity:.52;filter:saturate(.92);
+  transition:transform .55s cubic-bezier(.2,.7,.2,1),opacity .55s,filter .55s,box-shadow .55s,border-color .55s}
+.saga-photo img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.saga-photo::after{content:"";position:absolute;inset:0;border:1px solid rgba(255,255,255,.4);border-radius:12px;pointer-events:none}
+.saga-photo.is-focus{transform:translateY(0) scale(1.08);opacity:1;filter:saturate(1.06);
+  border-color:rgba(0,86,214,.85);
+  box-shadow:0 22px 54px rgba(0,26,86,.32),0 0 0 1px rgba(203,240,255,.65),0 0 46px rgba(0,86,214,.28)}
+.saga-year{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  width:clamp(96px,20vw,150px);z-index:3;text-align:center}
+.saga-year::before{content:"";width:1px;height:52px;background:linear-gradient(to bottom,transparent,var(--light),transparent);margin-bottom:8px}
+.saga-year-num{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:clamp(38px,7vw,64px);color:var(--accent);line-height:1}
+.saga-year-lbl{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--dark);padding-left:.32em;font-weight:500}
+.saga-hud{position:absolute;top:clamp(12px,3vh,28px);left:50%;transform:translateX(-50%);z-index:5;text-align:center;pointer-events:none}
+.saga-hud-year{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:clamp(26px,4.5vw,40px);color:var(--dark);line-height:1}
+.saga-hud-days{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;color:var(--ink-soft);margin-top:8px;font-weight:500;text-transform:uppercase}
+.saga-hud-days b{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--accent);font-size:1.5em;font-weight:600}
+.wheel-hint{text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;letter-spacing:.06em;color:var(--ink-soft);opacity:.75;}
+.saga-hint{margin-top:14px}
+/* Fallback sin pin (reduced-motion): tira horizontal con snap */
+.saga-fallback .saga-stage{height:auto;min-height:0;display:block}
+.saga-fallback .saga-viewport{overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;padding:24px 0 30px}
+.saga-fallback .saga-track{padding:0 16px;height:auto;transform:none!important}
+.saga-fallback .saga-photo{scroll-snap-align:center;transform:scale(1);opacity:1;filter:none}
+.saga-fallback .saga-hud,.saga-fallback .saga-spark,.saga-fallback .saga-thread{display:none}
+@media (max-width:520px){
+  .saga-stage{min-height:540px}
+  .saga-track{gap:14px}
+  .saga-photo{width:min(60vw,240px)}
+}
 </style>
 </head>
 <body>
@@ -449,7 +498,8 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-text">
             <div class="tl-time">4:30 PM</div>
             <div class="tl-ev">Recepción</div>
-            <div class="tl-desc">Agradecemos su puntualidad</div>
+            <div class="tl-desc">Les damos la bienvenida. Agradecemos su puntualidad para disfrutar cada momento de esta celebración</div>
+            <div class="tl-desc tl-en">Welcome Reception — Please arrive on time to enjoy every special moment of the celebration</div>
           </div>
         </div>
 
@@ -459,7 +509,8 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-text">
             <div class="tl-time">5:30 PM</div>
             <div class="tl-ev">Gran Entrada</div>
-            <div class="tl-desc">Bienvenida a nuestra quinceañera</div>
+            <div class="tl-desc">La celebración da inicio mientras nuestra familia recibe con orgullo a nuestra querida cumpleañera, Mía</div>
+            <div class="tl-desc tl-en">Grand Entrance — The celebration begins as our family proudly welcomes our birthday girl, Mía</div>
           </div>
         </div>
 
@@ -469,7 +520,8 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-text">
             <div class="tl-time">5:40 PM</div>
             <div class="tl-ev">Ceremonia de XV</div>
-            <div class="tl-desc">Tradiciones y momentos inolvidables</div>
+            <div class="tl-desc">Una hermosa ceremonia llena de tradiciones, emociones y momentos inolvidables</div>
+            <div class="tl-desc tl-en">The XV Ceremony — A beautiful ceremony filled with meaningful traditions and unforgettable moments</div>
           </div>
         </div>
 
@@ -479,7 +531,8 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-text">
             <div class="tl-time">6:00 PM</div>
             <div class="tl-ev">Vals Especiales</div>
-            <div class="tl-desc">Con quienes guardan un lugar especial en su corazón</div>
+            <div class="tl-desc">Una tradición inolvidable compartida con las personas más importantes en la vida de Mía</div>
+            <div class="tl-desc tl-en">Special Waltzes — A timeless tradition shared with those who hold a special place in Mía's heart</div>
           </div>
         </div>
 
@@ -489,7 +542,8 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-text">
             <div class="tl-time">6:10 PM</div>
             <div class="tl-ev">Palabras y Brindis</div>
-            <div class="tl-desc">Mensajes llenos de cariño y gratitud</div>
+            <div class="tl-desc">Mensajes llenos de cariño, gratitud y un brindis para celebrar este día tan especial</div>
+            <div class="tl-desc tl-en">Words &amp; Toast — Heartfelt messages, gratitude, and a celebratory toast</div>
           </div>
         </div>
 
@@ -499,7 +553,8 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-text">
             <div class="tl-time">6:20 PM</div>
             <div class="tl-ev">Cena</div>
-            <div class="tl-desc">Buena comida y excelente compañía</div>
+            <div class="tl-desc">Disfrutemos juntos de una velada llena de buena comida y excelente compañía</div>
+            <div class="tl-desc tl-en">Dinner — An evening to savor delicious cuisine and wonderful company</div>
           </div>
         </div>
 
@@ -510,6 +565,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
             <div class="tl-time">6:50 PM</div>
             <div class="tl-ev">Baile Sorpresa</div>
             <div class="tl-desc">Una presentación preparada con mucho cariño</div>
+            <div class="tl-desc tl-en">Surprise Performance — A special performance prepared with love</div>
           </div>
         </div>
 
@@ -519,7 +575,8 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-text">
             <div class="tl-time">9:30 PM</div>
             <div class="tl-ev">Celebración de Cumpleaños</div>
-            <div class="tl-desc">Cantamos juntos el Feliz Cumpleaños</div>
+            <div class="tl-desc">Acompáñanos a cantar el Feliz Cumpleaños y celebrar este inolvidable momento</div>
+            <div class="tl-desc tl-en">Birthday Celebration — Join us as we sing Happy Birthday and celebrate this unforgettable milestone together</div>
           </div>
         </div>
 
@@ -529,7 +586,8 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-text">
             <div class="tl-time">10:00 PM</div>
             <div class="tl-ev">Una Sorpresa Especial</div>
-            <div class="tl-desc">Un momento mágico por descubrir</div>
+            <div class="tl-desc">Porque aún queda un momento mágico por descubrir</div>
+            <div class="tl-desc tl-en">A Special Surprise — One more unforgettable moment awaits</div>
           </div>
         </div>
 
@@ -539,6 +597,8 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-text">
             <div class="tl-time">11:45 PM</div>
             <div class="tl-ev">Despedida</div>
+            <div class="tl-desc">Gracias por acompañarnos y formar parte de esta noche inolvidable</div>
+            <div class="tl-desc tl-en">Farewell — Thank you for celebrating this cherished evening with us</div>
             <div class="tl-gracias">¡Gracias!</div>
           </div>
         </div>
@@ -604,6 +664,111 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
       <div class="cf-fade-top"></div>
       <div class="cf-fade-bot"></div>
     </div>
+  </section>
+
+  <!-- CRECIENDO — LÍNEA DE TIEMPO FOTOGRÁFICA -->
+  <section class="saga" id="saga">
+    <div class="fcontent gallery-head">
+      <div class="eyebrow rv">Así fue creciendo</div>
+      <h2 class="sec-title rv">Mi historia <em>en el</em> tiempo</h2>
+      <div class="gallery-sub rv">De niña a quinceañera</div>
+    </div>
+
+    <div class="saga-stage" id="sagaStage">
+      <div class="saga-hud" aria-hidden="true">
+        <div class="saga-hud-year"><span id="sagaYear">Recién llegada</span></div>
+        <div class="saga-hud-days"><b id="sagaDays">0</b> años de recuerdos</div>
+      </div>
+      <div class="saga-viewport" id="sagaViewport">
+        <div class="saga-thread" aria-hidden="true"></div>
+        <div class="saga-spark" id="sagaSpark" aria-hidden="true"></div>
+        <div class="saga-track" id="sagaTrack">
+
+        <div class="saga-year" aria-hidden="true">
+          <span class="saga-year-num">0</span>
+          <span class="saga-year-lbl">Recién llegada</span>
+        </div>
+        <figure class="saga-photo" data-year="Recién llegada" style="--off:-30px">
+          <img src="creciendo-01.jpg" alt="Mia recién nacida" width="210" height="280" loading="lazy">
+        </figure>
+        <figure class="saga-photo" data-year="Recién llegada" style="--off:26px">
+          <img src="creciendo-02.jpg" alt="Mia recién nacida con sus papás" width="210" height="280" loading="lazy">
+        </figure>
+        <figure class="saga-photo" data-year="Recién llegada" style="--off:-16px">
+          <img src="creciendo-03.jpg" alt="Mia bebé con sus hermanas" width="210" height="280" loading="lazy">
+        </figure>
+
+        <div class="saga-year" aria-hidden="true">
+          <span class="saga-year-num">3</span>
+          <span class="saga-year-lbl">Pequeña</span>
+        </div>
+        <figure class="saga-photo" data-year="Pequeña" style="--off:30px">
+          <img src="creciendo-04.jpg" alt="Mia de pequeña" width="210" height="280" loading="lazy">
+        </figure>
+        <figure class="saga-photo" data-year="Pequeña" style="--off:-26px">
+          <img src="creciendo-05.jpg" alt="Mia de pequeña" width="210" height="280" loading="lazy">
+        </figure>
+        <figure class="saga-photo" data-year="Pequeña" style="--off:16px">
+          <img src="creciendo-06.jpg" alt="Mia de pequeña" width="210" height="280" loading="lazy">
+        </figure>
+
+        <div class="saga-year" aria-hidden="true">
+          <span class="saga-year-num">5</span>
+          <span class="saga-year-lbl">Niña</span>
+        </div>
+        <figure class="saga-photo" data-year="Niña" style="--off:-30px">
+          <img src="creciendo-07.jpg" alt="Mia de niña" width="210" height="280" loading="lazy">
+        </figure>
+        <figure class="saga-photo" data-year="Niña" style="--off:26px">
+          <img src="creciendo-08.jpg" alt="Mia de niña" width="210" height="280" loading="lazy">
+        </figure>
+        <figure class="saga-photo" data-year="Niña" style="--off:-16px">
+          <img src="creciendo-09.jpg" alt="Mia de niña" width="210" height="280" loading="lazy">
+        </figure>
+
+        <div class="saga-year" aria-hidden="true">
+          <span class="saga-year-num">8</span>
+          <span class="saga-year-lbl">Aventurera</span>
+        </div>
+        <figure class="saga-photo" data-year="Aventurera" style="--off:30px">
+          <img src="creciendo-10.jpg" alt="Mia aventurera" width="210" height="280" loading="lazy">
+        </figure>
+        <figure class="saga-photo" data-year="Aventurera" style="--off:-26px">
+          <img src="creciendo-11.jpg" alt="Mia aventurera" width="210" height="280" loading="lazy">
+        </figure>
+        <figure class="saga-photo" data-year="Aventurera" style="--off:16px">
+          <img src="creciendo-12.jpg" alt="Mia aventurera" width="210" height="280" loading="lazy">
+        </figure>
+
+        <div class="saga-year" aria-hidden="true">
+          <span class="saga-year-num">13</span>
+          <span class="saga-year-lbl">Casi señorita</span>
+        </div>
+        <figure class="saga-photo" data-year="Casi señorita" style="--off:-30px">
+          <img src="creciendo-13.jpg" alt="Mia casi señorita" width="210" height="280" loading="lazy">
+        </figure>
+        <figure class="saga-photo" data-year="Casi señorita" style="--off:26px">
+          <img src="creciendo-14.jpg" alt="Mia casi señorita" width="210" height="280" loading="lazy">
+        </figure>
+        <figure class="saga-photo" data-year="Casi señorita" style="--off:-16px">
+          <img src="creciendo-15.jpg" alt="Mia casi señorita" width="210" height="280" loading="lazy">
+        </figure>
+
+        <div class="saga-year saga-year--end" aria-hidden="true">
+          <span class="saga-year-num" style="color:var(--dark)">15</span>
+          <span class="saga-year-lbl">Mis XV años</span>
+        </div>
+        <figure class="saga-photo" data-year="Mis XV años" style="--off:30px">
+          <img src="creciendo-16.jpg" alt="Mia lista para sus XV años" width="210" height="280" loading="lazy">
+        </figure>
+        <figure class="saga-photo" data-year="Mis XV años" style="--off:-16px">
+          <img src="creciendo-17.jpg" alt="Mia el día de sus XV años" width="210" height="280" loading="lazy">
+        </figure>
+
+        </div>
+      </div>
+    </div>
+    <p class="wheel-hint saga-hint">Desliza para recorrer los años &nbsp;&rarr;</p>
   </section>
 
   <!-- ÁLBUM COMPARTIDO -->
@@ -765,6 +930,7 @@ function launchPage(){
   initScrollReveal();
   initTimeline();
   initCrossfade();
+  initSaga();
 }
 
 /* ── PÉTALOS azul ── */
@@ -819,6 +985,75 @@ function initCrossfade(){
   });
 }
 
+/* ── CRECIENDO — LÍNEA DE TIEMPO (pinneada cinematográfica) ── */
+function initSaga(){
+  var saga    = document.getElementById('saga');
+  var stage   = document.getElementById('sagaStage');
+  var viewport= document.getElementById('sagaViewport');
+  var track   = document.getElementById('sagaTrack');
+  var spark   = document.getElementById('sagaSpark');
+  var yearEl  = document.getElementById('sagaYear');
+  var daysEl  = document.getElementById('sagaDays');
+  if(!saga || !stage || !track) return;
+
+  var photos = Array.prototype.slice.call(track.querySelectorAll('.saga-photo'));
+  var TOTAL_STAGES = 15; // de recién nacida a los XV años
+
+  var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Fallback: reduced-motion -> tira horizontal deslizable, sin pin
+  if(prefersReduced){
+    saga.classList.add('saga-fallback');
+    return;
+  }
+
+  var lastFocus = null;
+  function distanceToScroll(){ return Math.max(1, track.scrollWidth - window.innerWidth); }
+
+  function updateScene(progress){
+    // spark viaja por el hilo
+    if(spark) spark.style.left = (progress*100) + '%';
+    // contador simbólico de años de recuerdos
+    if(daysEl){
+      var d = Math.round(progress * TOTAL_STAGES);
+      daysEl.textContent = d.toLocaleString('es-MX');
+    }
+    // foto en foco = la más cercana al centro de pantalla
+    var cx = window.innerWidth/2, best=null, bestD=1e9;
+    for(var i=0;i<photos.length;i++){
+      var r = photos[i].getBoundingClientRect();
+      var c = r.left + r.width/2;
+      var dd = Math.abs(c-cx);
+      if(dd<bestD){bestD=dd;best=photos[i];}
+    }
+    if(best && best!==lastFocus){
+      if(lastFocus) lastFocus.classList.remove('is-focus');
+      best.classList.add('is-focus');
+      lastFocus=best;
+      if(yearEl){ var y=best.getAttribute('data-year'); if(y) yearEl.textContent=y; }
+    }
+  }
+
+  gsap.to(track,{
+    x: function(){ return -distanceToScroll(); },
+    ease:'none',
+    scrollTrigger:{
+      trigger: stage,
+      start:'top top',
+      end: function(){ return '+=' + distanceToScroll(); },
+      pin: true,
+      scrub: 0.7,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+      onUpdate: function(self){ updateScene(self.progress); },
+      onRefresh: function(self){ updateScene(self.progress); }
+    }
+  });
+
+  // estado inicial
+  requestAnimationFrame(function(){ updateScene(0); });
+}
+
 /* ── COUNTDOWN ── */
 (function(){
   const target=new Date('2026-12-19T16:30:00-05:00').getTime();
@@ -844,7 +1079,7 @@ function initCrossfade(){
 /* ── RSVP — Panel Invitados ── */
 (function(){
   const SLUG     = 'xv-mia';
-  const URL_INV  = 'https://xv-mia.vercel.app';
+  const URL_INV  = 'https://xv-mia-psi.vercel.app';
   const DEADLINE = new Date(2026, 9, 24, 23, 59, 59, 999);
   const frozen   = Date.now() > DEADLINE.getTime();
   const params   = new URLSearchParams(location.search);
