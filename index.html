@@ -302,8 +302,8 @@ section{padding:62px 26px;position:relative;}
   box-shadow:0 10px 30px rgba(0,86,214,.14),inset 0 1px 0 rgba(255,255,255,.95);}
 .dc-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;pointer-events:none;
   background:linear-gradient(90deg,transparent,rgba(255,255,255,.98) 26%,rgba(212,175,55,.45) 50%,rgba(255,255,255,.98) 74%,transparent);}
-.dc-card img{width:100%;max-width:132px;height:auto;display:block;
-  filter:drop-shadow(0 6px 14px rgba(0,26,110,.28));}
+/* mismo lienzo 261x584 en ambos: al fijar la altura quedan idénticos, sin sombra */
+.dc-card img{height:190px;width:auto;display:block;}
 .dc-card figcaption{display:flex;flex-direction:column;align-items:center;gap:3px;}
 .dc-card-lbl{font-family:'Cinzel',serif;font-size:12px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--dark);}
 .dc-card-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--ink-soft);}
@@ -467,8 +467,27 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
 #env-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:2;transform:scale(1.18);}
 #env-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:3;opacity:0;transform:scale(1.18);}
 #env-flash{position:fixed;inset:0;background:#fff;z-index:9999;opacity:0;pointer-events:none;}
-.envelope-hint{position:absolute;bottom:50px;left:50%;transform:translateX(-50%);font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:rgba(0,86,214,.85);opacity:0;cursor:pointer;white-space:nowrap;z-index:10;text-shadow:0 1px 4px rgba(255,255,255,.6);}
-.envelope-hint::after{content:'';display:block;width:32px;height:1px;background:linear-gradient(90deg,transparent,rgba(0,86,214,.5),transparent);margin:10px auto 0;animation:hintPulse 2.2s ease-in-out infinite;}
+/* pista del sobre con el mismo acabado de hielo que los botones */
+.envelope-hint{position:absolute;bottom:46px;left:50%;transform:translateX(-50%);
+  padding:14px 34px;border-radius:30px;overflow:hidden;isolation:isolate;
+  font-family:'Cinzel',serif;font-size:11.5px;font-weight:600;letter-spacing:3px;text-transform:uppercase;
+  color:var(--dark);opacity:0;cursor:pointer;white-space:nowrap;z-index:10;
+  background:linear-gradient(150deg,rgba(255,255,255,.96) 0%,rgba(226,244,255,.9) 38%,rgba(186,220,252,.86) 72%,rgba(255,255,255,.94) 100%);
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 6px 18px rgba(0,86,214,.22),0 0 0 1px rgba(0,86,214,.16),
+    inset 0 1px 2px rgba(255,255,255,1),inset 0 -6px 14px rgba(0,86,214,.14);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  text-shadow:0 1px 0 rgba(255,255,255,.95);}
+/* facetas de hielo */
+.envelope-hint::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:-1;
+  background:
+    linear-gradient(115deg,transparent 0 18%,rgba(255,255,255,.55) 18% 22%,transparent 22% 46%,rgba(255,255,255,.35) 46% 49%,transparent 49%),
+    linear-gradient(200deg,transparent 0 58%,rgba(203,240,255,.5) 58% 63%,transparent 63%);}
+/* destello que barre el cristal */
+.envelope-hint::after{content:'';position:absolute;top:-60%;bottom:-60%;width:34%;left:-40%;pointer-events:none;z-index:-1;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);
+  transform:skewX(-18deg);animation:btnsheen 5.5s ease-in-out infinite;}
+@media (prefers-reduced-motion:reduce){.envelope-hint::after{animation:none;}}
 @keyframes hintPulse{0%,100%{opacity:.4;width:32px;}50%{opacity:1;width:54px;}}
 
 .rv{will-change:transform,opacity;}
@@ -1423,20 +1442,32 @@ function initSaga(){
     }
   }
 
-  gsap.to(track,{
-    x: function(){ return -distanceToScroll(); },
-    ease:'none',
-    scrollTrigger:{
-      trigger: stage,
-      start:'top top',
-      end: function(){ return '+=' + distanceToScroll(); },
-      pin: true,
-      scrub: 0.7,
-      anticipatePin: 1,
-      invalidateOnRefresh: true,
-      onUpdate: function(self){ updateScene(self.progress); },
-      onRefresh: function(self){ updateScene(self.progress); }
-    }
+  // margen de reposo al entrar y al salir: la primera y la última foto se aprecian
+  // antes de que el riel arranque y después de que termine, sin soltar el pin de golpe
+  // entrada: pausa para apreciar la primera foto · salida: pausa corta y libera
+  var HOLD_IN  = function(){ return Math.round(window.innerHeight * 0.20); };
+  var HOLD_OUT = function(){ return Math.round(window.innerHeight * 0.10); };
+  var setX = gsap.quickSetter(track, 'x', 'px');
+
+  gsap.set(track,{x:0});
+
+  ScrollTrigger.create({
+    trigger: stage,
+    start: 'top top',
+    end: function(){ return '+=' + (distanceToScroll() + HOLD_IN() + HOLD_OUT()); },
+    pin: true,
+    pinSpacing: true,
+    scrub: true,              // 1:1 con el scroll: sin arrastre ni rebote al soltar
+    invalidateOnRefresh: true,
+    onUpdate: function(self){
+      var dist = distanceToScroll(), hin = HOLD_IN();
+      var total = dist + hin + HOLD_OUT();
+      // progreso del riel, con las zonas de reposo recortadas en ambos extremos
+      var p = Math.min(1, Math.max(0, (self.progress * total - hin) / dist));
+      setX(-dist * p);
+      updateScene(p);
+    },
+    onRefresh: function(){ setX(0); updateScene(0); }
   });
 
   // estado inicial
