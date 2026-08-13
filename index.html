@@ -115,35 +115,35 @@ section{padding:62px 26px;position:relative;}
       #ffffff 0%,#f2fbff 14%,#d8f0ff 30%,#a9d6f7 46%,
       #6ba8e0 62%,#2f6fc4 78%,var(--dark) 92%,#001a6e 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  /* escarcha alrededor + hielo grueso translúcido */
+  /* hielo tallado: filo blanco nítido + sombra de profundidad, sin halo */
   filter:
-    drop-shadow(0 1px 0 rgba(255,255,255,.95))
-    drop-shadow(0 2px 10px rgba(0,26,110,.35))
-    drop-shadow(0 0 22px rgba(203,240,255,.85))
-    drop-shadow(0 0 44px rgba(120,190,255,.45));
-  animation:floatGlow 4s ease-in-out infinite;
+    drop-shadow(0 1px 0 rgba(255,255,255,.9))
+    drop-shadow(0 2px 4px rgba(0,26,110,.28));
 }
-/* capa de cristales: brillo que recorre las letras como luz sobre hielo */
+/* reflejo tenue de luz sobre el hielo (sutil, no neón) */
 .hero-name::after{
   content:attr(data-text);position:absolute;left:0;top:0;padding-top:18px;pointer-events:none;
   background:linear-gradient(105deg,
-    transparent 0%,transparent 38%,rgba(255,255,255,.9) 47%,
-    rgba(255,255,255,1) 51%,rgba(255,255,255,.9) 55%,transparent 64%,transparent 100%);
+    transparent 0%,transparent 42%,rgba(255,255,255,.55) 49%,
+    rgba(255,255,255,.7) 51%,rgba(255,255,255,.55) 53%,transparent 60%,transparent 100%);
   background-size:260% 100%;
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  animation:iceglint 7s ease-in-out infinite;
+  animation:iceglint 9s ease-in-out infinite;
 }
-@keyframes iceglint{0%,60%{background-position:180% 0;}88%,100%{background-position:-80% 0;}}
-@media (prefers-reduced-motion:reduce){.hero-name::after{animation:none;opacity:.35;}}
+@keyframes iceglint{0%,66%{background-position:180% 0;}90%,100%{background-position:-80% 0;}}
+@media (prefers-reduced-motion:reduce){.hero-name::after{animation:none;opacity:.25;}}
 .hero-sub{display:flex;flex-direction:column;align-items:center;gap:2px;transform:translateY(16px);opacity:0;}
 .xv-num{
   font-family:'Cinzel',serif;font-weight:600;font-size:46px;letter-spacing:10px;line-height:1;padding-left:10px;
-  background:linear-gradient(180deg,var(--accent) 0%,#0042a9 28%,var(--dark) 62%,#001a6e 100%);
+  /* mismo hielo tallado que el nombre */
+  background:linear-gradient(178deg,#ffffff 0%,#eaf8ff 18%,#c2e4fb 42%,#6ba8e0 66%,#2f6fc4 84%,var(--dark) 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  filter:drop-shadow(0 0 12px rgba(203,240,255,.4));position:relative;display:inline-block;
+  filter:drop-shadow(0 1px 0 rgba(255,255,255,.9)) drop-shadow(0 2px 3px rgba(0,26,110,.28));
+  position:relative;display:inline-block;
 }
 .xv-num::after{content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:54px;height:1px;background:var(--accent);opacity:.5;}
-.xv-anos{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;letter-spacing:6px;text-transform:uppercase;color:var(--dark);margin-top:14px;}
+.xv-anos{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;letter-spacing:6px;text-transform:uppercase;color:var(--dark);margin-top:14px;
+  text-shadow:0 1px 0 rgba(255,255,255,.85);}
 
 /* ── ORNAMENTO ── */
 .orn{display:flex;justify-content:center;padding:6px 0;}
@@ -289,6 +289,26 @@ section{padding:62px 26px;position:relative;}
 /* ── DRESS CODE ── */
 .dc-note{text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;letter-spacing:2px;text-transform:uppercase;color:var(--dark);margin-bottom:30px;font-weight:500;}
 .dc-circles{display:flex;justify-content:center;gap:34px;margin-bottom:26px;}
+/* cards de hielo con las ilustraciones de vestimenta */
+.dc-cards{display:flex;justify-content:center;align-items:stretch;gap:14px;max-width:392px;margin:6px auto 24px;}
+.dc-card{flex:1;margin:0;position:relative;border-radius:12px;overflow:hidden;padding:16px 10px 14px;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  background:
+    radial-gradient(ellipse 90px 60px at 18% 6%,rgba(255,255,255,.95),transparent 62%),
+    radial-gradient(ellipse 80px 60px at 86% 88%,rgba(255,255,255,.9),transparent 60%),
+    repeating-linear-gradient(122deg,transparent 0 22px,rgba(255,255,255,.45) 22px 24px,transparent 24px 56px),
+    linear-gradient(158deg,#ffffff 0%,#f3fbff 34%,#e2f2ff 68%,#d3ebff 100%);
+  border:1px solid rgba(140,195,240,.45);
+  box-shadow:0 10px 30px rgba(0,86,214,.14),inset 0 1px 0 rgba(255,255,255,.95);}
+.dc-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.98) 26%,rgba(212,175,55,.45) 50%,rgba(255,255,255,.98) 74%,transparent);}
+.dc-card img{width:100%;max-width:132px;height:auto;display:block;
+  filter:drop-shadow(0 6px 14px rgba(0,26,110,.28));}
+.dc-card figcaption{display:flex;flex-direction:column;align-items:center;gap:3px;}
+.dc-card-lbl{font-family:'Cinzel',serif;font-size:12px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--dark);}
+.dc-card-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--ink-soft);}
+@media (max-width:360px){.dc-cards{gap:10px;}.dc-card{padding:12px 6px 10px;}.dc-card-lbl{font-size:11px;letter-spacing:1.8px;}}
+
 .dc-c{text-align:center;}
 .dc-c .ring{width:118px;height:118px;border-radius:50%;background:var(--paper);box-shadow:0 8px 28px rgba(0,86,214,.1);border:1px solid rgba(203,240,255,.5);display:flex;align-items:center;justify-content:center;margin-bottom:10px;}
 .dc-c .ring img{width:58px;height:58px;}
@@ -808,12 +828,21 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
     <div class="eyebrow">Etiqueta</div>
     <h2 class="sec-title">Código de Vestimenta</h2>
     <div class="dc-note">Formal</div>
-    <div class="dc-circles">
-      <div class="dc-c"><div class="ring"><img src="./ic-traje.svg" alt="Caballeros"></div><div class="dc-lbl">Caballeros</div></div>
-      <div class="dc-c"><div class="ring"><img src="./ic-vestido.svg" alt="Damas"></div><div class="dc-lbl">Damas</div></div>
-    </div>
-    <div style="max-width:300px;margin:0 auto 20px;border-radius:12px;overflow:hidden;box-shadow:0 8px 28px rgba(0,86,214,.1);">
-      <img src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/238c9d84-28a9-49a1-a7a0-c9026547e76e/codigo-vestimenta-1785970607764.png" alt="Referencia de vestimenta" style="width:100%;display:block;">
+    <div class="dc-cards">
+      <figure class="dc-card">
+        <img src="./caballero.png" alt="Caballero con traje formal" loading="lazy">
+        <figcaption>
+          <span class="dc-card-lbl">Caballeros</span>
+          <span class="dc-card-sub">Traje formal</span>
+        </figcaption>
+      </figure>
+      <figure class="dc-card">
+        <img src="./dama.png" alt="Dama con vestido largo formal" loading="lazy">
+        <figcaption>
+          <span class="dc-card-lbl">Damas</span>
+          <span class="dc-card-sub">Vestido largo</span>
+        </figcaption>
+      </figure>
     </div>
     <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
       <span style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-soft);">Evitar:</span>
@@ -1184,6 +1213,9 @@ gsap.registerPlugin(ScrollTrigger);
   envVideo.addEventListener('ended',function(){gsap.set(envFlash,{opacity:1});revealInvitation();});
   function openEnvelope(){
     if(opened) return; opened=true;
+    // el toque del usuario es el gesto que autoriza el autoplay del audio
+    var aud=document.getElementById('bgAudio');
+    if(aud){var ap=aud.play();if(ap!==undefined){ap.catch(function(){});}}
     gsap.killTweensOf(envImage);
     gsap.to(hint,{opacity:0,duration:0.2});
     var p=envVideo.play();
