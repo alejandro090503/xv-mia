@@ -35,7 +35,13 @@ body{
 body::before{
   content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background:url('./fondo-acuarela.jpg') center top/cover no-repeat;
-  opacity:.62;
+  opacity:var(--bg1-op,.62);
+}
+/* segundo fondo: entra con crossfade al terminar el countdown */
+#bg2{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:url('./fondo-invierno.jpg') center top/cover no-repeat;
+  opacity:var(--bg2-op,0);
 }
 
 .wrap{max-width:440px;margin:0 auto;background:transparent;position:relative;overflow:clip;z-index:1;}
@@ -80,13 +86,14 @@ section{padding:62px 26px;position:relative;}
 .ld-name span{opacity:0;display:inline-block;transform:translateY(22px);}
 .ld-tag{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;letter-spacing:5px;text-transform:uppercase;color:var(--accent);opacity:0;}
 
-/* ── PÉTALOS ── */
+/* ── COPOS DE NIEVE ── */
 #petals{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-.petal{position:absolute;top:-30px;border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;opacity:0;}
+.petal{position:absolute;top:-30px;opacity:0;
+  -webkit-mask:var(--flake) center/contain no-repeat;mask:var(--flake) center/contain no-repeat;}
 
 /* ── HERO ── */
 .hero{position:relative;width:100%;min-height:100dvh;display:flex;flex-direction:column;background:#ddeeff;}
-.hero-bg{position:absolute;inset:0;background:url('https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/238c9d84-28a9-49a1-a7a0-c9026547e76e/1785974050865-5.jpeg') center 20%/cover no-repeat;}
+.hero-bg{position:absolute;inset:0;background:url('./hero.jpg') center 18%/cover no-repeat;}
 .hero-veil{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(238,248,255,.08) 0%,rgba(238,248,255,0) 25%,rgba(238,248,255,.35) 58%,rgba(238,248,255,.88) 82%,#EEF8FF 100%);}
 .hero-top{position:relative;z-index:3;padding:30px 26px 0;text-align:center;}
 .hero-eyebrow{font-family:'Cinzel',serif;font-size:12px;letter-spacing:6px;text-transform:uppercase;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.45);opacity:0;}
@@ -186,6 +193,25 @@ section{padding:62px 26px;position:relative;}
 .tl-ev{font-family:'Lato',sans-serif;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-soft);margin-top:2px;line-height:1.35;}
 .tl-desc{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:var(--ink-soft);line-height:1.4;margin-top:3px;opacity:.85;}
 .tl-desc.tl-en{opacity:.6;margin-top:5px;padding-top:5px;border-top:1px solid var(--hair,rgba(0,86,214,.15));}
+
+/* ── ITINERARIO COLAPSABLE ── */
+.tl-item{cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.tl-body{overflow:hidden;height:0;opacity:0;}
+.tl-item.is-open .tl-body{height:auto;opacity:1;}
+/* pista "toca para abrir" — levita bajo el horario */
+.tl-hint{display:inline-flex;align-items:center;gap:6px;margin-top:6px;
+  font-family:'Cinzel',serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);
+  opacity:.9;animation:hintfloat 3.2s ease-in-out infinite;}
+.tl-hint svg{width:15px;height:15px;flex:none;}
+.tl-item.is-open .tl-hint{display:none;}
+@keyframes hintfloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
+/* al abrir, el contenido se muestra en grande */
+.tl-item.is-open .tl-ev{font-size:14.5px;color:var(--dark);}
+.tl-item.is-open .tl-desc{font-size:15px;opacity:1;}
+.tl-item.is-open .tl-desc.tl-en{opacity:.75;}
+.tl-item.is-open .tl-icon{transform:scale(1.12);}
+.tl-icon{transition:transform .45s cubic-bezier(.2,.7,.3,1);}
+@media (prefers-reduced-motion:reduce){.tl-hint{animation:none;}}
 .tl-fin .tl-icon{position:relative;}
 .tl-gracias{font-family:'Great Vibes',cursive;font-size:24px;color:var(--accent);}
 
@@ -198,6 +224,23 @@ section{padding:62px 26px;position:relative;}
 .dc-c .dc-lbl{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);}
 .dc-reserve{text-align:center;font-family:'Cormorant Garamond',serif;font-size:15px;letter-spacing:1px;color:var(--ink-soft);text-transform:uppercase;}
 .dc-reserve b{color:var(--dark);}
+
+/* ── LLUVIA DE SOBRES · sobre interactivo ── */
+#sgifts{text-align:center}
+.env-interactive{display:flex;flex-direction:column;align-items:center;cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none;border:none;background:none;padding:0;margin:28px auto 0}
+.env-body{perspective:700px;position:relative;width:260px;height:200px;animation:env-breathe 3.6s ease-in-out infinite}
+.env-body svg.env-svg{width:100%;height:100%}
+.env-flap-wrap{position:absolute;top:46px;left:18px;width:224px;height:86px;transform-origin:top center;transform-style:preserve-3d;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:transform .65s cubic-bezier(.4,0,.2,1);pointer-events:none;z-index:2}
+.env-interactive.open .env-flap-wrap{transform:rotateX(-175deg)}
+.env-open-content{overflow:hidden;max-height:0;opacity:0;transition:max-height .55s .3s ease,opacity .4s .38s ease;display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 20px;text-align:center;pointer-events:none}
+.env-interactive.open .env-open-content{max-height:260px;opacity:1;pointer-events:auto}
+.env-mailbox-icon{width:40px;height:40px;color:var(--accent);margin-top:10px}
+.env-title{font-family:'Great Vibes',cursive;font-size:30px;color:var(--dark);letter-spacing:.5px;line-height:1.25}
+.env-desc{font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:var(--ink-soft);line-height:1.75}
+.env-tap-hint{font-family:'Cinzel',serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);opacity:.85;margin-top:8px;transition:opacity .3s}
+.env-interactive.open~.env-tap-hint{opacity:0;pointer-events:none}
+@keyframes env-breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+@media (prefers-reduced-motion:reduce){.env-body{animation:none}}
 
 /* ── MESA DE REGALOS ── */
 .gift-intro{text-align:center;font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.65;color:var(--ink);margin:4px auto 28px;max-width:340px;font-weight:500;}
@@ -284,7 +327,7 @@ section{padding:62px 26px;position:relative;}
 
 /* ── CIERRE + FOOTER ── */
 .closing{position:relative;min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding:60px 28px;}
-.closing-bg{position:absolute;inset:0;background:url('https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/238c9d84-28a9-49a1-a7a0-c9026547e76e/1786030553152-0.jpeg') center 15%/cover no-repeat;}
+.closing-bg{position:absolute;inset:0;background:url('./cierre.jpg') center 22%/cover no-repeat;}
 .closing-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,26,110,.35),rgba(0,26,110,.55) 60%,rgba(0,26,110,.8));}
 .closing-text,.closing-sign{position:relative;z-index:2;}
 .closing-text{font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.8;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.4);max-width:340px;margin-bottom:18px;font-weight:500;}
@@ -297,10 +340,39 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
 .credit{margin-top:24px;font-family:'Lato',sans-serif;font-size:11px;letter-spacing:1px;color:var(--ink-soft);opacity:.65;}
 .credit a{color:var(--accent);text-decoration:none;}
 
-/* ── MÚSICA FAB ── */
-.music-fab{position:fixed;bottom:22px;right:22px;z-index:998;width:54px;height:54px;border-radius:50%;border:none;cursor:pointer;background:var(--accent);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,86,214,.5);animation:fabpulse 2.8s infinite ease-out;}
-@keyframes fabpulse{0%{box-shadow:0 0 0 0 rgba(0,86,214,.55);}70%{box-shadow:0 0 0 16px rgba(0,86,214,0);}100%{box-shadow:0 0 0 0 rgba(0,86,214,0);}}
-.music-fab svg{width:23px;height:23px;}
+/* ── MÚSICA FAB · COPO DE NIEVE ── */
+.music-fab{position:fixed;bottom:22px;right:22px;z-index:998;width:62px;height:62px;border-radius:50%;border:none;padding:0;cursor:pointer;
+  background:radial-gradient(circle at 34% 28%,#ffffff 0%,#eaf7ff 34%,#cbf0ff 66%,#a7c6ff 100%);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 22px rgba(0,86,214,.34),inset 0 2px 5px rgba(255,255,255,.95),inset 0 -5px 12px rgba(0,86,214,.16);
+  animation:fabfloat 4.4s ease-in-out infinite;-webkit-tap-highlight-color:transparent;}
+/* halo de escarcha */
+.music-fab::before{content:'';position:absolute;inset:-7px;border-radius:50%;pointer-events:none;
+  border:1px solid rgba(203,240,255,.85);animation:fabhalo 3.2s ease-out infinite;}
+/* aro dorado sutil */
+.music-fab::after{content:'';position:absolute;inset:3px;border-radius:50%;pointer-events:none;
+  border:1px solid rgba(212,175,55,.55);
+  background:conic-gradient(from 0deg,transparent 0deg,rgba(212,175,55,.28) 60deg,transparent 130deg,transparent 240deg,rgba(255,255,255,.5) 300deg,transparent 360deg);}
+@keyframes fabfloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
+@keyframes fabhalo{0%{opacity:.9;transform:scale(1);}70%{opacity:0;transform:scale(1.42);}100%{opacity:0;transform:scale(1.42);}}
+/* el copo gira lento mientras suena */
+.music-fab .fab-flake{width:34px;height:34px;position:relative;z-index:2;
+  filter:drop-shadow(0 1px 2px rgba(0,86,214,.4));transition:transform .5s ease;}
+.music-fab.is-playing .fab-flake{animation:flakespin 9s linear infinite;}
+@keyframes flakespin{to{transform:rotate(360deg);}}
+/* estado sonando: el copo se “congela” en azul profundo */
+.music-fab.is-playing{background:radial-gradient(circle at 34% 28%,#eaf7ff 0%,#a7c6ff 38%,#5a93de 72%,#0056d6 100%);
+  box-shadow:0 6px 24px rgba(0,86,214,.5),inset 0 2px 5px rgba(255,255,255,.6),inset 0 -5px 12px rgba(0,26,110,.3);}
+.music-fab .fab-bars{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);display:none;gap:2px;align-items:flex-end;height:9px;z-index:3;}
+.music-fab.is-playing .fab-bars{display:flex;}
+.music-fab .fab-bars i{width:2px;background:#fff;border-radius:1px;opacity:.9;animation:eq .9s ease-in-out infinite;}
+.music-fab .fab-bars i:nth-child(1){height:5px;animation-delay:0s;}
+.music-fab .fab-bars i:nth-child(2){height:9px;animation-delay:.18s;}
+.music-fab .fab-bars i:nth-child(3){height:6px;animation-delay:.36s;}
+@keyframes eq{0%,100%{transform:scaleY(.45);}50%{transform:scaleY(1);}}
+@media (prefers-reduced-motion:reduce){
+  .music-fab,.music-fab::before,.music-fab .fab-flake,.music-fab .fab-bars i{animation:none;}
+}
 
 /* ── ENVELOPE ── */
 #envelope-screen{position:fixed;inset:0;z-index:10000;overflow:hidden;cursor:pointer;opacity:0;background:#fff;}
@@ -319,12 +391,34 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
 .gallery-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--dark);margin-top:2px;}
 .saga-stage{position:relative;height:100svh;min-height:600px;display:flex;align-items:center;overflow:hidden}
 .saga-viewport{position:relative;width:100%;height:100%;display:flex;align-items:center;overflow:hidden}
-.saga-thread{position:absolute;left:0;right:0;top:50%;height:2px;transform:translateY(-1px);
-  background:linear-gradient(to right,transparent 0%,rgba(0,86,214,.12) 5%,rgba(0,86,214,.55) 50%,rgba(0,86,214,.12) 95%,transparent 100%);
-  box-shadow:0 0 16px rgba(0,86,214,.35);pointer-events:none;z-index:1}
-.saga-spark{position:absolute;top:50%;left:0;width:15px;height:15px;border-radius:50%;transform:translate(-50%,-50%);
-  background:radial-gradient(circle,#ffffff 0%,#cbf0ff 42%,rgba(0,86,214,0) 72%);
-  box-shadow:0 0 20px 5px rgba(0,86,214,.5);pointer-events:none;z-index:2}
+/* hilo de hielo: núcleo blanco brillante + halo celeste + destello dorado viajero */
+.saga-thread{position:absolute;left:0;right:0;top:50%;height:3px;transform:translateY(-1.5px);
+  background:linear-gradient(to right,transparent 0%,rgba(203,240,255,.25) 5%,
+    rgba(255,255,255,.95) 42%,#ffffff 50%,rgba(255,255,255,.95) 58%,rgba(203,240,255,.25) 95%,transparent 100%);
+  box-shadow:0 0 6px rgba(255,255,255,.95),0 0 16px rgba(203,240,255,.9),
+    0 0 34px rgba(0,86,214,.5),0 0 60px rgba(0,86,214,.22);
+  border-radius:3px;pointer-events:none;z-index:1}
+/* escarcha: capa superpuesta que centellea */
+.saga-thread::before{content:'';position:absolute;inset:-2px 0;border-radius:4px;
+  background:repeating-linear-gradient(90deg,transparent 0 6px,rgba(255,255,255,.75) 6px 8px,transparent 8px 22px);
+  -webkit-mask:linear-gradient(to right,transparent,#000 18%,#000 82%,transparent);
+  mask:linear-gradient(to right,transparent,#000 18%,#000 82%,transparent);
+  opacity:.5;animation:frostshimmer 3.4s linear infinite}
+/* destello dorado que recorre el hilo */
+.saga-thread::after{content:'';position:absolute;top:-3px;bottom:-3px;width:26%;border-radius:6px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.9) 35%,rgba(233,203,133,.95) 50%,rgba(255,255,255,.9) 65%,transparent);
+  filter:blur(1px);opacity:.85;animation:threadsweep 5.2s ease-in-out infinite}
+@keyframes frostshimmer{to{background-position:44px 0}}
+@keyframes threadsweep{0%{left:-30%}55%,100%{left:104%}}
+.saga-spark{position:absolute;top:50%;left:0;width:19px;height:19px;border-radius:50%;transform:translate(-50%,-50%);
+  background:radial-gradient(circle,#ffffff 0%,#eaf7ff 30%,#cbf0ff 52%,rgba(0,86,214,0) 76%);
+  box-shadow:0 0 10px 2px #fff,0 0 26px 7px rgba(203,240,255,.95),
+    0 0 48px 12px rgba(0,86,214,.45),0 0 14px 3px rgba(212,175,55,.5);
+  pointer-events:none;z-index:2;animation:sparkpulse 2.1s ease-in-out infinite}
+@keyframes sparkpulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.92}50%{transform:translate(-50%,-50%) scale(1.28);opacity:1}}
+@media (prefers-reduced-motion:reduce){
+  .saga-thread::before,.saga-thread::after,.saga-spark{animation:none}
+}
 .saga-track{position:relative;display:flex;align-items:center;gap:clamp(16px,3vw,38px);
   padding:0 50vw;height:100%;will-change:transform;z-index:2}
 .saga-photo{position:relative;flex:0 0 auto;width:clamp(158px,44vw,214px);aspect-ratio:3/4;
@@ -363,6 +457,9 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
 </style>
 </head>
 <body>
+
+<!-- FONDO SECUNDARIO (crossfade tras el countdown) -->
+<div id="bg2" aria-hidden="true"></div>
 
 <!-- ENVELOPE -->
 <div id="envelope-screen" role="button" aria-label="Toca para abrir tu invitación">
@@ -498,8 +595,11 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-text">
             <div class="tl-time">4:30 PM</div>
             <div class="tl-ev">Recepción</div>
-            <div class="tl-desc">Les damos la bienvenida. Agradecemos su puntualidad para disfrutar cada momento de esta celebración</div>
-            <div class="tl-desc tl-en">Welcome Reception — Please arrive on time to enjoy every special moment of the celebration</div>
+            <div class="tl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V6a1.8 1.8 0 0 1 3.6 0v8"/><path d="M12.6 9.6a1.7 1.7 0 0 1 3.4 0v1.2"/><path d="M16 10.6a1.7 1.7 0 0 1 3.4 0V15a6 6 0 0 1-6 6h-1.6a5 5 0 0 1-4-2l-3-4.2a1.7 1.7 0 0 1 2.7-2l1.5 1.7"/></svg>Toca para abrir</div>
+            <div class="tl-body">
+              <div class="tl-desc">Les damos la bienvenida. Agradecemos su puntualidad para disfrutar cada momento de esta celebración</div>
+              <div class="tl-desc tl-en">Welcome Reception — Please arrive on time to enjoy every special moment of the celebration</div>
+            </div>
           </div>
         </div>
 
@@ -509,8 +609,11 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-text">
             <div class="tl-time">5:30 PM</div>
             <div class="tl-ev">Gran Entrada</div>
-            <div class="tl-desc">La celebración da inicio mientras nuestra familia recibe con orgullo a nuestra querida cumpleañera, Mía</div>
-            <div class="tl-desc tl-en">Grand Entrance — The celebration begins as our family proudly welcomes our birthday girl, Mía</div>
+            <div class="tl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V6a1.8 1.8 0 0 1 3.6 0v8"/><path d="M12.6 9.6a1.7 1.7 0 0 1 3.4 0v1.2"/><path d="M16 10.6a1.7 1.7 0 0 1 3.4 0V15a6 6 0 0 1-6 6h-1.6a5 5 0 0 1-4-2l-3-4.2a1.7 1.7 0 0 1 2.7-2l1.5 1.7"/></svg>Toca para abrir</div>
+            <div class="tl-body">
+              <div class="tl-desc">La celebración da inicio mientras nuestra familia recibe con orgullo a nuestra querida cumpleañera, Mía</div>
+              <div class="tl-desc tl-en">Grand Entrance — The celebration begins as our family proudly welcomes our birthday girl, Mía</div>
+            </div>
           </div>
         </div>
 
@@ -520,8 +623,11 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-text">
             <div class="tl-time">5:40 PM</div>
             <div class="tl-ev">Ceremonia de XV</div>
-            <div class="tl-desc">Una hermosa ceremonia llena de tradiciones, emociones y momentos inolvidables</div>
-            <div class="tl-desc tl-en">The XV Ceremony — A beautiful ceremony filled with meaningful traditions and unforgettable moments</div>
+            <div class="tl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V6a1.8 1.8 0 0 1 3.6 0v8"/><path d="M12.6 9.6a1.7 1.7 0 0 1 3.4 0v1.2"/><path d="M16 10.6a1.7 1.7 0 0 1 3.4 0V15a6 6 0 0 1-6 6h-1.6a5 5 0 0 1-4-2l-3-4.2a1.7 1.7 0 0 1 2.7-2l1.5 1.7"/></svg>Toca para abrir</div>
+            <div class="tl-body">
+              <div class="tl-desc">Una hermosa ceremonia llena de tradiciones, emociones y momentos inolvidables</div>
+              <div class="tl-desc tl-en">The XV Ceremony — A beautiful ceremony filled with meaningful traditions and unforgettable moments</div>
+            </div>
           </div>
         </div>
 
@@ -531,8 +637,11 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-text">
             <div class="tl-time">6:00 PM</div>
             <div class="tl-ev">Vals Especiales</div>
-            <div class="tl-desc">Una tradición inolvidable compartida con las personas más importantes en la vida de Mía</div>
-            <div class="tl-desc tl-en">Special Waltzes — A timeless tradition shared with those who hold a special place in Mía's heart</div>
+            <div class="tl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V6a1.8 1.8 0 0 1 3.6 0v8"/><path d="M12.6 9.6a1.7 1.7 0 0 1 3.4 0v1.2"/><path d="M16 10.6a1.7 1.7 0 0 1 3.4 0V15a6 6 0 0 1-6 6h-1.6a5 5 0 0 1-4-2l-3-4.2a1.7 1.7 0 0 1 2.7-2l1.5 1.7"/></svg>Toca para abrir</div>
+            <div class="tl-body">
+              <div class="tl-desc">Una tradición inolvidable compartida con las personas más importantes en la vida de Mía</div>
+              <div class="tl-desc tl-en">Special Waltzes — A timeless tradition shared with those who hold a special place in Mía's heart</div>
+            </div>
           </div>
         </div>
 
@@ -542,8 +651,11 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-text">
             <div class="tl-time">6:10 PM</div>
             <div class="tl-ev">Palabras y Brindis</div>
-            <div class="tl-desc">Mensajes llenos de cariño, gratitud y un brindis para celebrar este día tan especial</div>
-            <div class="tl-desc tl-en">Words &amp; Toast — Heartfelt messages, gratitude, and a celebratory toast</div>
+            <div class="tl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V6a1.8 1.8 0 0 1 3.6 0v8"/><path d="M12.6 9.6a1.7 1.7 0 0 1 3.4 0v1.2"/><path d="M16 10.6a1.7 1.7 0 0 1 3.4 0V15a6 6 0 0 1-6 6h-1.6a5 5 0 0 1-4-2l-3-4.2a1.7 1.7 0 0 1 2.7-2l1.5 1.7"/></svg>Toca para abrir</div>
+            <div class="tl-body">
+              <div class="tl-desc">Mensajes llenos de cariño, gratitud y un brindis para celebrar este día tan especial</div>
+              <div class="tl-desc tl-en">Words &amp; Toast — Heartfelt messages, gratitude, and a celebratory toast</div>
+            </div>
           </div>
         </div>
 
@@ -553,8 +665,11 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-text">
             <div class="tl-time">6:20 PM</div>
             <div class="tl-ev">Cena</div>
-            <div class="tl-desc">Disfrutemos juntos de una velada llena de buena comida y excelente compañía</div>
-            <div class="tl-desc tl-en">Dinner — An evening to savor delicious cuisine and wonderful company</div>
+            <div class="tl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V6a1.8 1.8 0 0 1 3.6 0v8"/><path d="M12.6 9.6a1.7 1.7 0 0 1 3.4 0v1.2"/><path d="M16 10.6a1.7 1.7 0 0 1 3.4 0V15a6 6 0 0 1-6 6h-1.6a5 5 0 0 1-4-2l-3-4.2a1.7 1.7 0 0 1 2.7-2l1.5 1.7"/></svg>Toca para abrir</div>
+            <div class="tl-body">
+              <div class="tl-desc">Disfrutemos juntos de una velada llena de buena comida y excelente compañía</div>
+              <div class="tl-desc tl-en">Dinner — An evening to savor delicious cuisine and wonderful company</div>
+            </div>
           </div>
         </div>
 
@@ -564,8 +679,11 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-text">
             <div class="tl-time">6:50 PM</div>
             <div class="tl-ev">Baile Sorpresa</div>
-            <div class="tl-desc">Una presentación preparada con mucho cariño</div>
-            <div class="tl-desc tl-en">Surprise Performance — A special performance prepared with love</div>
+            <div class="tl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V6a1.8 1.8 0 0 1 3.6 0v8"/><path d="M12.6 9.6a1.7 1.7 0 0 1 3.4 0v1.2"/><path d="M16 10.6a1.7 1.7 0 0 1 3.4 0V15a6 6 0 0 1-6 6h-1.6a5 5 0 0 1-4-2l-3-4.2a1.7 1.7 0 0 1 2.7-2l1.5 1.7"/></svg>Toca para abrir</div>
+            <div class="tl-body">
+              <div class="tl-desc">Una presentación preparada con mucho cariño</div>
+              <div class="tl-desc tl-en">Surprise Performance — A special performance prepared with love</div>
+            </div>
           </div>
         </div>
 
@@ -575,8 +693,11 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-text">
             <div class="tl-time">9:30 PM</div>
             <div class="tl-ev">Celebración de Cumpleaños</div>
-            <div class="tl-desc">Acompáñanos a cantar el Feliz Cumpleaños y celebrar este inolvidable momento</div>
-            <div class="tl-desc tl-en">Birthday Celebration — Join us as we sing Happy Birthday and celebrate this unforgettable milestone together</div>
+            <div class="tl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V6a1.8 1.8 0 0 1 3.6 0v8"/><path d="M12.6 9.6a1.7 1.7 0 0 1 3.4 0v1.2"/><path d="M16 10.6a1.7 1.7 0 0 1 3.4 0V15a6 6 0 0 1-6 6h-1.6a5 5 0 0 1-4-2l-3-4.2a1.7 1.7 0 0 1 2.7-2l1.5 1.7"/></svg>Toca para abrir</div>
+            <div class="tl-body">
+              <div class="tl-desc">Acompáñanos a cantar el Feliz Cumpleaños y celebrar este inolvidable momento</div>
+              <div class="tl-desc tl-en">Birthday Celebration — Join us as we sing Happy Birthday and celebrate this unforgettable milestone together</div>
+            </div>
           </div>
         </div>
 
@@ -586,8 +707,11 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-text">
             <div class="tl-time">10:00 PM</div>
             <div class="tl-ev">Una Sorpresa Especial</div>
-            <div class="tl-desc">Porque aún queda un momento mágico por descubrir</div>
-            <div class="tl-desc tl-en">A Special Surprise — One more unforgettable moment awaits</div>
+            <div class="tl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V6a1.8 1.8 0 0 1 3.6 0v8"/><path d="M12.6 9.6a1.7 1.7 0 0 1 3.4 0v1.2"/><path d="M16 10.6a1.7 1.7 0 0 1 3.4 0V15a6 6 0 0 1-6 6h-1.6a5 5 0 0 1-4-2l-3-4.2a1.7 1.7 0 0 1 2.7-2l1.5 1.7"/></svg>Toca para abrir</div>
+            <div class="tl-body">
+              <div class="tl-desc">Porque aún queda un momento mágico por descubrir</div>
+              <div class="tl-desc tl-en">A Special Surprise — One more unforgettable moment awaits</div>
+            </div>
           </div>
         </div>
 
@@ -597,9 +721,12 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-text">
             <div class="tl-time">11:45 PM</div>
             <div class="tl-ev">Despedida</div>
-            <div class="tl-desc">Gracias por acompañarnos y formar parte de esta noche inolvidable</div>
-            <div class="tl-desc tl-en">Farewell — Thank you for celebrating this cherished evening with us</div>
-            <div class="tl-gracias">¡Gracias!</div>
+            <div class="tl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V6a1.8 1.8 0 0 1 3.6 0v8"/><path d="M12.6 9.6a1.7 1.7 0 0 1 3.4 0v1.2"/><path d="M16 10.6a1.7 1.7 0 0 1 3.4 0V15a6 6 0 0 1-6 6h-1.6a5 5 0 0 1-4-2l-3-4.2a1.7 1.7 0 0 1 2.7-2l1.5 1.7"/></svg>Toca para abrir</div>
+            <div class="tl-body">
+              <div class="tl-desc">Gracias por acompañarnos y formar parte de esta noche inolvidable</div>
+              <div class="tl-desc tl-en">Farewell — Thank you for celebrating this cherished evening with us</div>
+              <div class="tl-gracias">¡Gracias!</div>
+            </div>
           </div>
         </div>
 
@@ -649,8 +776,52 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
     <div class="fcontent">
       <div class="eyebrow rv">Con Cariño</div>
       <h2 class="sec-title rv">Lluvia de Sobres</h2>
-      <div class="silver-circle rv" style="margin-top:24px;"><img src="./ic-sobre.svg" alt="Sobre"></div>
-      <p class="gift-sobre-desc rv">Tu presencia es nuestro mejor regalo. Si deseas obsequiarme algo, agradezco mucho tu detalle en efectivo.</p>
+      <button class="env-interactive rv" aria-label="Sobre — toca para abrir" aria-expanded="false">
+        <div class="env-body">
+          <svg class="env-svg" viewBox="0 0 260 200" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="mia-env-fill" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0%" stop-color="rgba(203,240,255,.55)"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,.85)"/>
+              </linearGradient>
+            </defs>
+            <rect x="18" y="52" width="224" height="132" rx="10"
+                  fill="url(#mia-env-fill)" stroke="rgba(0,86,214,.42)" stroke-width="1.4"/>
+            <path d="M18 184 L130 110 L242 184" stroke="rgba(0,86,214,.28)" stroke-width="1" fill="none"/>
+            <g stroke="#7fb3e8" stroke-linecap="round" fill="none">
+              <path d="M90 26v-10M86 21l8 4M94 21l-8 4" stroke-width="1.3" opacity=".65"/>
+              <path d="M130 20v-10M126 15l8 4M134 15l-8 4" stroke-width="1.3" opacity=".8"/>
+              <path d="M170 26v-10M166 21l8 4M174 21l-8 4" stroke-width="1.3" opacity=".65"/>
+            </g>
+            <circle cx="130" cy="118" r="16" fill="rgba(203,240,255,.5)" stroke="rgba(0,86,214,.42)" stroke-width="1"/>
+            <text x="130" y="123" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#0056d6" opacity=".85">M.F.C</text>
+          </svg>
+          <div class="env-flap-wrap" aria-hidden="true">
+            <svg viewBox="0 0 224 86" preserveAspectRatio="none" style="width:100%;height:100%">
+              <defs>
+                <linearGradient id="mia-flap-fill" x1="0" y1="1" x2="1" y2="0">
+                  <stop offset="0%" stop-color="rgba(167,198,255,.75)"/>
+                  <stop offset="100%" stop-color="rgba(255,255,255,.92)"/>
+                </linearGradient>
+              </defs>
+              <path d="M0 0 L112 86 L224 0 Z"
+                    fill="url(#mia-flap-fill)" stroke="rgba(0,86,214,.42)" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="env-open-content" aria-live="polite">
+          <svg class="env-mailbox-icon" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="8" y="22" width="36" height="24" rx="5"/>
+            <path d="M8 30 Q26 38 44 30"/>
+            <rect x="18" y="8" width="16" height="16" rx="2"/>
+            <path d="M18 8 Q26 3 34 8"/>
+            <rect x="20" y="28" width="12" height="2.5" rx="1.25" fill="currentColor" stroke="none" opacity=".4"/>
+          </svg>
+          <p class="env-title">Tu presencia es mi mejor regalo</p>
+          <p class="env-desc">El día del evento habrá una urna donde podrás<br>depositar tu sobre con mucho cariño.</p>
+        </div>
+      </button>
+      <p class="env-tap-hint rv">Toca el sobre</p>
     </div>
   </section>
 
@@ -866,8 +1037,14 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
 <audio id="bgAudio" loop preload="none">
   <source src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/audio/xv-mia/cancion.mp3" type="audio/mpeg">
 </audio>
-<button class="music-fab" id="musicFab" aria-label="Reproducir música">
-  <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+<button class="music-fab" id="musicFab" aria-label="Reproducir música" aria-pressed="false">
+  <svg class="fab-flake" viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round">
+    <path d="M32 5v54M32 5l-6 7M32 5l6 7M32 59l-6-7M32 59l6-7M32 21l-7.5 4.5M32 21l7.5 4.5M32 43l-7.5-4.5M32 43l7.5-4.5"/>
+    <path d="M8.6 18.5l46.8 27M8.6 18.5l1.3 8.7M8.6 18.5l8.7-1.3M55.4 45.5l-1.3-8.7M55.4 45.5l-8.7 1.3M22.5 26.5l-.6 8.9M22.5 26.5l8.9.6M41.5 37.5l.6-8.9M41.5 37.5l-8.9-.6"/>
+    <path d="M8.6 45.5l46.8-27M8.6 45.5l8.7 1.3M8.6 45.5l1.3-8.7M55.4 18.5l-8.7-1.3M55.4 18.5l-1.3 8.7M22.5 37.5l8.9-.6M22.5 37.5l-.6-8.9M41.5 26.5l-8.9.6M41.5 26.5l.6 8.9"/>
+    <circle cx="32" cy="32" r="3.4" fill="#fff" stroke="none"/>
+  </svg>
+  <span class="fab-bars" aria-hidden="true"><i></i><i></i><i></i></span>
 </button>
 
 <script>
@@ -931,26 +1108,60 @@ function launchPage(){
   initTimeline();
   initCrossfade();
   initSaga();
+  initBgSwap();
 }
 
-/* ── PÉTALOS azul ── */
+/* ── CROSSFADE DE FONDO (tras el countdown) ── */
+function initBgSwap(){
+  const cd=document.querySelector('.cd-hero');
+  if(!cd) return;
+  const BASE=0.62;
+  const setOp=p=>{
+    document.body.style.setProperty('--bg1-op',(BASE*(1-p)).toFixed(3));
+    document.body.style.setProperty('--bg2-op',(BASE*p).toFixed(3));
+  };
+  setOp(0);
+  ScrollTrigger.create({
+    trigger:cd,start:'bottom 90%',end:'bottom 25%',scrub:true,
+    onUpdate(self){setOp(self.progress);},
+    onLeave(){setOp(1);},onLeaveBack(){setOp(0);}
+  });
+}
+
+/* ── COPOS DE NIEVE ── */
+const FLAKE_SHAPES=[
+  // copo clásico de seis brazos con ramificaciones
+  "<path d='M32 3v58M32 3l-6 7M32 3l6 7M32 61l-6-7M32 61l6-7M32 20l-8 5M32 20l8 5M32 44l-8-5M32 44l8 5' stroke='%23fff' stroke-width='3.4' stroke-linecap='round' fill='none'/><path d='M7 17.5l50 29M7 17.5l1.4 9.1M7 17.5l9.1-1.4M57 46.5l-1.4-9.1M57 46.5l-9.1 1.4M21.7 26l-.6 9.4M21.7 26l9.4.6M42.3 38l.6-9.4M42.3 38l-9.4-.6' stroke='%23fff' stroke-width='3.4' stroke-linecap='round' fill='none'/><path d='M7 46.5l50-29M7 46.5l9.1 1.4M7 46.5l1.4-9.1M57 17.5l-9.1-1.4M57 17.5l-1.4 9.1M21.7 38l9.4-.6M21.7 38l-.6-9.4M42.3 26l-9.4.6M42.3 26l.6 9.4' stroke='%23fff' stroke-width='3.4' stroke-linecap='round' fill='none'/>",
+  // copo estrellado más simple
+  "<path d='M32 5v54M8.6 18.5l46.8 27M8.6 45.5l46.8-27' stroke='%23fff' stroke-width='4.2' stroke-linecap='round' fill='none'/><path d='M32 16l-6.5 6M32 16l6.5 6M32 48l-6.5-6M32 48l6.5-6' stroke='%23fff' stroke-width='4.2' stroke-linecap='round' fill='none'/><circle cx='32' cy='32' r='4.6' fill='%23fff'/>",
+  // cristal hexagonal
+  "<path d='M32 6l22.5 13v26L32 58 9.5 45V19z' stroke='%23fff' stroke-width='3.6' fill='none' stroke-linejoin='round'/><path d='M32 6v52M9.5 19l45 26M54.5 19l-45 26' stroke='%23fff' stroke-width='2.6' stroke-linecap='round'/>"
+];
+function flakeURL(i){
+  return `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E${FLAKE_SHAPES[i%FLAKE_SHAPES.length]}%3C/svg%3E")`;
+}
 function initPetals(){
   const layer=document.getElementById('petals');
-  const colors=['#cbf0ff','#d6d6d6','#a7c6ff','#0056d6','#ddeeff','#b8d4f0'];
-  for(let i=0;i<26;i++){
+  // blancos · celestes · azulados · dorados
+  const colors=['#ffffff','#eaf7ff','#cbf0ff','#a7c6ff','#7fb3e8','#e8cf8f','#d4af37','#f2e2b0'];
+  for(let i=0;i<30;i++){
     const p=document.createElement('div');p.className='petal';
-    const w=6+Math.random()*8;
-    p.style.cssText=`width:${w}px;height:${w*1.4}px;background:${colors[i%colors.length]};left:${Math.random()*100}%;`;
+    const w=8+Math.random()*13;
+    p.style.cssText=`width:${w}px;height:${w}px;background:${colors[i%colors.length]};left:${Math.random()*100}%;`;
+    p.style.setProperty('--flake',flakeURL(i));
     layer.appendChild(p);animPetal(p);
   }
 }
 function animPetal(p){
   const h=window.innerHeight;
-  gsap.set(p,{y:-30,x:0,opacity:0,rotation:Math.random()*360});
+  const drift=(Math.random()*140)-70;
+  gsap.set(p,{y:-40,x:0,opacity:0,rotation:Math.random()*360});
   gsap.timeline({delay:Math.random()*16})
-    .to(p,{opacity:.5,duration:3,ease:'none'})
-    .to(p,{y:h+60,x:(Math.random()*120)-60,rotation:`+=${200+Math.random()*360}`,duration:20+Math.random()*22,ease:'none',
-      onComplete(){gsap.set(p,{left:Math.random()*100+'%',x:0});animPetal(p);}},'<');
+    .to(p,{opacity:.35+Math.random()*.4,duration:3.4,ease:'none'})
+    .to(p,{y:h+70,rotation:`+=${180+Math.random()*300}`,duration:22+Math.random()*24,ease:'none',
+      onComplete(){gsap.set(p,{left:Math.random()*100+'%',x:0});animPetal(p);}},'<')
+    // vaivén lateral: el copo se mece al caer en vez de ir en línea recta
+    .to(p,{x:drift,duration:5+Math.random()*4,ease:'sine.inOut',repeat:-1,yoyo:true},'<');
 }
 
 /* ── SCROLL REVEAL ── */
@@ -965,6 +1176,41 @@ function initTimeline(){
   document.querySelectorAll('.tl-item').forEach((row,i)=>{
     gsap.fromTo(row,{x:-26,opacity:0},{x:0,opacity:1,duration:1,ease:'power2.out',
       scrollTrigger:{trigger:'#siti',start:'top 76%'},delay:i*0.14});
+
+    const body=row.querySelector('.tl-body');
+    if(!body) return;
+    gsap.set(body,{height:0,opacity:0});
+    row.setAttribute('role','button');
+    row.setAttribute('tabindex','0');
+    row.setAttribute('aria-expanded','false');
+
+    const close=(el)=>{
+      const b=el.querySelector('.tl-body');
+      el.classList.remove('is-open');
+      el.setAttribute('aria-expanded','false');
+      // fijar la altura en px antes de cerrar: GSAP no interpola desde 'auto'
+      gsap.killTweensOf(b);
+      const from=b.offsetHeight;
+      gsap.fromTo(b,{height:from,opacity:1},{height:0,opacity:0,duration:.4,ease:'power2.inOut',
+        onComplete(){ScrollTrigger.refresh();}});
+    };
+    const toggle=()=>{
+      if(row.classList.contains('is-open')){ close(row); return; }
+      // acordeón: al abrir uno, se cierran los demás
+      document.querySelectorAll('.tl-item.is-open').forEach(close);
+      row.classList.add('is-open');
+      row.setAttribute('aria-expanded','true');
+      // medir la altura real: GSAP no resuelve height:'auto' en esta build
+      gsap.killTweensOf(body);
+      gsap.set(body,{height:'auto',opacity:1});
+      const target=body.offsetHeight;
+      gsap.fromTo(body,{height:0,opacity:0},{height:target,opacity:1,duration:.5,ease:'power2.out',
+        onComplete(){gsap.set(body,{height:'auto'});ScrollTrigger.refresh();}});
+    };
+    row.addEventListener('click',toggle);
+    row.addEventListener('keydown',e=>{
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}
+    });
   });
 }
 
@@ -1203,19 +1449,32 @@ function initSaga(){
   });
 })();
 
+/* ── SOBRE INTERACTIVO ── */
+(function(){
+  var btn=document.querySelector('.env-interactive');
+  if(!btn)return;
+  btn.addEventListener('click',function(){
+    var isOpen=btn.classList.toggle('open');
+    btn.setAttribute('aria-expanded',isOpen?'true':'false');
+  });
+})();
+
 /* ── MÚSICA ── */
 (function(){
   var aud = document.getElementById('bgAudio');
   var fab = document.getElementById('musicFab');
+  function sync(){
+    var playing = !aud.paused;
+    fab.classList.toggle('is-playing', playing);
+    fab.setAttribute('aria-pressed', playing ? 'true' : 'false');
+    fab.setAttribute('aria-label', playing ? 'Pausar música' : 'Reproducir música');
+  }
   fab.addEventListener('click', function(){
-    if(aud.paused){
-      aud.play().catch(function(){});
-      fab.style.background = 'var(--dark)';
-    } else {
-      aud.pause();
-      fab.style.background = 'var(--accent)';
-    }
+    if(aud.paused){ aud.play().catch(function(){}); } else { aud.pause(); }
   });
+  aud.addEventListener('play', sync);
+  aud.addEventListener('pause', sync);
+  sync();
 })();
 </script>
 </body>
