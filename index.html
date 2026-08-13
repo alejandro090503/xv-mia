@@ -43,6 +43,12 @@ body::before{
   background:url('./fondo-invierno.jpg') center top/cover no-repeat;
   opacity:var(--bg2-op,0);
 }
+/* tercer fondo: entra con crossfade al terminar la galería "Momentos" */
+#bg3{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:url('./fondo-escarcha.jpg') center top/cover no-repeat;
+  opacity:var(--bg3-op,0);
+}
 
 .wrap{max-width:440px;margin:0 auto;background:transparent;position:relative;overflow:clip;z-index:1;}
 
@@ -98,14 +104,37 @@ section{padding:62px 26px;position:relative;}
 .hero-top{position:relative;z-index:3;padding:30px 26px 0;text-align:center;}
 .hero-eyebrow{font-family:'Cinzel',serif;font-size:12px;letter-spacing:6px;text-transform:uppercase;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.45);opacity:0;}
 .hero-bottom{position:relative;z-index:3;margin-top:auto;padding:0 28px 60px;text-align:center;}
+/* ── HERO CONGELADO ── */
 .hero-name{
+  position:relative;display:inline-block;
   font-family:'Great Vibes',cursive;font-size:92px;line-height:.95;margin-bottom:6px;padding-top:18px;
   transform:translateY(30px);opacity:0;
-  background:linear-gradient(180deg,var(--accent) 0%,#0042a9 32%,var(--dark) 78%,#001a6e 100%);
+  /* hielo: blanco escarchado arriba → azul cristal abajo, con vetas heladas */
+  background:
+    linear-gradient(178deg,
+      #ffffff 0%,#f2fbff 14%,#d8f0ff 30%,#a9d6f7 46%,
+      #6ba8e0 62%,#2f6fc4 78%,var(--dark) 92%,#001a6e 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  filter:drop-shadow(0 2px 18px rgba(0,26,110,.3)) drop-shadow(0 0 26px rgba(203,240,255,.35));
+  /* escarcha alrededor + hielo grueso translúcido */
+  filter:
+    drop-shadow(0 1px 0 rgba(255,255,255,.95))
+    drop-shadow(0 2px 10px rgba(0,26,110,.35))
+    drop-shadow(0 0 22px rgba(203,240,255,.85))
+    drop-shadow(0 0 44px rgba(120,190,255,.45));
   animation:floatGlow 4s ease-in-out infinite;
 }
+/* capa de cristales: brillo que recorre las letras como luz sobre hielo */
+.hero-name::after{
+  content:attr(data-text);position:absolute;left:0;top:0;padding-top:18px;pointer-events:none;
+  background:linear-gradient(105deg,
+    transparent 0%,transparent 38%,rgba(255,255,255,.9) 47%,
+    rgba(255,255,255,1) 51%,rgba(255,255,255,.9) 55%,transparent 64%,transparent 100%);
+  background-size:260% 100%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:iceglint 7s ease-in-out infinite;
+}
+@keyframes iceglint{0%,60%{background-position:180% 0;}88%,100%{background-position:-80% 0;}}
+@media (prefers-reduced-motion:reduce){.hero-name::after{animation:none;opacity:.35;}}
 .hero-sub{display:flex;flex-direction:column;align-items:center;gap:2px;transform:translateY(16px);opacity:0;}
 .xv-num{
   font-family:'Cinzel',serif;font-weight:600;font-size:46px;letter-spacing:10px;line-height:1;padding-left:10px;
@@ -130,14 +159,31 @@ section{padding:62px 26px;position:relative;}
 .fecha-txt{font-family:'Cormorant Garamond',serif;font-weight:500;font-size:16px;letter-spacing:7px;text-transform:uppercase;color:var(--dark);}
 
 /* ── FRASE INICIAL ── */
+/* card de hielo esmerilado: textura de escarcha, texto perfectamente legible */
 .intro-card{
-  position:relative;background:var(--paper);border-radius:8px;
+  position:relative;border-radius:10px;
   margin:8px auto 0;max-width:392px;padding:78px 30px 64px;overflow:hidden;
-  box-shadow:0 14px 50px rgba(0,86,214,.12);border:1px solid rgba(203,240,255,.35);
+  background:
+    /* cristales de escarcha (radiales tenues) */
+    radial-gradient(ellipse 120px 80px at 12% 8%,rgba(255,255,255,.95),transparent 60%),
+    radial-gradient(ellipse 140px 90px at 88% 22%,rgba(255,255,255,.85),transparent 62%),
+    radial-gradient(ellipse 110px 70px at 78% 92%,rgba(255,255,255,.9),transparent 60%),
+    /* vetas de hielo diagonales */
+    repeating-linear-gradient(118deg,transparent 0 26px,rgba(255,255,255,.5) 26px 28px,transparent 28px 62px),
+    repeating-linear-gradient(-142deg,transparent 0 34px,rgba(203,240,255,.42) 34px 36px,transparent 36px 78px),
+    /* base helada */
+    linear-gradient(160deg,#ffffff 0%,#f4fbff 30%,#e4f4ff 62%,#d5edff 100%);
+  box-shadow:0 16px 54px rgba(0,86,214,.16),0 2px 0 rgba(255,255,255,.9) inset,
+    0 0 0 1px rgba(255,255,255,.85) inset;
+  border:1px solid rgba(140,195,240,.42);
 }
+/* filo de escarcha en el borde superior */
+.intro-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.98) 22%,rgba(212,175,55,.5) 50%,rgba(255,255,255,.98) 78%,transparent);}
 .intro-card .fl{width:46%;max-width:175px;}
 .intro-tiara{position:relative;z-index:2;display:flex;justify-content:center;margin-bottom:18px;}
-.intro-tiara img{width:96px;height:auto;filter:drop-shadow(0 4px 10px rgba(0,86,214,.18)) hue-rotate(10deg) saturate(.7);}
+.intro-tiara img{width:112px;height:auto;
+  filter:drop-shadow(0 3px 8px rgba(0,86,214,.28)) drop-shadow(0 0 14px rgba(203,240,255,.9));}
 .intro-text{position:relative;z-index:2;font-family:'Cormorant Garamond',serif;font-size:18.5px;line-height:1.78;color:var(--ink);text-align:center;font-weight:500;}
 .intro-text .lead::first-letter{font-family:'Great Vibes',cursive;font-size:52px;color:var(--accent);float:left;line-height:.7;padding:8px 8px 0 0;}
 .intro-text p+p{margin-top:16px;}
@@ -177,7 +223,32 @@ section{padding:62px 26px;position:relative;}
 .loc-times .lt-h{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--dark);font-weight:600;}
 .loc-times .lt-sep{width:1px;background:var(--light);opacity:.6;}
 .map-wrap{margin-top:20px;border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,86,214,.1);}
-.btn{display:inline-block;margin-top:18px;padding:12px 32px;background:var(--accent);color:#fff;border-radius:30px;font-family:'Cinzel',serif;font-size:11px;text-transform:uppercase;letter-spacing:3px;text-decoration:none;transition:background .3s,transform .3s;border:none;cursor:pointer;}
+/* botón de hielo: cristal traslúcido con escarcha, texto siempre legible */
+.btn{position:relative;display:inline-block;margin-top:18px;padding:14px 34px;
+  color:var(--dark);border-radius:30px;
+  font-family:'Cinzel',serif;font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:3px;
+  text-decoration:none;border:none;cursor:pointer;overflow:hidden;isolation:isolate;
+  background:linear-gradient(150deg,rgba(255,255,255,.96) 0%,rgba(226,244,255,.9) 38%,rgba(186,220,252,.86) 72%,rgba(255,255,255,.94) 100%);
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 6px 18px rgba(0,86,214,.22),0 0 0 1px rgba(0,86,214,.16),
+    inset 0 1px 2px rgba(255,255,255,1),inset 0 -6px 14px rgba(0,86,214,.14);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  text-shadow:0 1px 0 rgba(255,255,255,.95);
+  transition:transform .28s ease,box-shadow .28s ease;}
+/* facetas de hielo */
+.btn::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:-1;
+  background:
+    linear-gradient(115deg,transparent 0 18%,rgba(255,255,255,.55) 18% 22%,transparent 22% 46%,rgba(255,255,255,.35) 46% 49%,transparent 49%),
+    linear-gradient(200deg,transparent 0 58%,rgba(203,240,255,.5) 58% 63%,transparent 63%);}
+/* destello que barre el cristal */
+.btn::after{content:'';position:absolute;top:-60%;bottom:-60%;width:34%;left:-40%;pointer-events:none;z-index:-1;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);
+  transform:skewX(-18deg);animation:btnsheen 5.5s ease-in-out infinite;}
+@keyframes btnsheen{0%,68%,100%{left:-40%;}84%{left:112%;}}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,86,214,.3),0 0 0 1px rgba(0,86,214,.22),inset 0 1px 2px rgba(255,255,255,1),inset 0 -6px 14px rgba(0,86,214,.16);}
+.btn:active{transform:translateY(0) scale(.985);}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+@media (prefers-reduced-motion:reduce){.btn::after{animation:none;}}
 .btn:hover{background:var(--dark);transform:translateY(-2px);}
 
 /* ── ITINERARIO ── */
@@ -340,38 +411,35 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
 .credit{margin-top:24px;font-family:'Lato',sans-serif;font-size:11px;letter-spacing:1px;color:var(--ink-soft);opacity:.65;}
 .credit a{color:var(--accent);text-decoration:none;}
 
-/* ── MÚSICA FAB · COPO DE NIEVE ── */
-.music-fab{position:fixed;bottom:22px;right:22px;z-index:998;width:62px;height:62px;border-radius:50%;border:none;padding:0;cursor:pointer;
-  background:radial-gradient(circle at 34% 28%,#ffffff 0%,#eaf7ff 34%,#cbf0ff 66%,#a7c6ff 100%);
+/* ── MÚSICA FAB · el botón ES el copo de nieve ── */
+.music-fab{position:fixed;bottom:20px;right:20px;z-index:998;
+  width:68px;height:68px;                 /* área táctil ≥44px con el copo dentro */
+  border:none;background:none;padding:0;cursor:pointer;
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 6px 22px rgba(0,86,214,.34),inset 0 2px 5px rgba(255,255,255,.95),inset 0 -5px 12px rgba(0,86,214,.16);
-  animation:fabfloat 4.4s ease-in-out infinite;-webkit-tap-highlight-color:transparent;}
-/* halo de escarcha */
-.music-fab::before{content:'';position:absolute;inset:-7px;border-radius:50%;pointer-events:none;
-  border:1px solid rgba(203,240,255,.85);animation:fabhalo 3.2s ease-out infinite;}
-/* aro dorado sutil */
-.music-fab::after{content:'';position:absolute;inset:3px;border-radius:50%;pointer-events:none;
-  border:1px solid rgba(212,175,55,.55);
-  background:conic-gradient(from 0deg,transparent 0deg,rgba(212,175,55,.28) 60deg,transparent 130deg,transparent 240deg,rgba(255,255,255,.5) 300deg,transparent 360deg);}
-@keyframes fabfloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
-@keyframes fabhalo{0%{opacity:.9;transform:scale(1);}70%{opacity:0;transform:scale(1.42);}100%{opacity:0;transform:scale(1.42);}}
-/* el copo gira lento mientras suena */
-.music-fab .fab-flake{width:34px;height:34px;position:relative;z-index:2;
-  filter:drop-shadow(0 1px 2px rgba(0,86,214,.4));transition:transform .5s ease;}
-.music-fab.is-playing .fab-flake{animation:flakespin 9s linear infinite;}
+  -webkit-tap-highlight-color:transparent;
+  animation:fabfloat 5.2s ease-in-out infinite;}
+.music-fab:focus-visible{outline:none;}
+.music-fab:focus-visible .fab-flake{filter:drop-shadow(0 0 4px #fff) drop-shadow(0 0 10px var(--accent));}
+@keyframes fabfloat{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-6px) rotate(4deg);}}
+
+.fab-flake{width:100%;height:100%;display:block;overflow:visible;
+  filter:drop-shadow(0 2px 3px rgba(0,26,110,.35)) drop-shadow(0 0 7px rgba(203,240,255,.9));
+  transition:filter .45s ease;}
+/* dendritas: trazo helado con degradado */
+.fab-arm{stroke:url(#fabIce);stroke-width:3.1;stroke-linecap:round;fill:none;}
+.fab-arm-hi{stroke:#fff;stroke-width:1.1;stroke-linecap:round;fill:none;opacity:.85;}
+.fab-hex{fill:url(#fabCore);stroke:url(#fabGold);stroke-width:1.6;}
+.fab-glyph{fill:var(--dark);}
+/* al reproducir: el cristal gira despacio y el oro se enciende */
+.music-fab.is-playing{animation:fabfloat 5.2s ease-in-out infinite;}
+.music-fab.is-playing .fab-rotor{animation:flakespin 14s linear infinite;transform-origin:50px 50px;}
+.music-fab.is-playing .fab-flake{filter:drop-shadow(0 2px 3px rgba(0,26,110,.4)) drop-shadow(0 0 10px rgba(255,255,255,.95)) drop-shadow(0 0 18px rgba(212,175,55,.55));}
 @keyframes flakespin{to{transform:rotate(360deg);}}
-/* estado sonando: el copo se “congela” en azul profundo */
-.music-fab.is-playing{background:radial-gradient(circle at 34% 28%,#eaf7ff 0%,#a7c6ff 38%,#5a93de 72%,#0056d6 100%);
-  box-shadow:0 6px 24px rgba(0,86,214,.5),inset 0 2px 5px rgba(255,255,255,.6),inset 0 -5px 12px rgba(0,26,110,.3);}
-.music-fab .fab-bars{position:absolute;bottom:9px;left:50%;transform:translateX(-50%);display:none;gap:2px;align-items:flex-end;height:9px;z-index:3;}
-.music-fab.is-playing .fab-bars{display:flex;}
-.music-fab .fab-bars i{width:2px;background:#fff;border-radius:1px;opacity:.9;animation:eq .9s ease-in-out infinite;}
-.music-fab .fab-bars i:nth-child(1){height:5px;animation-delay:0s;}
-.music-fab .fab-bars i:nth-child(2){height:9px;animation-delay:.18s;}
-.music-fab .fab-bars i:nth-child(3){height:6px;animation-delay:.36s;}
-@keyframes eq{0%,100%{transform:scaleY(.45);}50%{transform:scaleY(1);}}
+/* destello de escarcha que recorre el copo */
+.fab-sheen{opacity:.55;animation:fabsheen 6s ease-in-out infinite;}
+@keyframes fabsheen{0%,72%,100%{opacity:0;}82%{opacity:.75;}}
 @media (prefers-reduced-motion:reduce){
-  .music-fab,.music-fab::before,.music-fab .fab-flake,.music-fab .fab-bars i{animation:none;}
+  .music-fab,.music-fab.is-playing .fab-rotor,.fab-sheen{animation:none;}
 }
 
 /* ── ENVELOPE ── */
@@ -460,6 +528,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
 
 <!-- FONDO SECUNDARIO (crossfade tras el countdown) -->
 <div id="bg2" aria-hidden="true"></div>
+<div id="bg3" aria-hidden="true"></div>
 
 <!-- ENVELOPE -->
 <div id="envelope-screen" role="button" aria-label="Toca para abrir tu invitación">
@@ -486,7 +555,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
     <div class="hero-veil"></div>
     <div class="hero-top"><div class="hero-eyebrow" id="hEy">Mis XV Años</div></div>
     <div class="hero-bottom">
-      <h1 class="hero-name" id="hNm">Mia</h1>
+      <h1 class="hero-name" id="hNm" data-text="Mia">Mia</h1>
       <div class="hero-sub" id="hSb">
         <span class="xv-num">XV</span>
         <span class="xv-anos">Años</span>
@@ -562,7 +631,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
     <div class="loc-pin rv"><img src="./ic-pin.svg" alt=""></div>
     <div class="loc-card rv">
       <div class="lt">Recepción</div>
-      <div class="ls script" style="font-size:38px;color:var(--dark);margin:4px 0 2px;line-height:1.1;">1225 Iyannough Rd</div>
+      <div class="ls script" style="font-size:38px;color:var(--dark);margin:4px 0 2px;line-height:1.1;text-transform:lowercase;">1225 Iyannough rd</div>
       <p style="margin-top:2px;"><strong>Hyannis, MA 02601</strong></p>
       <div class="loc-times">
         <div><div class="lt-lbl">Recepción</div><div class="lt-h">4:30 PM</div></div>
@@ -688,7 +757,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
         </div>
 
         <div class="tl-item rv">
-          <div class="tl-icon"><img src="./ic-regalo.svg" alt="Cumpleaños"></div>
+          <div class="tl-icon"><img src="./ic-pastel.svg" alt="Cumpleaños"></div>
           <div class="tl-dot"></div>
           <div class="tl-text">
             <div class="tl-time">9:30 PM</div>
@@ -1038,13 +1107,42 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
   <source src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/audio/xv-mia/cancion.mp3" type="audio/mpeg">
 </audio>
 <button class="music-fab" id="musicFab" aria-label="Reproducir música" aria-pressed="false">
-  <svg class="fab-flake" viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round">
-    <path d="M32 5v54M32 5l-6 7M32 5l6 7M32 59l-6-7M32 59l6-7M32 21l-7.5 4.5M32 21l7.5 4.5M32 43l-7.5-4.5M32 43l7.5-4.5"/>
-    <path d="M8.6 18.5l46.8 27M8.6 18.5l1.3 8.7M8.6 18.5l8.7-1.3M55.4 45.5l-1.3-8.7M55.4 45.5l-8.7 1.3M22.5 26.5l-.6 8.9M22.5 26.5l8.9.6M41.5 37.5l.6-8.9M41.5 37.5l-8.9-.6"/>
-    <path d="M8.6 45.5l46.8-27M8.6 45.5l8.7 1.3M8.6 45.5l1.3-8.7M55.4 18.5l-8.7-1.3M55.4 18.5l-1.3 8.7M22.5 37.5l8.9-.6M22.5 37.5l-.6-8.9M41.5 26.5l-8.9.6M41.5 26.5l.6 8.9"/>
-    <circle cx="32" cy="32" r="3.4" fill="#fff" stroke="none"/>
+  <svg class="fab-flake" viewBox="0 0 100 100" aria-hidden="true">
+    <defs>
+      <linearGradient id="fabIce" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="45%" stop-color="#e3f4ff"/>
+        <stop offset="100%" stop-color="#a7c6ff"/>
+      </linearGradient>
+      <radialGradient id="fabCore" cx="38%" cy="30%">
+        <stop offset="0%" stop-color="#ffffff"/>
+        <stop offset="55%" stop-color="#dcefff"/>
+        <stop offset="100%" stop-color="#a7c6ff"/>
+      </radialGradient>
+      <linearGradient id="fabGold" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#f2e2b0"/>
+        <stop offset="50%" stop-color="#d4af37"/>
+        <stop offset="100%" stop-color="#e8cf8f"/>
+      </linearGradient>
+      <linearGradient id="fabSheen" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#fff" stop-opacity="0"/>
+        <stop offset="50%" stop-color="#fff" stop-opacity=".95"/>
+        <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+      </linearGradient>
+      <!-- un brazo dendrítico; se repite 6 veces a 60° -->
+      <g id="fabArm">
+        <path class="fab-arm" d="M50.00 50.00L50.00 7.00M50.00 36.50L61.69 29.75M50.00 36.50L38.31 29.75M50.00 26.50L59.09 21.25M50.00 26.50L40.91 21.25M50.00 17.50L56.50 13.75M50.00 17.50L43.50 13.75M50.00 7.00L54.50 9.60M50.00 7.00L45.50 9.60"/>
+        <path class="fab-arm-hi" d="M50 46L50 12"/>
+      </g>
+    </defs>
+    <g class="fab-rotor">
+      <use href="#fabArm"/><use href="#fabArm" transform="rotate(60 50 50)"/><use href="#fabArm" transform="rotate(120 50 50)"/>
+      <use href="#fabArm" transform="rotate(180 50 50)"/><use href="#fabArm" transform="rotate(240 50 50)"/><use href="#fabArm" transform="rotate(300 50 50)"/>
+      <path class="fab-hex" d="M50.00 40.50L58.23 45.25L58.23 54.75L50.00 59.50L41.77 54.75L41.77 45.25Z"/>
+      <path class="fab-sheen" d="M50.00 40.50L58.23 45.25L58.23 54.75L50.00 59.50L41.77 54.75L41.77 45.25Z" fill="url(#fabSheen)"/>
+    </g>
+    <g class="fab-glyph" id="fabGlyph"><path d="M46.6 44.6l8.6 5.4-8.6 5.4z"/></g>
   </svg>
-  <span class="fab-bars" aria-hidden="true"><i></i><i></i><i></i></span>
 </button>
 
 <script>
@@ -1125,6 +1223,19 @@ function initBgSwap(){
     trigger:cd,start:'bottom 90%',end:'bottom 25%',scrub:true,
     onUpdate(self){setOp(self.progress);},
     onLeave(){setOp(1);},onLeaveBack(){setOp(0);}
+  });
+
+  // tercer fondo: la escarcha releva al invierno al terminar "Momentos"
+  const gal=document.querySelector('#sgal');
+  if(!gal) return;
+  const setOp3=p=>{
+    document.body.style.setProperty('--bg2-op',(BASE*(1-p)).toFixed(3));
+    document.body.style.setProperty('--bg3-op',(BASE*p).toFixed(3));
+  };
+  ScrollTrigger.create({
+    trigger:gal,start:'bottom 85%',end:'bottom 20%',scrub:true,
+    onUpdate(self){setOp3(self.progress);},
+    onLeave(){setOp3(1);},onLeaveBack(){setOp3(0);}
   });
 }
 
@@ -1463,11 +1574,15 @@ function initSaga(){
 (function(){
   var aud = document.getElementById('bgAudio');
   var fab = document.getElementById('musicFab');
+  var glyph = document.getElementById('fabGlyph');
+  var PLAY  = '<path d="M46.6 44.6l8.6 5.4-8.6 5.4z"/>';
+  var PAUSE = '<path d="M46.4 44.8h2.7v10.4h-2.7zM50.9 44.8h2.7v10.4h-2.7z"/>';
   function sync(){
     var playing = !aud.paused;
     fab.classList.toggle('is-playing', playing);
     fab.setAttribute('aria-pressed', playing ? 'true' : 'false');
     fab.setAttribute('aria-label', playing ? 'Pausar música' : 'Reproducir música');
+    if(glyph) glyph.innerHTML = playing ? PAUSE : PLAY;
   }
   fab.addEventListener('click', function(){
     if(aud.paused){ aud.play().catch(function(){}); } else { aud.pause(); }
