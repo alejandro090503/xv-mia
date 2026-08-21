@@ -57,8 +57,11 @@ body::before{
 .snow-corners{position:absolute;inset:0;pointer-events:none;z-index:3;border-radius:inherit;overflow:hidden;}
 .snow-corners i{
   position:absolute;width:var(--sc,54px);height:var(--sc,54px);
-  background:url('./copo-esquina.png') center/contain no-repeat;
-  opacity:.42;filter:drop-shadow(0 1px 2px rgba(0,86,214,.25));
+  /* como máscara para poder teñirlo: en blanco puro no se vería sobre las cards */
+  -webkit-mask:url('./copo-esquina.png') center/contain no-repeat;
+          mask:url('./copo-esquina.png') center/contain no-repeat;
+  background-color:var(--accent);
+  opacity:.3;
 }
 .snow-corners i:nth-child(1){top:-6px;left:-6px;}
 .snow-corners i:nth-child(2){top:-6px;right:-6px;transform:scaleX(-1);}
