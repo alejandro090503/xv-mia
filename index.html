@@ -213,7 +213,7 @@ section{padding:62px 26px;position:relative;}
 .fam-sep{width:40px;height:1px;background:var(--light);margin:28px auto;opacity:.6;}
 
 /* ── COUNTDOWN sobre foto ── */
-.cd-hero{position:relative;min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:70px 24px 46px;overflow:hidden;}
+.cd-hero{position:relative;min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:70px 24px clamp(96px,21vh,200px);overflow:hidden;}
 .cd-hero-bg{position:absolute;inset:0;background:url('https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/238c9d84-28a9-49a1-a7a0-c9026547e76e/1786029921447-4.jpeg') center 40%/cover no-repeat;}
 .cd-hero-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,26,110,.10) 0%,rgba(0,26,110,.08) 38%,rgba(0,26,110,.40) 70%,rgba(0,26,110,.66) 100%);}
 .cd-hero .cd-pre,.cd-hero .cd-row,.cd-hero .cd-post{position:relative;z-index:2;}
@@ -491,7 +491,7 @@ section{padding:62px 26px;position:relative;}
 .closing-text{font-family:'Cormorant Garamond',serif;font-size:18px;line-height:1.8;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.4);max-width:340px;margin-bottom:18px;font-weight:500;}
 .closing-sign{font-family:'Imperial Script','Great Vibes',cursive;font-size:70px;color:#fff;text-shadow:0 3px 20px rgba(0,0,0,.45);line-height:1;}
 footer{padding:46px 20px 56px;text-align:center;background:var(--bg);}
-footer .fn{font-family:'Great Vibes',cursive;font-size:46px;padding-top:10px;
+footer .fn{font-family:'Imperial Script','Great Vibes',cursive;font-size:52px;padding-top:10px;
   background:linear-gradient(90deg,var(--dark),var(--light) 50%,var(--dark));background-size:200% auto;
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 7s ease-in-out infinite;}
 footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-top:6px;}
@@ -564,7 +564,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
 .saga{padding:min(14vh,120px) 0 min(8vh,60px);overflow:hidden;position:relative;}
 .saga .gallery-head{margin-bottom:24px;text-align:center;padding:0 26px;}
 .gallery-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--dark);margin-top:2px;}
-.saga-stage{position:relative;height:auto;min-height:0;padding:18px 0 26px;display:flex;align-items:center;overflow:hidden}
+.saga-stage{position:relative;height:auto;min-height:0;padding:104px 0 26px;display:flex;align-items:center;overflow:hidden}
 .saga-viewport{position:relative;width:100%;height:auto;display:flex;align-items:center;overflow:hidden;
   cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
 .saga-viewport.is-grabbing{cursor:grabbing}
@@ -636,7 +636,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
   padding:0 .14em;
 }
 .saga-card--end .saga-card-t{font-size:36px;}
-.saga-hud{position:absolute;top:clamp(12px,3vh,28px);left:50%;transform:translateX(-50%);z-index:5;text-align:center;pointer-events:none}
+.saga-hud{position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:5;text-align:center;pointer-events:none}
 .saga-hud-year{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:clamp(26px,4.5vw,40px);color:var(--dark);line-height:1}
 .saga-hud-days{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;color:var(--ink-soft);margin-top:8px;font-weight:500;text-transform:uppercase}
 .saga-hud-days b{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--accent);font-size:1.5em;font-weight:600}
@@ -1257,26 +1257,25 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
         <figure class="saga-photo" data-year="Casi señorita" data-edad="13-14 años" style="--off:-30px">
           <img src="linea-049.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
         </figure>
-        <div class="saga-year" aria-hidden="true">
-          <span class="saga-year-num">15</span>
-          <span class="saga-year-lbl">Mis quince</span>
-        </div>
-        <figure class="saga-photo" data-year="Mis quince" data-edad="15 años" style="--off:26px">
-          <img src="linea-050.jpg" alt="Mia · Mis quince" width="210" height="280" loading="lazy">
+        <figure class="saga-photo" data-year="Casi señorita" data-edad="14 años" style="--off:26px">
+          <img src="linea-050.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
         </figure>
-        <figure class="saga-photo" data-year="Mis quince" data-edad="15 años" style="--off:-16px">
-          <img src="linea-051.jpg" alt="Mia · Mis quince" width="210" height="280" loading="lazy">
+        <figure class="saga-photo" data-year="Casi señorita" data-edad="14 años" style="--off:-16px">
+          <img src="linea-051.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
         </figure>
-        <figure class="saga-photo" data-year="Mis quince" data-edad="15 años" style="--off:30px">
-          <img src="linea-052.jpg" alt="Mia · Mis quince" width="210" height="280" loading="lazy">
+        <figure class="saga-photo" data-year="Casi señorita" data-edad="14 años" style="--off:30px">
+          <img src="linea-052.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
         </figure>
-        <figure class="saga-photo" data-year="Mis quince" data-edad="15 años" style="--off:-24px">
-          <img src="linea-053.jpg" alt="Mia · Mis quince" width="210" height="280" loading="lazy">
+        <figure class="saga-photo" data-year="Casi señorita" data-edad="14 años" style="--off:-24px">
+          <img src="linea-053.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
         </figure>
-        <figure class="saga-card saga-card--end" data-year="Y aquí estoy" data-edad="15 años">
+        <figure class="saga-card saga-card--end" data-year="Y aquí estoy" data-edad="">
           <span class="snow-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
           <span class="saga-card-orn" aria-hidden="true"><img src="./corona.png" alt=""></span>
           <span class="saga-card-t">Y aquí estoy</span>
+        </figure>
+        <figure class="saga-photo" data-year="Y aquí estoy" data-edad="" style="--off:0px">
+          <img src="linea-final.jpg" alt="Mia" width="210" height="280" loading="lazy">
         </figure>
         </div>
       </div>
@@ -1686,36 +1685,22 @@ function initSaga(){
 
   var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* El riel se duplica para que el desplazamiento sea continuo: al pasar el
-     ancho del bloque original se reinicia la posición y el corte no se ve. */
-  var originalHTML = track.innerHTML;
-  track.insertAdjacentHTML('beforeend', originalHTML);
-  track.setAttribute('aria-live','off');
-  // el clon es decorativo: se oculta a lectores de pantalla
-  var kids = track.children, half = kids.length/2;
-  for(var k=half;k<kids.length;k++) kids[k].setAttribute('aria-hidden','true');
+  var all = photos;
 
-  var all = Array.prototype.slice.call(track.querySelectorAll('.saga-photo,.saga-card'));
-
-  var loopW = 0;                       // ancho de una vuelta (el bloque original)
+  /* La línea tiene principio y fin: minX es el tope izquierdo (última foto) y
+     0 el tope derecho (primera foto). No se repite ni da la vuelta. */
+  var minX = 0;
   function measure(){
-    var gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 0;
-    var w = 0;
-    for(var i=0;i<half;i++) w += kids[i].getBoundingClientRect().width + gap;
-    loopW = w;
+    minX = Math.min(0, viewport.clientWidth - track.scrollWidth);
   }
 
   var x = 0;                           // posición actual del riel
   var SPEED = 26;                      // px por segundo, ritmo de paseo
-  var dragging=false, paused=false, lastT=0, vel=0;
+  var dragging=false, paused=false, lastT=0, vel=0, targetX=0, atEnd=false;
   var setX = gsap.quickSetter(track,'x','px');
 
-  function norm(v){
-    if(!loopW) return v;
-    while(v <= -loopW) v += loopW;
-    while(v > 0)       v -= loopW;
-    return v;
-  }
+  // se frena en los extremos en vez de saltar al otro lado
+  function clamp(v){ return v < minX ? minX : (v > 0 ? 0 : v); }
 
   var lastFocus=null;
   function paint(){
@@ -1739,20 +1724,23 @@ function initSaga(){
         daysEl.textContent = e || '';
       }
     }
-    if(spark && loopW) spark.style.left = ((-x/loopW)*100 % 100).toFixed(2) + '%';
+    if(spark && minX) spark.style.left = ((x/minX)*100).toFixed(2) + '%';
   }
 
   function tick(t){
     if(!lastT) lastT=t;
     var dt = Math.min(0.05,(t-lastT)/1000); lastT=t;
-    if(!dragging && !paused && !prefersReduced){
-      x = norm(x - SPEED*dt);
-    }else if(!dragging && vel){
+    if(!dragging && vel){
       // inercia al soltar el arrastre
-      x = norm(x + vel*dt);
-      vel *= 0.94;
-      if(Math.abs(vel)<6) vel=0;
+      x = clamp(x + vel*dt);
+      vel *= 0.945;
+      if(Math.abs(vel)<8 || x===minX || x===0) vel=0;
+    }else if(!dragging && !paused && !prefersReduced && !atEnd){
+      x = clamp(x - SPEED*dt);
+      if(x===minX) atEnd = true;          // llegó al final: se queda ahí
     }
+    // el arrastre persigue el dedo con suavizado, para que no se sienta trabado
+    if(dragging){ x += (targetX - x)*Math.min(1, dt*22); }
     paint();
     requestAnimationFrame(tick);
   }
@@ -1765,7 +1753,7 @@ function initSaga(){
   function down(e){
     var pt = e.touches ? e.touches[0] : e;
     dragging=false; horiz=null; vel=0;
-    startX=lastMoveX=pt.clientX; startY=pt.clientY; startPos=x;
+    startX=lastMoveX=pt.clientX; startY=pt.clientY; startPos=x; targetX=x; atEnd=false;
     lastMoveT=performance.now();
     viewport.classList.add('is-grabbing');
   }
@@ -1780,7 +1768,11 @@ function initSaga(){
     }
     if(!horiz) return;
     if(e.cancelable) e.preventDefault();
-    x = norm(startPos + dx);
+    var raw = startPos + dx;
+    // resistencia al pasarse de los topes: se siente el límite sin trabarse
+    if(raw > 0)         raw = raw * 0.35;
+    else if(raw < minX) raw = minX + (raw - minX) * 0.35;
+    targetX = raw;
     var now=performance.now(), dt=(now-lastMoveT)/1000;
     if(dt>0) vel = (pt.clientX-lastMoveX)/dt;
     lastMoveX=pt.clientX; lastMoveT=now;
@@ -1788,6 +1780,9 @@ function initSaga(){
   function up(){
     if(horiz===false){ horiz=null; return; }
     dragging=false; horiz=null;
+    // si quedó fuera de los topes, regresa suave
+    if(x>0 || x<minX){ vel=0; gsap.to({v:x},{v:clamp(x),duration:.42,ease:'power2.out',
+      onUpdate:function(){ x=this.targets()[0].v; paint(); }}); }
     viewport.classList.remove('is-grabbing');
   }
 
@@ -1810,7 +1805,7 @@ function initSaga(){
     },{threshold:0}).observe(stage);
   }
 
-  window.addEventListener('resize',function(){ measure(); x=norm(x); paint(); });
+  window.addEventListener('resize',function(){ measure(); x=clamp(x); paint(); });
 
   // las imágenes cambian el ancho al cargar: se vuelve a medir
   var imgs = track.querySelectorAll('img');
