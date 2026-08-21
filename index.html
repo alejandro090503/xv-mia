@@ -27,6 +27,10 @@ html{scroll-behavior:smooth;}
   --light:#cbf0ff;
   --surface:#ddeeff;
   --silver:#d6d6d6;
+  --gold:#C9A04E;
+  --gold-light:#E8D5A3;
+  --gold-deep:#9A7830;
+  --silver-deep:#8A9AAB;
 }
 body{
   font-family:'Lato',sans-serif;font-weight:400;font-size:16px;
@@ -34,26 +38,45 @@ body{
 }
 body::before{
   content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:url('./fondo-acuarela.jpg') center top/cover no-repeat;
-  opacity:var(--bg1-op,.62);
-}
-/* segundo fondo: entra con crossfade al terminar el countdown */
-#bg2{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:url('./fondo-invierno.jpg') center top/cover no-repeat;
-  opacity:var(--bg2-op,0);
-}
-/* tercer fondo: entra con crossfade al terminar la galería "Momentos" */
-#bg3{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:url('./fondo-escarcha.jpg') center top/cover no-repeat;
-  opacity:var(--bg3-op,0);
+  background:url('./fondo-invernal.jpg') center top/cover no-repeat;
+  opacity:.72;
 }
 
 .wrap{max-width:440px;margin:0 auto;background:transparent;position:relative;overflow:clip;z-index:1;}
 
 /* ── TIPOGRAFÍA EDITORIAL ── */
 .script{font-family:'Great Vibes',cursive;font-weight:400;}
+
+/* ── CARD PREMIUM: textura de papel + copos en las esquinas ── */
+.tex-card{position:relative;isolation:isolate;}
+.tex-card::before{
+  content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:inherit;
+  background:url('./textura-card.png') center/300px 300px repeat;
+  opacity:.55;mix-blend-mode:multiply;
+}
+.snow-corners{position:absolute;inset:0;pointer-events:none;z-index:3;border-radius:inherit;overflow:hidden;}
+.snow-corners i{
+  position:absolute;width:var(--sc,54px);height:var(--sc,54px);
+  background:url('./copo-esquina.png') center/contain no-repeat;
+  opacity:.42;filter:drop-shadow(0 1px 2px rgba(0,86,214,.25));
+}
+.snow-corners i:nth-child(1){top:-6px;left:-6px;}
+.snow-corners i:nth-child(2){top:-6px;right:-6px;transform:scaleX(-1);}
+.snow-corners i:nth-child(3){bottom:-6px;left:-6px;transform:scaleY(-1);}
+.snow-corners i:nth-child(4){bottom:-6px;right:-6px;transform:scale(-1);}
+@media (max-width:380px){.snow-corners i{--sc:42px;}}
+@keyframes goldSweep{0%{background-position:200% center}100%{background-position:-100% center}}
+@media (prefers-reduced-motion:reduce){
+  .sec-title,.gold-text{animation:none!important;background-position:60% center!important;}
+}
+/* dorado reutilizable para textos cortos */
+.gold-text{
+  background-image:linear-gradient(100deg,
+    #6B4F1C 0%,#8A6A28 20%,#C9A04E 32%,#A8822F 40%,#6B4F1C 58%,#B98F3C 80%,#6B4F1C 100%);
+  background-size:300% 100%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:goldSweep 6s linear infinite;
+}
 .eyebrow{
   font-family:'Cinzel',serif;font-size:11px;letter-spacing:5px;text-transform:uppercase;
   color:var(--accent);text-align:center;margin-bottom:10px;font-weight:500;
@@ -61,11 +84,15 @@ body::before{
 .sec-title{
   font-family:'Great Vibes',cursive;font-size:54px;
   text-align:center;line-height:1.05;margin-bottom:8px;padding-top:10px;
-  background:linear-gradient(90deg,var(--dark) 0%,var(--dark) 28%,var(--light) 50%,var(--dark) 72%,var(--dark) 100%);
-  background-size:200% auto;
+  background-image:linear-gradient(100deg,
+    #6B4F1C 0%,#7A5C22 10%,#8A6A28 20%,#A8822F 27%,#C9A04E 32%,#A8822F 37%,
+    #9A7830 46%,#6B4F1C 58%,#8A6A28 70%,#B98F3C 80%,#7A5C22 90%,#6B4F1C 100%);
+  background-size:300% 100%;
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  animation:shimmer 7s ease-in-out infinite;
-  filter:drop-shadow(0 1px 10px rgba(203,240,255,.3));
+  animation:goldSweep 6s linear infinite;
+  /* la caja se ensancha porque los rasgos de Great Vibes sobresalen y se cortan */
+  padding-left:.14em;padding-right:.14em;margin-left:-.14em;margin-right:-.14em;
+  filter:drop-shadow(0 1px 0 rgba(255,255,255,.55));
 }
 .heart-div{display:flex;align-items:center;justify-content:center;gap:14px;margin:6px auto 26px;}
 .heart-div .hd-bar{width:46px;height:1px;background:linear-gradient(90deg,transparent,var(--light));}
@@ -111,27 +138,17 @@ section{padding:62px 26px;position:relative;}
   transform:translateY(30px);opacity:0;
   /* hielo: blanco escarchado arriba → azul cristal abajo, con vetas heladas */
   background:
-    linear-gradient(178deg,
-      #ffffff 0%,#f2fbff 14%,#d8f0ff 30%,#a9d6f7 46%,
-      #6ba8e0 62%,#2f6fc4 78%,var(--dark) 92%,#001a6e 100%);
+    linear-gradient(176deg,
+      #ffffff 0%,#f6fcff 18%,#dCeEfB 38%,#B9D4EA 55%,
+      #8FB4D4 70%,#5D86B4 84%,#3A5F8F 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  /* hielo tallado: filo blanco nítido + sombra de profundidad, sin halo */
+  padding-left:.12em;padding-right:.12em;margin-left:-.12em;margin-right:-.12em;
+  /* hielo tallado: filo nítido y sombra de profundidad, sin halo ni brillo */
   filter:
-    drop-shadow(0 1px 0 rgba(255,255,255,.9))
-    drop-shadow(0 2px 4px rgba(0,26,110,.28));
+    drop-shadow(0 1px 0 rgba(255,255,255,.95))
+    drop-shadow(0 2px 3px rgba(0,26,110,.34));
 }
-/* reflejo tenue de luz sobre el hielo (sutil, no neón) */
-.hero-name::after{
-  content:attr(data-text);position:absolute;left:0;top:0;padding-top:18px;pointer-events:none;
-  background:linear-gradient(105deg,
-    transparent 0%,transparent 42%,rgba(255,255,255,.55) 49%,
-    rgba(255,255,255,.7) 51%,rgba(255,255,255,.55) 53%,transparent 60%,transparent 100%);
-  background-size:260% 100%;
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  animation:iceglint 9s ease-in-out infinite;
-}
-@keyframes iceglint{0%,66%{background-position:180% 0;}90%,100%{background-position:-80% 0;}}
-@media (prefers-reduced-motion:reduce){.hero-name::after{animation:none;opacity:.25;}}
+/* sin destello animado: hielo tallado quieto */
 .hero-sub{display:flex;flex-direction:column;align-items:center;gap:2px;transform:translateY(16px);opacity:0;}
 .xv-num{
   font-family:'Cinzel',serif;font-weight:600;font-size:46px;letter-spacing:10px;line-height:1;padding-left:10px;
@@ -182,7 +199,7 @@ section{padding:62px 26px;position:relative;}
   background:linear-gradient(90deg,transparent,rgba(255,255,255,.98) 22%,rgba(212,175,55,.5) 50%,rgba(255,255,255,.98) 78%,transparent);}
 .intro-card .fl{width:46%;max-width:175px;}
 .intro-tiara{position:relative;z-index:2;display:flex;justify-content:center;margin-bottom:18px;}
-.intro-tiara img{width:112px;height:auto;
+.intro-tiara img{width:132px;height:auto;
   filter:drop-shadow(0 3px 8px rgba(0,86,214,.28)) drop-shadow(0 0 14px rgba(203,240,255,.9));}
 .intro-text{position:relative;z-index:2;font-family:'Cormorant Garamond',serif;font-size:18.5px;line-height:1.78;color:var(--ink);text-align:center;font-weight:500;}
 .intro-text .lead::first-letter{font-family:'Great Vibes',cursive;font-size:52px;color:var(--accent);float:left;line-height:.7;padding:8px 8px 0 0;}
@@ -190,15 +207,15 @@ section{padding:62px 26px;position:relative;}
 
 /* ── FAMILIA / PADRINOS ── */
 .fam-block{text-align:center;}
-.fam-names{font-family:'Cormorant Garamond',serif;font-size:21px;color:var(--dark);line-height:1.7;font-weight:500;}
-.fam-amp{font-family:'Great Vibes',cursive;font-size:30px;color:var(--accent);display:block;margin:2px 0;}
-.fam-role{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+.fam-names{font-family:'Cormorant Garamond',serif;font-size:27px;color:var(--dark);line-height:1.65;font-weight:600;}
+.fam-amp{font-family:'Great Vibes',cursive;font-size:38px;color:var(--gold);display:block;margin:4px 0;}
+.fam-role{font-family:'Cinzel',serif;font-size:13.5px;letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;font-weight:600;}
 .fam-sep{width:40px;height:1px;background:var(--light);margin:28px auto;opacity:.6;}
 
 /* ── COUNTDOWN sobre foto ── */
-.cd-hero{position:relative;min-height:78vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px 24px;overflow:hidden;}
+.cd-hero{position:relative;min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:70px 24px 46px;overflow:hidden;}
 .cd-hero-bg{position:absolute;inset:0;background:url('https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/238c9d84-28a9-49a1-a7a0-c9026547e76e/1786029921447-4.jpeg') center 40%/cover no-repeat;}
-.cd-hero-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,26,110,.5),rgba(0,26,110,.32) 45%,rgba(0,26,110,.55));}
+.cd-hero-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,26,110,.10) 0%,rgba(0,26,110,.08) 38%,rgba(0,26,110,.40) 70%,rgba(0,26,110,.66) 100%);}
 .cd-hero .cd-pre,.cd-hero .cd-row,.cd-hero .cd-post{position:relative;z-index:2;}
 .cd-pre{font-family:'Great Vibes',cursive;font-size:46px;color:#fff;text-shadow:0 3px 18px rgba(0,0,0,.4);margin-bottom:22px;line-height:1;}
 .cd-row{display:flex;justify-content:center;gap:10px;}
@@ -217,6 +234,9 @@ section{padding:62px 26px;position:relative;}
 .loc-card{background:var(--paper);border-radius:16px;padding:30px 24px;box-shadow:0 8px 40px rgba(0,86,214,.09);text-align:center;border:1px solid rgba(203,240,255,.35);}
 .loc-card .lt{font-family:'Great Vibes',cursive;font-size:40px;color:var(--dark);margin-bottom:2px;padding-top:8px;}
 .loc-card .ls{font-family:'Cinzel',serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+/* ciudad protagonista, estado en segundo plano */
+.loc-city{font-family:'Cinzel',serif;font-weight:600;font-size:29px;letter-spacing:5px;text-transform:uppercase;color:var(--dark);line-height:1.1;margin:8px 0 5px;}
+.loc-state{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13.5px;letter-spacing:3px;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px;}
 .loc-card p{font-size:15.5px;margin:3px 0;line-height:1.6;font-weight:400;color:var(--ink);}
 .loc-times{display:flex;justify-content:center;gap:30px;margin-top:16px;}
 .loc-times .lt-lbl{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
@@ -224,9 +244,10 @@ section{padding:62px 26px;position:relative;}
 .loc-times .lt-sep{width:1px;background:var(--light);opacity:.6;}
 .map-wrap{margin-top:20px;border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,86,214,.1);}
 /* botón de hielo: cristal traslúcido con escarcha, texto siempre legible */
+.btn-lg{font-size:15px!important;letter-spacing:3px!important;padding:18px 40px!important;}
 .btn{position:relative;display:inline-block;margin-top:18px;padding:14px 34px;
   color:var(--dark);border-radius:30px;
-  font-family:'Cinzel',serif;font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:3px;
+  font-family:'Cinzel',serif;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:2.6px;
   text-decoration:none;border:none;cursor:pointer;overflow:hidden;isolation:isolate;
   background:linear-gradient(150deg,rgba(255,255,255,.96) 0%,rgba(226,244,255,.9) 38%,rgba(186,220,252,.86) 72%,rgba(255,255,255,.94) 100%);
   border:1px solid rgba(255,255,255,.9);
@@ -304,6 +325,55 @@ section{padding:62px 26px;position:relative;}
   background:linear-gradient(90deg,transparent,rgba(255,255,255,.98) 26%,rgba(212,175,55,.45) 50%,rgba(255,255,255,.98) 74%,transparent);}
 /* mismo lienzo 261x584 en ambos: al fijar la altura quedan idénticos, sin sombra */
 .dc-card img{height:190px;width:auto;display:block;}
+/* swatch en forma de coronita: la silueta se pinta con background-color */
+.dc-crown{
+  display:inline-block;width:34px;height:24px;
+  -webkit-mask:url('./corona-mini.png') center/contain no-repeat;
+          mask:url('./corona-mini.png') center/contain no-repeat;
+  filter:drop-shadow(0 1px 1px rgba(0,26,110,.35));
+}
+.dc-crown-row{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:12px;}
+
+/* ── AVISO DE PUNTUALIDAD ── */
+.punt-card{position:relative;max-width:330px;margin:2px auto 30px;padding:22px 22px 20px;
+  border-radius:16px;text-align:center;background:rgba(255,255,255,.9);
+  border:1px solid rgba(201,160,78,.4);
+  box-shadow:0 8px 30px rgba(0,86,214,.10);}
+.punt-ico{display:block;width:34px;height:34px;margin:0 auto 10px;color:var(--gold-deep);}
+.punt-ico svg{width:100%;height:100%;}
+.punt-txt{font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.65;color:var(--ink);font-weight:500;}
+.punt-txt strong{color:var(--gold-deep);font-weight:700;}
+
+/* ── ALBUM: alternativa al QR ── */
+.album-or{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:rgba(255,255,255,.9);margin:14px auto 0;max-width:300px;}
+.album-btn{margin-top:12px;}
+
+/* ── RSVP: "Por favor" ── */
+.rsvp-please{font-family:'Great Vibes',cursive;font-size:40px;line-height:1;color:var(--gold-deep);margin-bottom:2px;}
+.closing-carino{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:rgba(255,255,255,.92);margin-top:18px;}
+
+/* ── TEXTO MANUSCRITO ── */
+.handwriting{
+  font-family:'Great Vibes',cursive;font-size:29px;line-height:1.55;
+  color:var(--dark);letter-spacing:.4px;
+}
+.handwriting::first-letter{font-size:inherit!important;float:none!important;padding:0!important;color:inherit!important;line-height:inherit!important;}
+/* pluma: cursor que acompaña mientras se escribe */
+[data-type].is-typing::after{
+  content:'';display:inline-block;width:2px;height:1em;margin-left:2px;
+  background:var(--gold-deep);vertical-align:-.14em;
+  animation:penBlink .7s steps(1) infinite;
+}
+@keyframes penBlink{0%,50%{opacity:1}51%,100%{opacity:0}}
+
+/* ── PISTA DEL SOBRE: dedo + latido, pensada para quien no usa mucho el celular ── */
+.eh-finger{display:block;width:34px;height:34px;margin:0 auto 8px;color:var(--dark);animation:tapPulse 1.8s ease-in-out infinite;}
+.eh-finger svg{width:100%;height:100%;}
+.eh-txt{display:block;font-size:13px;line-height:1.5;letter-spacing:2px;}
+.eh-txt b{font-size:14.5px;letter-spacing:2.4px;display:inline-block;margin-top:2px;}
+@keyframes tapPulse{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(5px) scale(.94);}}
+@keyframes hintBeat{0%,100%{transform:translateX(-50%) scale(1);}50%{transform:translateX(-50%) scale(1.045);}}
+@media (prefers-reduced-motion:reduce){.eh-finger{animation:none;}}
 .dc-card figcaption{display:flex;flex-direction:column;align-items:center;gap:3px;}
 .dc-card-lbl{font-family:'Cinzel',serif;font-size:12px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--dark);}
 .dc-card-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--ink-soft);}
@@ -469,9 +539,10 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
 #env-flash{position:fixed;inset:0;background:#fff;z-index:9999;opacity:0;pointer-events:none;}
 /* pista del sobre con el mismo acabado de hielo que los botones */
 .envelope-hint{position:absolute;bottom:46px;left:50%;transform:translateX(-50%);
-  padding:14px 34px;border-radius:30px;overflow:hidden;isolation:isolate;
-  font-family:'Cinzel',serif;font-size:11.5px;font-weight:600;letter-spacing:3px;text-transform:uppercase;
+  padding:20px 34px 22px;border-radius:26px;overflow:hidden;isolation:isolate;
+  font-family:'Cinzel',serif;font-weight:600;text-transform:uppercase;text-align:center;
   color:var(--dark);opacity:0;cursor:pointer;white-space:nowrap;z-index:10;
+  animation:hintBeat 2.4s ease-in-out infinite;
   background:linear-gradient(150deg,rgba(255,255,255,.96) 0%,rgba(226,244,255,.9) 38%,rgba(186,220,252,.86) 72%,rgba(255,255,255,.94) 100%);
   border:1px solid rgba(255,255,255,.9);
   box-shadow:0 6px 18px rgba(0,86,214,.22),0 0 0 1px rgba(0,86,214,.16),
@@ -544,6 +615,28 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
 .saga-year::before{content:"";width:1px;height:52px;background:linear-gradient(to bottom,transparent,var(--light),transparent);margin-bottom:8px}
 .saga-year-num{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:clamp(38px,7vw,64px);color:var(--accent);line-height:1}
 .saga-year-lbl{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--dark);padding-left:.32em;font-weight:500}
+
+/* ── CARDS DE APERTURA Y CIERRE DE LA LÍNEA ── */
+.saga-card{
+  position:relative;flex:0 0 auto;width:210px;height:280px;margin:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  padding:26px 20px;border-radius:14px;text-align:center;
+  background:linear-gradient(160deg,rgba(255,255,255,.97),rgba(226,244,255,.92));
+  background-image:url('./textura-card.png'),linear-gradient(160deg,rgba(255,255,255,.97),rgba(226,244,255,.92));
+  background-size:260px 260px,cover;
+  border:1px solid rgba(201,160,78,.45);
+  box-shadow:0 10px 34px rgba(0,86,214,.16);
+}
+.saga-card-orn img{width:56px;height:auto;opacity:.9;}
+.saga-card-t{
+  font-family:'Great Vibes',cursive;font-size:30px;line-height:1.2;
+  background-image:linear-gradient(100deg,#6B4F1C 0%,#8A6A28 20%,#C9A04E 32%,#A8822F 40%,#6B4F1C 58%,#B98F3C 80%,#6B4F1C 100%);
+  background-size:300% 100%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:goldSweep 6s linear infinite;
+  padding:0 .14em;
+}
+.saga-card--end .saga-card-t{font-size:36px;}
 .saga-hud{position:absolute;top:clamp(12px,3vh,28px);left:50%;transform:translateX(-50%);z-index:5;text-align:center;pointer-events:none}
 .saga-hud-year{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:clamp(26px,4.5vw,40px);color:var(--dark);line-height:1}
 .saga-hud-days{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;color:var(--ink-soft);margin-top:8px;font-weight:500;text-transform:uppercase}
@@ -566,14 +659,21 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
 <body>
 
 <!-- FONDO SECUNDARIO (crossfade tras el countdown) -->
-<div id="bg2" aria-hidden="true"></div>
-<div id="bg3" aria-hidden="true"></div>
 
 <!-- ENVELOPE -->
 <div id="envelope-screen" role="button" aria-label="Toca para abrir tu invitación">
   <img id="env-image" src="./sobre.png" alt="Invitación XV Años Mia F. Correa">
   <video id="env-video" src="./sobre-apertura.mp4" playsinline webkit-playsinline muted preload="auto"></video>
-  <p class="envelope-hint" id="env-hint">Toca para abrir</p>
+  <div class="envelope-hint" id="env-hint" role="button" tabindex="0" aria-label="Toca el sobre para abrir la invitación">
+    <span class="eh-finger" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 11.5V6a1.7 1.7 0 0 1 3.4 0v5"/>
+        <path d="M12.4 11V9.2a1.6 1.6 0 0 1 3.2 0V11"/>
+        <path d="M15.6 11.4v-1a1.6 1.6 0 0 1 3.2 0V15a6 6 0 0 1-6 6h-1.2a5 5 0 0 1-3.7-1.6L5 16.2a1.7 1.7 0 0 1 2.4-2.4L9 15.2"/>
+      </svg>
+    </span>
+    <span class="eh-txt">Toca el sobre<br><b>para abrir tu invitación</b></span>
+  </div>
 </div>
 <div id="env-flash"></div>
 
@@ -613,11 +713,12 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
 
   <!-- FRASE INICIAL -->
   <section style="padding-top:40px;">
-    <div class="intro-card rv">
-      <div class="intro-tiara"><img src="./tiara.svg" alt=""></div>
+    <div class="intro-card tex-card rv">
+      <span class="snow-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <div class="intro-tiara"><img src="./corona.png" alt=""></div>
       <div class="intro-text">
-        <p class="lead">Con el corazón lleno de ilusión y una sonrisa que no puedo ocultar, llega un día que soñé desde niña. Un día rodeado de amor, abrazos sinceros y momentos que se quedarán guardados para siempre.</p>
-        <p>Hoy quiero que seas parte de esta alegría tan especial y que celebremos juntos mis quince años, el comienzo de una nueva etapa llena de sueños por cumplir.</p>
+        <p class="lead handwriting" data-type>Con el corazón lleno de ilusión y una sonrisa que no puedo ocultar, llega un día que soñé desde niña. Un día rodeado de amor, abrazos sinceros y momentos que se quedarán guardados para siempre.</p>
+        <p data-type>Hoy quiero que seas parte de esta alegría tan especial y que celebremos juntos mis quince años, el comienzo de una nueva etapa llena de sueños por cumplir.</p>
       </div>
     </div>
   </section>
@@ -627,7 +728,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
     <h2 class="sec-title">Mis Papás</h2>
     <div class="heart-div">
       <span class="hd-bar"></span>
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.9-10-9.5C.5 8.5 2 5 5.3 5c1.9 0 3.3 1.1 4.2 2.4C10.4 6.1 11.8 5 13.7 5 17 5 18.5 8.5 17 11.5 14.5 16.1 12 21 12 21z"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2v20M12 2l-2.4 2.6M12 2l2.4 2.6M12 22l-2.4-2.6M12 22l2.4-2.6M12 8.4l-2.8 1.7M12 8.4l2.8 1.7M12 15.6l-2.8-1.7M12 15.6l2.8-1.7"/><path d="M3.3 7l17.4 10M3.3 7l.5 3.4M3.3 7l3.4-.5M20.7 17l-.5-3.4M20.7 17l-3.4.5M9 9.6l-.2 3.3M9 9.6l3.3.2M15 14.4l.2-3.3M15 14.4l-3.3-.2"/><path d="M3.3 17l17.4-10M3.3 17l3.4.5M3.3 17l.5-3.4M20.7 7l-3.4-.5M20.7 7l-.5 3.4M9 14.4l3.3-.2M9 14.4l-.2-3.3M15 9.6l-3.3.2M15 9.6l.2 3.3"/></svg>
       <span class="hd-bar r"></span>
     </div>
     <div class="fam-block">
@@ -640,12 +741,11 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
     <h2 class="sec-title">Mis Padrinos</h2>
     <div class="heart-div">
       <span class="hd-bar"></span>
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.9-10-9.5C.5 8.5 2 5 5.3 5c1.9 0 3.3 1.1 4.2 2.4C10.4 6.1 11.8 5 13.7 5 17 5 18.5 8.5 17 11.5 14.5 16.1 12 21 12 21z"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2v20M12 2l-2.4 2.6M12 2l2.4 2.6M12 22l-2.4-2.6M12 22l2.4-2.6M12 8.4l-2.8 1.7M12 8.4l2.8 1.7M12 15.6l-2.8-1.7M12 15.6l2.8-1.7"/><path d="M3.3 7l17.4 10M3.3 7l.5 3.4M3.3 7l3.4-.5M20.7 17l-.5-3.4M20.7 17l-3.4.5M9 9.6l-.2 3.3M9 9.6l3.3.2M15 14.4l.2-3.3M15 14.4l-3.3-.2"/><path d="M3.3 17l17.4-10M3.3 17l3.4.5M3.3 17l.5-3.4M20.7 7l-3.4-.5M20.7 7l-.5 3.4M9 14.4l3.3-.2M9 14.4l-.2-3.3M15 9.6l-3.3.2M15 9.6l.2 3.3"/></svg>
       <span class="hd-bar r"></span>
     </div>
     <div class="fam-block">
-      <div class="fam-names">Julio Chung</div>
-      <div class="fam-names" style="margin-top:4px;">Sara Benites d. Chung</div>
+      <div class="fam-names">Julio Chung<span class="fam-amp">&amp;</span>Sara Benites d. Chung</div>
     </div>
   </section>
 
@@ -668,10 +768,11 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
     <h2 class="sec-title rv">Cuándo &amp; Dónde</h2>
     <p class="loc-intro rv">¡Me encantaría que me acompañaras!</p>
     <div class="loc-pin rv"><img src="./ic-pin.svg" alt=""></div>
-    <div class="loc-card rv">
-      <div class="lt">Recepción</div>
-      <div class="ls script" style="font-size:38px;color:var(--dark);margin:4px 0 2px;line-height:1.1;text-transform:lowercase;">1225 Iyannough rd</div>
-      <p style="margin-top:2px;"><strong>Hyannis, MA 02601</strong></p>
+    <div class="loc-card tex-card rv">
+      <span class="snow-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <div class="lt">Margaritaville Resort</div>
+      <div class="loc-city">Hyannis</div>
+      <div class="loc-state">Massachusetts</div>
       <div class="loc-times">
         <div><div class="lt-lbl">Recepción</div><div class="lt-h">4:30 PM</div></div>
       </div>
@@ -687,7 +788,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
     <div class="eyebrow">No lo olvides</div>
     <h2 class="sec-title">Guárdalo</h2>
     <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--dark);margin-bottom:18px;">Agrega el evento a tu calendario</p>
-    <a class="btn" id="gcalBtn" href="#" target="_blank" rel="noopener">Añadir a Google Calendar</a>
+    <a class="btn btn-lg" id="gcalBtn" href="#" target="_blank" rel="noopener">Añadir a Google Calendar</a>
   </section>
 
   <!-- ITINERARIO -->
@@ -695,6 +796,16 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
     <div class="fcontent">
       <div class="eyebrow rv">Programa del Día</div>
       <h2 class="sec-title rv">Itinerario</h2>
+      <div class="punt-card tex-card rv">
+        <span class="snow-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="punt-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.4 2"/>
+          </svg>
+        </span>
+        <p class="punt-txt">Cada momento de esta noche está pensado con mucho cariño.<br>
+        Te agradecemos de corazón <strong>llegar a tiempo</strong> para vivirlos todos juntos.</p>
+      </div>
       <div class="timeline">
 
         <div class="tl-item rv">
@@ -848,14 +959,16 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
     <h2 class="sec-title">Código de Vestimenta</h2>
     <div class="dc-note">Formal</div>
     <div class="dc-cards">
-      <figure class="dc-card">
+      <figure class="dc-card tex-card">
+        <span class="snow-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         <img src="./caballero.png" alt="Caballero con traje formal" loading="lazy">
         <figcaption>
           <span class="dc-card-lbl">Caballeros</span>
           <span class="dc-card-sub">Traje formal</span>
         </figcaption>
       </figure>
-      <figure class="dc-card">
+      <figure class="dc-card tex-card">
+        <span class="snow-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         <img src="./dama.png" alt="Dama con vestido largo formal" loading="lazy">
         <figcaption>
           <span class="dc-card-lbl">Damas</span>
@@ -863,14 +976,13 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
         </figcaption>
       </figure>
     </div>
-    <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
-      <span style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink-soft);">Evitar:</span>
-      <span style="width:18px;height:18px;border-radius:50%;background:#cbf0ff;border:1px solid rgba(0,0,0,.1);display:inline-block;"></span>
-      <span style="width:18px;height:18px;border-radius:50%;background:#0056d6;border:1px solid rgba(0,0,0,.1);display:inline-block;"></span>
-      <span style="width:18px;height:18px;border-radius:50%;background:#a7c6ff;border:1px solid rgba(0,0,0,.1);display:inline-block;"></span>
-      <span style="width:18px;height:18px;border-radius:50%;background:#FFFFFF;border:1px solid rgba(0,0,0,.15);display:inline-block;"></span>
+    <p class="dc-reserve" style="font-family:'Cormorant Garamond',serif;font-size:15.5px;color:var(--dark);line-height:1.55;margin-bottom:14px;">Estos colores están <strong>reservados</strong> para la quinceañera</p>
+    <div class="dc-crown-row">
+      <span class="dc-crown" style="background-color:#cbf0ff;" title="Azul cielo"></span>
+      <span class="dc-crown" style="background-color:#0056d6;" title="Azul rey"></span>
+      <span class="dc-crown" style="background-color:#a7c6ff;" title="Azul claro"></span>
+      <span class="dc-crown" style="background-color:#FFFFFF;filter:drop-shadow(0 0 1px rgba(0,26,110,.55));" title="Blanco"></span>
     </div>
-    <p class="dc-reserve" style="font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--dark);line-height:1.5;">Estos colores están <strong>reservados</strong> para la quinceañera</p>
   </section>
 
   <!-- SOLO ADULTOS -->
@@ -946,9 +1058,8 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
   <section id="sgal">
     <div class="cf-frame">
       <div class="cf-label"><h2 class="sec-title">Momentos</h2></div>
-      <img class="cf-img" id="cfImg1" src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/238c9d84-28a9-49a1-a7a0-c9026547e76e/1786030145507-1.jpeg" alt="Mia">
-      <img class="cf-img" id="cfImg2" src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/238c9d84-28a9-49a1-a7a0-c9026547e76e/1786030278156-0.jpeg" alt="Mia">
-      <img class="cf-img" id="cfImg3" src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/238c9d84-28a9-49a1-a7a0-c9026547e76e/1786030496835-1.jpeg" alt="Mia">
+      <img class="cf-img" id="cfImg1" src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/238c9d84-28a9-49a1-a7a0-c9026547e76e/1786030278156-0.jpeg" alt="Mia">
+      <img class="cf-img" id="cfImg2" src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/238c9d84-28a9-49a1-a7a0-c9026547e76e/1786030496835-1.jpeg" alt="Mia">
       <div class="cf-fade-top"></div>
       <div class="cf-fade-bot"></div>
     </div>
@@ -958,7 +1069,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
   <section class="saga" id="saga">
     <div class="fcontent gallery-head">
       <div class="eyebrow rv">Así fue creciendo</div>
-      <h2 class="sec-title rv">Mi historia <em>en el</em> tiempo</h2>
+      <h2 class="sec-title rv">Mi historia desde el primer día</h2>
       <div class="gallery-sub rv">De niña a quinceañera</div>
     </div>
 
@@ -971,6 +1082,12 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
         <div class="saga-thread" aria-hidden="true"></div>
         <div class="saga-spark" id="sagaSpark" aria-hidden="true"></div>
         <div class="saga-track" id="sagaTrack">
+
+        <figure class="saga-card saga-card--start" data-year="Recién llegada">
+          <span class="snow-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="saga-card-orn" aria-hidden="true"><img src="./copo-esquina.png" alt=""></span>
+          <span class="saga-card-t">Un recorrido por<br>XV años de recuerdos</span>
+        </figure>
 
         <div class="saga-year" aria-hidden="true">
           <span class="saga-year-num">0</span>
@@ -1032,9 +1149,6 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <span class="saga-year-num">13</span>
           <span class="saga-year-lbl">Casi señorita</span>
         </div>
-        <figure class="saga-photo" data-year="Casi señorita" style="--off:-30px">
-          <img src="creciendo-13.jpg" alt="Mia casi señorita" width="210" height="280" loading="lazy">
-        </figure>
         <figure class="saga-photo" data-year="Casi señorita" style="--off:26px">
           <img src="creciendo-14.jpg" alt="Mia casi señorita" width="210" height="280" loading="lazy">
         </figure>
@@ -1042,15 +1156,19 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <img src="creciendo-15.jpg" alt="Mia casi señorita" width="210" height="280" loading="lazy">
         </figure>
 
-        <div class="saga-year saga-year--end" aria-hidden="true">
-          <span class="saga-year-num" style="color:var(--dark)">15</span>
-          <span class="saga-year-lbl">Mis XV años</span>
-        </div>
-        <figure class="saga-photo" data-year="Mis XV años" style="--off:30px">
+        <figure class="saga-card saga-card--end" data-year="Y aquí estoy">
+          <span class="snow-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="saga-card-orn" aria-hidden="true"><img src="./corona.png" alt=""></span>
+          <span class="saga-card-t">Y aquí estoy</span>
+        </figure>
+        <figure class="saga-photo" data-year="Y aquí estoy" style="--off:30px">
           <img src="creciendo-16.jpg" alt="Mia lista para sus XV años" width="210" height="280" loading="lazy">
         </figure>
-        <figure class="saga-photo" data-year="Mis XV años" style="--off:-16px">
+        <figure class="saga-photo" data-year="Y aquí estoy" style="--off:-16px">
           <img src="creciendo-17.jpg" alt="Mia el día de sus XV años" width="210" height="280" loading="lazy">
+        </figure>
+        <figure class="saga-photo" data-year="Y aquí estoy" style="--off:22px">
+          <img src="creciendo-18.jpg" alt="Mia el día de sus XV años" width="210" height="280" loading="lazy">
         </figure>
 
         </div>
@@ -1070,12 +1188,15 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
       <div class="album-cam rv"><img src="./ic-camara.svg" alt=""></div>
       <p class="album-sub rv">O sube los momentos que captures con tu celular a nuestro álbum compartido escaneando el código:</p>
       <div class="qr-card rv"><img src="./qr-album.png" alt="Código QR del álbum compartido"></div>
+      <p class="album-or rv">¿Lo ves desde el celular? No hace falta escanear:</p>
+      <a class="btn btn-lg album-btn rv" id="albumBtn" href="#" target="_blank" rel="noopener">Abrir el álbum</a>
     </div>
   </section>
 
   <!-- RSVP -->
   <section id="srsvp">
-    <div class="rsvp-card rv">
+    <div class="rsvp-card tex-card rv">
+      <span class="snow-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
       <svg class="rsvp-corner rsvp-corner--tl" viewBox="0 0 52 52" fill="none" aria-hidden="true"><path d="M2 50 L2 2 L50 2" stroke="var(--accent)" stroke-width=".9" opacity=".6"/><circle cx="2" cy="2" r="2.5" fill="var(--accent)" opacity=".5"/></svg>
       <svg class="rsvp-corner rsvp-corner--tr" viewBox="0 0 52 52" fill="none" aria-hidden="true"><path d="M2 50 L2 2 L50 2" stroke="var(--accent)" stroke-width=".9" opacity=".6"/><circle cx="2" cy="2" r="2.5" fill="var(--accent)" opacity=".5"/></svg>
       <svg class="rsvp-corner rsvp-corner--bl" viewBox="0 0 52 52" fill="none" aria-hidden="true"><path d="M2 50 L2 2 L50 2" stroke="var(--accent)" stroke-width=".9" opacity=".6"/><circle cx="2" cy="2" r="2.5" fill="var(--accent)" opacity=".5"/></svg>
@@ -1096,6 +1217,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
         </svg>
 
         <div class="eyebrow">Confirma tu Asistencia</div>
+        <div class="rsvp-please">Por favor</div>
         <h2 class="rsvp-title">Tu presencia <em>significa</em> todo</h2>
         <p class="rsvp-text">Por favor confirma tu asistencia antes del <strong>24 de Octubre de 2026</strong>. Tu confirmación es muy importante para mí.</p>
 
@@ -1137,7 +1259,8 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
   <section class="closing">
     <div class="closing-bg"></div>
     <div class="closing-veil"></div>
-    <p class="closing-text rv">Con mucha ilusión y cariño, te espero para compartir juntos este día tan especial. Tu presencia hará de esta celebración un recuerdo lleno de alegría y amor.</p>
+    <p class="closing-text rv">Este día ha vivido en mis sueños, y hoy la verdadera magia será estar rodeada de quienes han caminado conmigo.</p>
+    <p class="closing-carino rv">Con cariño,</p>
     <div class="closing-sign script rv">Mia F. Correa</div>
   </section>
 
@@ -1151,7 +1274,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
 </div>
 
 <!-- MÚSICA — audio ANTES del botón, AMBOS antes del script -->
-<audio id="bgAudio" loop preload="none">
+<audio id="bgAudio" loop preload="metadata">
   <source src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/audio/xv-mia/cancion.mp3" type="audio/mpeg">
 </audio>
 <button class="music-fab" id="musicFab" aria-label="Reproducir música" aria-pressed="false">
@@ -1232,9 +1355,22 @@ gsap.registerPlugin(ScrollTrigger);
   envVideo.addEventListener('ended',function(){gsap.set(envFlash,{opacity:1});revealInvitation();});
   function openEnvelope(){
     if(opened) return; opened=true;
-    // el toque del usuario es el gesto que autoriza el autoplay del audio
+    // el toque del usuario es el gesto que autoriza el autoplay del audio.
+    // con preload="none" el archivo aún no está listo, así que se fuerza la
+    // carga y se reintenta en cuanto haya datos suficientes.
     var aud=document.getElementById('bgAudio');
-    if(aud){var ap=aud.play();if(ap!==undefined){ap.catch(function(){});}}
+    if(aud){
+      var tries=0;
+      var tryPlay=function(){
+        var ap=aud.play();
+        if(ap!==undefined){ ap.catch(function(){
+          if(++tries<=3){ aud.addEventListener('canplay',tryPlay,{once:true}); }
+        }); }
+      };
+      aud.preload='auto';
+      try{ aud.load(); }catch(e){}
+      tryPlay();
+    }
     gsap.killTweensOf(envImage);
     gsap.to(hint,{opacity:0,duration:0.2});
     var p=envVideo.play();
@@ -1257,36 +1393,64 @@ function launchPage(){
   initTimeline();
   initCrossfade();
   initSaga();
-  initBgSwap();
+  initTypewriter();
 }
 
-/* ── CROSSFADE DE FONDO (tras el countdown) ── */
-function initBgSwap(){
-  const cd=document.querySelector('.cd-hero');
-  if(!cd) return;
-  const BASE=0.62;
-  const setOp=p=>{
-    document.body.style.setProperty('--bg1-op',(BASE*(1-p)).toFixed(3));
-    document.body.style.setProperty('--bg2-op',(BASE*p).toFixed(3));
-  };
-  setOp(0);
-  ScrollTrigger.create({
-    trigger:cd,start:'bottom 90%',end:'bottom 25%',scrub:true,
-    onUpdate(self){setOp(self.progress);},
-    onLeave(){setOp(1);},onLeaveBack(){setOp(0);}
-  });
+/* ── MÁQUINA DE ESCRIBIR: revela el texto al entrar en pantalla ── */
+function initTypewriter(){
+  const els=document.querySelectorAll('[data-type]');
+  if(!els.length) return;
+  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // tercer fondo: la escarcha releva al invierno al terminar "Momentos"
-  const gal=document.querySelector('#sgal');
-  if(!gal) return;
-  const setOp3=p=>{
-    document.body.style.setProperty('--bg2-op',(BASE*(1-p)).toFixed(3));
-    document.body.style.setProperty('--bg3-op',(BASE*p).toFixed(3));
+  els.forEach(el=>{
+    const full=el.textContent.trim();
+    if(reduced){ el.textContent=full; return; }
+    // se reserva la altura final para que no salte el layout al escribir
+    el.style.minHeight=el.getBoundingClientRect().height+'px';
+    el.textContent='';
+    el.dataset.full=full;
+  });
+  if(reduced) return;
+
+  const type=(el,done)=>{
+    if(el.dataset.done){ if(done) done(); return; }
+    el.dataset.done='1';
+    const full=el.dataset.full||''; let i=0;
+    el.classList.add('is-typing');
+    // ritmo de escritura a mano: pausa en comas y puntos, no cadencia de máquina
+    const step=()=>{
+      i+=1; el.textContent=full.slice(0,i);
+      if(i<full.length){ setTimeout(step, full[i-1]===',' ? 190 : full[i-1]==='.' ? 320 : 38); }
+      else{ el.classList.remove('is-typing'); if(done) done(); }
+    };
+    step();
   };
-  ScrollTrigger.create({
-    trigger:gal,start:'bottom 85%',end:'bottom 20%',scrub:true,
-    onUpdate(self){setOp3(self.progress);},
-    onLeave(){setOp3(1);},onLeaveBack(){setOp3(0);}
+  // varios párrafos del mismo bloque se escriben uno tras otro, no a la vez
+  const typeChain=list=>{
+    let k=0;
+    const next=()=>{ if(k<list.length){ const el=list[k++]; type(el,()=>setTimeout(next,320)); } };
+    next();
+  };
+
+  // El bloque está oculto por el scroll-reveal, así que se escribe cuando el
+  // reveal lo hace visible; si no hay contenedor .rv se usa IntersectionObserver.
+  // se agrupan por bloque .rv para encadenar los párrafos de un mismo bloque
+  const groups=new Map();
+  els.forEach(el=>{
+    const host=el.closest('.rv')||el;
+    if(!groups.has(host)) groups.set(host,[]);
+    groups.get(host).push(el);
+  });
+  groups.forEach((list,host)=>{
+    const go=()=>typeChain(list);
+    if(host.classList.contains('rv')){
+      if(host.dataset.revealed){ go(); return; }
+      host.addEventListener('rv:reveal',()=>setTimeout(go,260),{once:true});
+    }else{
+      new IntersectionObserver((ents,ob)=>{
+        ents.forEach(en=>{ if(en.isIntersecting){ go(); ob.disconnect(); } });
+      },{threshold:0.12}).observe(host);
+    }
   });
 }
 
@@ -1329,7 +1493,9 @@ function animPetal(p){
 /* ── SCROLL REVEAL ── */
 function initScrollReveal(){
   document.querySelectorAll('.rv').forEach(el=>{
-    gsap.fromTo(el,{y:34,opacity:0},{y:0,opacity:1,duration:1.2,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 88%'}});
+    gsap.fromTo(el,{y:34,opacity:0},{y:0,opacity:1,duration:1.2,ease:'power2.out',
+      scrollTrigger:{trigger:el,start:'top 88%'},
+      onStart(){ el.dataset.revealed='1'; el.dispatchEvent(new CustomEvent('rv:reveal')); }});
   });
 }
 
@@ -1378,17 +1544,14 @@ function initTimeline(){
 
 /* ── CROSSFADE GALERÍA ── */
 function initCrossfade(){
-  gsap.set('#cfImg2,#cfImg3',{opacity:0});
+  gsap.set('#cfImg2',{opacity:0});
   ScrollTrigger.create({
     trigger:'#sgal',start:'top top',end:'bottom bottom',scrub:1,
     onUpdate(self){
       const p=self.progress;
-      const i1=1-gsap.utils.clamp(0,1,(p-0.25)/0.2);
-      const i2=Math.min(gsap.utils.clamp(0,1,(p-0.25)/0.2),1-gsap.utils.clamp(0,1,(p-0.65)/0.2));
-      const i3=gsap.utils.clamp(0,1,(p-0.65)/0.2);
-      gsap.set('#cfImg1',{opacity:i1});
-      gsap.set('#cfImg2',{opacity:i2});
-      gsap.set('#cfImg3',{opacity:i3});
+      const t=gsap.utils.clamp(0,1,(p-0.42)/0.24);   // cruce a media sección
+      gsap.set('#cfImg1',{opacity:1-t});
+      gsap.set('#cfImg2',{opacity:t});
     }
   });
 }
@@ -1492,6 +1655,12 @@ function initSaga(){
   const t=encodeURIComponent('XV Años de Mia F. Correa');
   const d=encodeURIComponent('Recepción 4:30 PM — 1225 Iyannough Rd, Hyannis, MA 02601');
   const l=encodeURIComponent('1225 Iyannough Rd, Hyannis, MA 02601');
+  // el botón del álbum comparte destino con el QR
+  (function(){
+    var ALBUM_URL='https://photos.app.goo.gl/PENDIENTE-ailin-xv';
+    var b=document.getElementById('albumBtn');
+    if(b) b.href=ALBUM_URL;
+  })();
   document.getElementById('gcalBtn').href=
     `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${t}&dates=20261219T213000Z/20261220T043000Z&details=${d}&location=${l}`;
 })();
