@@ -684,12 +684,12 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
 
 /* ── ÚLTIMA FOTO DE LA LÍNEA: el texto vive dentro de la imagen ── */
 .saga-final{overflow:hidden;}
-.sf-veil{position:absolute;left:0;right:0;top:0;height:56%;pointer-events:none;z-index:2;
-  background:linear-gradient(to bottom,rgba(0,26,86,.82) 0%,rgba(0,26,86,.55) 45%,rgba(0,26,86,0) 100%);}
-.sf-cap{position:absolute;left:0;right:0;top:0;z-index:3;padding:12px 10px 0;text-align:center;}
-.sf-crown{width:34px;height:auto;display:block;margin:0 auto 4px;
+.sf-veil{position:absolute;left:0;right:0;top:0;height:34%;pointer-events:none;z-index:2;
+  background:linear-gradient(to bottom,rgba(0,26,86,.72) 0%,rgba(0,26,86,.44) 55%,rgba(0,26,86,0) 100%);}
+.sf-cap{position:absolute;left:0;right:0;top:0;z-index:3;padding:7px 8px 0;text-align:center;line-height:1;}
+.saga-final .sf-crown{width:21px!important;height:auto!important;display:block;margin:0 auto 1px;object-fit:contain;
   filter:drop-shadow(0 2px 5px rgba(0,0,0,.5));}
-.sf-t{display:block;font-family:'Great Vibes',cursive;font-size:26px;line-height:1.1;
+.sf-t{display:block;font-family:'Great Vibes',cursive;font-size:20px;line-height:1;white-space:nowrap;
   background-image:linear-gradient(100deg,#E8D5A3 0%,#fff6dc 22%,#C9A04E 42%,#fff6dc 62%,#E8D5A3 100%);
   background-size:300% 100%;-webkit-background-clip:text;background-clip:text;
   -webkit-text-fill-color:transparent;animation:goldSweep 5s linear infinite;
@@ -701,7 +701,8 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
   border-color:rgba(201,160,78,.95);
   box-shadow:0 26px 60px rgba(0,26,86,.4),0 0 0 2px rgba(232,213,163,.75),
              0 0 42px 8px rgba(201,160,78,.55),0 0 90px 26px rgba(201,160,78,.3);}
-.saga-final.is-focus .sf-t{font-size:30px;}
+.saga-final.is-focus .sf-t{font-size:23px;}
+.saga-final.is-focus .sf-crown{width:24px!important;}
 @media (prefers-reduced-motion:reduce){.sf-t{animation:none;background-position:60% center;}}
 
 /* ── CARDS DE APERTURA Y CIERRE DE LA LÍNEA ── */
