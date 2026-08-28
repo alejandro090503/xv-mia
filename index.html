@@ -207,8 +207,6 @@ section{padding:62px 26px;position:relative;}
 .intro-text{position:relative;z-index:2;font-family:'Cormorant Garamond',serif;font-size:18.5px;line-height:1.78;color:var(--ink);text-align:center;font-weight:500;}
 .intro-text .lead::first-letter{font-family:'Great Vibes',cursive;font-size:52px;color:var(--accent);float:left;line-height:.7;padding:8px 8px 0 0;}
 .intro-text p+p{margin-top:16px;}
-.intro-en{font-size:16px;line-height:1.7;color:var(--ink-soft);}
-.intro-en:first-of-type{margin-top:22px;padding-top:20px;border-top:1px solid rgba(201,160,78,.35);}
 
 /* ── FAMILIA / PADRINOS ── */
 .fam-block{text-align:center;}
@@ -613,6 +611,28 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
   .music-fab,.music-fab.is-playing .fab-rotor,.fab-sheen{animation:none;}
 }
 
+/* ── SELECTOR DE IDIOMA ── */
+#lang-screen{position:fixed;inset:0;z-index:10002;display:flex;align-items:center;justify-content:center;
+  padding:24px;background:linear-gradient(160deg,#f4fbff,#dceefc 55%,#eaf6ff);}
+#lang-screen.is-out{opacity:0;pointer-events:none;transition:opacity .5s ease;}
+.lang-card{position:relative;max-width:330px;width:100%;text-align:center;padding:38px 26px 32px;
+  border-radius:20px;background:rgba(255,255,255,.95);border:1px solid rgba(201,160,78,.45);
+  box-shadow:0 20px 50px rgba(0,86,214,.16);}
+.lang-orn img{width:52px;height:52px;opacity:.75;margin-bottom:12px;}
+.lang-t{font-family:'Cinzel',serif;font-size:12.5px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--dark);line-height:1.6;}
+.lang-t--en{color:var(--ink-soft);font-size:11.5px;margin-bottom:22px;}
+.lang-btns{display:flex;flex-direction:column;gap:12px;}
+.lang-b{font-family:'Cinzel',serif;font-size:13.5px;font-weight:600;letter-spacing:2.6px;
+  text-transform:uppercase;color:var(--dark);cursor:pointer;padding:15px 20px;border-radius:26px;
+  border:1px solid rgba(255,255,255,.9);
+  background:linear-gradient(150deg,rgba(255,255,255,.97),rgba(226,244,255,.92) 45%,rgba(186,220,252,.9));
+  box-shadow:0 6px 18px rgba(0,86,214,.2),inset 0 1px 2px rgba(255,255,255,1);}
+.lang-b:active{transform:translateY(1px);}
+/* en cada idioma solo se muestra su bloque: nunca se traslapan */
+body.lang-en .tl-desc:not(.tl-en){display:none;}
+body:not(.lang-en) .tl-desc.tl-en{display:none;}
+
 /* ── ENVELOPE ── */
 #envelope-screen{position:fixed;inset:0;z-index:10000;overflow:hidden;cursor:pointer;opacity:0;background:#fff;}
 #env-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:2;transform:scale(1.18);}
@@ -646,12 +666,18 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
 
 /* ============ CRECIENDO — CARRUSEL 3D ============ */
 .saga{padding:min(12vh,90px) 0 min(8vh,54px);position:relative;overflow:hidden}
-.wheel-scene{position:relative;width:100%;height:400px;margin:26px auto 0;
-  perspective:1200px;transform-style:preserve-3d;overflow:hidden}
+.wheel-scene{position:relative;width:100%;height:520px;margin:22px auto 0;
+  perspective:820px;perspective-origin:50% 50%;transform-style:preserve-3d;overflow:hidden}
+/* el anillo se inclina para que se lea la forma circular, no una fila plana */
 .wheel-ring{position:absolute;inset:0;transform-style:preserve-3d;cursor:grab;touch-action:pan-y}
+/* guía elíptica del piso: refuerza la sensación de carrusel */
+.wheel-floor{position:absolute;left:50%;top:72%;width:150%;height:132px;transform:translateX(-50%);
+  border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse at center,rgba(0,86,214,.16),rgba(0,86,214,.06) 55%,transparent 72%);
+  box-shadow:inset 0 0 60px rgba(201,160,78,.18)}
 .wheel-ring.dragging{cursor:grabbing}
-.wheel-card{position:absolute;left:50%;top:50%;width:150px;height:200px;
-  margin-left:-75px;margin-top:-100px;border-radius:14px;overflow:hidden;
+.wheel-card{position:absolute;left:50%;top:50%;width:124px;height:166px;
+  margin-left:-62px;margin-top:-83px;border-radius:12px;overflow:hidden;
   border:2px solid rgba(0,86,214,.32);box-shadow:0 12px 34px rgba(0,26,86,.24);
   background:var(--paper);user-select:none;-webkit-user-select:none;backface-visibility:hidden}
 .wheel-card img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
@@ -661,14 +687,27 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
   font-size:14px;letter-spacing:2px;color:var(--accent);margin-top:20px;opacity:.85}
 .saga-hint{margin-top:20px}
 @media (max-width:400px){
-  .wheel-scene{height:340px}
-  .wheel-card{width:124px;height:166px;margin-left:-62px;margin-top:-83px}
+  .wheel-scene{height:452px}
+  .wheel-card{width:98px;height:131px;margin-left:-49px;margin-top:-66px}
 }
 </style>
 </head>
 <body>
 
 <!-- FONDO SECUNDARIO (crossfade tras el countdown) -->
+
+<!-- SELECTOR DE IDIOMA -->
+<div id="lang-screen" role="dialog" aria-label="Elige tu idioma / Choose your language">
+  <div class="lang-card">
+    <span class="lang-orn" aria-hidden="true"><img src="./copo-esquina.png" alt=""></span>
+    <p class="lang-t">Elige tu idioma</p>
+    <p class="lang-t lang-t--en">Choose your language</p>
+    <div class="lang-btns">
+      <button type="button" class="lang-b" data-lang="es">Español</button>
+      <button type="button" class="lang-b" data-lang="en">English</button>
+    </div>
+  </div>
+</div>
 
 <!-- ENVELOPE -->
 <div id="envelope-screen" role="button" aria-label="Toca para abrir tu invitación">
@@ -702,12 +741,12 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
   <section class="hero" style="padding:0;">
     <div class="hero-bg"></div>
     <div class="hero-veil"></div>
-    <div class="hero-top"><div class="hero-eyebrow" id="hEy">Mis XV Años</div></div>
+    <div class="hero-top"><div class="hero-eyebrow" id="hEy" data-en="My Quinceañera">Mis XV Años</div></div>
     <div class="hero-bottom">
       <h1 class="hero-name" id="hNm" data-text="Mia">Mia</h1>
       <div class="hero-sub" id="hSb">
         <span class="xv-num">XV</span>
-        <span class="xv-anos">Años</span>
+        <span class="xv-anos" data-en="Years">Años</span>
       </div>
     </div>
   </section>
@@ -716,7 +755,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
   <div class="fecha-sec rv">
     <div class="fecha-line">
       <div class="fl-bar"></div>
-      <div class="fecha-txt">19 · Diciembre · 2026</div>
+      <div class="fecha-txt" data-en="December 19 · 2026">19 · Diciembre · 2026</div>
       <div class="fl-bar right"></div>
     </div>
   </div>
@@ -727,17 +766,15 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
       <span class="snow-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
       <div class="intro-tiara"><img src="./corona.png" alt=""></div>
       <div class="intro-text">
-        <p class="lead handwriting" data-type>Con el corazón lleno de ilusión y una sonrisa que no puedo ocultar, llega un día que soñé desde niña. Un día rodeado de amor, abrazos sinceros y momentos que se quedarán guardados para siempre.</p>
-        <p data-type>Hoy quiero que seas parte de esta alegría tan especial y que celebremos juntos mis quince años, el comienzo de una nueva etapa llena de sueños por cumplir.</p>
-        <p class="intro-en" data-type>With a heart full of excitement and a smile I can't hide, the day I have dreamed of since I was a little girl has finally arrived. A day surrounded by love, heartfelt hugs, and moments that will be cherished forever.</p>
-        <p class="intro-en" data-type>Today, I want you to be part of this very special joy and celebrate with me as I turn fifteen, marking the beginning of a new chapter filled with dreams waiting to come true.</p>
+        <p class="lead handwriting" data-type data-en="With a heart full of excitement and a smile I can't hide, the day I have dreamed of since I was a little girl has finally arrived. A day surrounded by love, heartfelt hugs, and moments that will be cherished forever.">Con el corazón lleno de ilusión y una sonrisa que no puedo ocultar, llega un día que soñé desde niña. Un día rodeado de amor, abrazos sinceros y momentos que se quedarán guardados para siempre.</p>
+        <p data-type data-en="Today, I want you to be part of this very special joy and celebrate with me as I turn fifteen, marking the beginning of a new chapter filled with dreams waiting to come true.">Hoy quiero que seas parte de esta alegría tan especial y que celebremos juntos mis quince años, el comienzo de una nueva etapa llena de sueños por cumplir.</p>
       </div>
     </div>
   </section>
 
   <!-- MIS PAPÁS -->
   <section class="rv">
-    <h2 class="sec-title">Mis Papás</h2>
+    <h2 class="sec-title" data-en="My Parents">Mis Papás</h2>
     <div class="heart-div">
       <span class="hd-bar"></span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2v20M12 2l-2.4 2.6M12 2l2.4 2.6M12 22l-2.4-2.6M12 22l2.4-2.6M12 8.4l-2.8 1.7M12 8.4l2.8 1.7M12 15.6l-2.8-1.7M12 15.6l2.8-1.7"/><path d="M3.3 7l17.4 10M3.3 7l.5 3.4M3.3 7l3.4-.5M20.7 17l-.5-3.4M20.7 17l-3.4.5M9 9.6l-.2 3.3M9 9.6l3.3.2M15 14.4l.2-3.3M15 14.4l-3.3-.2"/><path d="M3.3 17l17.4-10M3.3 17l3.4.5M3.3 17l.5-3.4M20.7 7l-3.4-.5M20.7 7l-.5 3.4M9 14.4l3.3-.2M9 14.4l-.2-3.3M15 9.6l-3.3.2M15 9.6l.2 3.3"/></svg>
@@ -750,7 +787,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
 
   <!-- MIS PADRINOS -->
   <section class="rv">
-    <h2 class="sec-title">Mis Padrinos</h2>
+    <h2 class="sec-title" data-en="My Godparents">Mis Padrinos</h2>
     <div class="heart-div">
       <span class="hd-bar"></span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2v20M12 2l-2.4 2.6M12 2l2.4 2.6M12 22l-2.4-2.6M12 22l2.4-2.6M12 8.4l-2.8 1.7M12 8.4l2.8 1.7M12 15.6l-2.8-1.7M12 15.6l2.8-1.7"/><path d="M3.3 7l17.4 10M3.3 7l.5 3.4M3.3 7l3.4-.5M20.7 17l-.5-3.4M20.7 17l-3.4.5M9 9.6l-.2 3.3M9 9.6l3.3.2M15 14.4l.2-3.3M15 14.4l-3.3-.2"/><path d="M3.3 17l17.4-10M3.3 17l3.4.5M3.3 17l.5-3.4M20.7 7l-3.4-.5M20.7 7l-.5 3.4M9 14.4l3.3-.2M9 14.4l-.2-3.3M15 9.6l-3.3.2M15 9.6l.2 3.3"/></svg>
@@ -765,52 +802,52 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
   <section id="scd" class="cd-hero rv">
     <div class="cd-hero-bg"></div>
     <div class="cd-hero-veil"></div>
-    <span class="cd-label">¡Tan solo faltan!</span>
+    <span class="cd-label" data-en="Just a few more!">¡Tan solo faltan!</span>
     <div class="cd-wrap">
-      <div class="cd-seg"><span class="cd-num" id="cdD">000</span><span class="cd-lbl">Días</span></div>
+      <div class="cd-seg"><span class="cd-num" id="cdD">000</span><span class="cd-lbl" data-en="Days">Días</span></div>
       <span class="cd-colon">:</span>
-      <div class="cd-seg"><span class="cd-num" id="cdH">00</span><span class="cd-lbl">Horas</span></div>
+      <div class="cd-seg"><span class="cd-num" id="cdH">00</span><span class="cd-lbl" data-en="Hours">Horas</span></div>
       <span class="cd-colon">:</span>
-      <div class="cd-seg"><span class="cd-num" id="cdM">00</span><span class="cd-lbl">Min</span></div>
+      <div class="cd-seg"><span class="cd-num" id="cdM">00</span><span class="cd-lbl" data-en="Min">Min</span></div>
       <span class="cd-colon">:</span>
-      <div class="cd-seg"><span class="cd-num" id="cdS">00</span><span class="cd-lbl">Seg</span></div>
+      <div class="cd-seg"><span class="cd-num" id="cdS">00</span><span class="cd-lbl" data-en="Sec">Seg</span></div>
     </div>
-    <div class="cd-foot">Para este día tan especial</div>
+    <div class="cd-foot" data-en="Until this very special day">Para este día tan especial</div>
   </section>
 
   <!-- CUÁNDO Y DÓNDE -->
   <section id="subic">
-    <h2 class="sec-title rv">Cuándo &amp; Dónde</h2>
-    <p class="loc-intro rv">¡Me encantaría que me acompañaras!</p>
+    <h2 class="sec-title rv" data-en="When &amp; Where">Cuándo &amp; Dónde</h2>
+    <p class="loc-intro rv" data-en="I would love for you to join me!">¡Me encantaría que me acompañaras!</p>
     <div class="loc-pin rv"><span class="tl-ic" style="--ic:url('./ic-pin.svg')" role="img" aria-label=""></span></div>
     <div class="loc-card tex-card rv">
       <span class="snow-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-      <div class="lt">Margaritaville Resort</div>
+      <div class="lt" data-en="Margaritaville Resort">Margaritaville Resort</div>
       <div class="loc-city">Hyannis</div>
       <div class="loc-state">Massachusetts</div>
       <div class="loc-times">
-        <div><div class="lt-lbl">Recepción</div><div class="lt-h">4:30 PM</div></div>
+        <div><div class="lt-lbl" data-en="Reception">Recepción</div><div class="lt-h">4:30 PM</div></div>
       </div>
       <div class="map-wrap">
         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2977!2d-70.3120676!3d41.6741177!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89fb3138c233bd39%3A0x2947a155404134d6!2s1225+Iyannough+Rd%2C+Hyannis%2C+MA+02601!5e0!3m2!1sen!2sus!4v1750000000000!5m2!1sen!2sus" width="100%" height="210" style="border:0;display:block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
-      <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=1225+Iyannough+Rd+Hyannis+MA+02601" target="_blank" rel="noopener">Cómo Llegar</a>
+      <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=1225+Iyannough+Rd+Hyannis+MA+02601" target="_blank" rel="noopener" data-en="Get Directions">Cómo Llegar</a>
     </div>
   </section>
 
   <!-- CALENDARIO -->
   <section class="rv" style="text-align:center;padding-top:8px;">
-    <div class="eyebrow">No lo olvides</div>
-    <h2 class="sec-title">Guárdalo</h2>
-    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--dark);margin-bottom:18px;">Agrega el evento a tu calendario</p>
-    <a class="btn btn-lg" id="gcalBtn" href="#" target="_blank" rel="noopener">Añadir a Google Calendar</a>
+    <div class="eyebrow" data-en="Don't forget">No lo olvides</div>
+    <h2 class="sec-title" data-en="Save the Date">Guárdalo</h2>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--dark);margin-bottom:18px;" data-en="Add the event to your calendar">Agrega el evento a tu calendario</p>
+    <a class="btn btn-lg" id="gcalBtn" href="#" target="_blank" rel="noopener" data-en="Add to Google Calendar">Añadir a Google Calendar</a>
   </section>
 
   <!-- ITINERARIO -->
   <section id="siti">
     <div class="fcontent">
-      <div class="eyebrow rv">Programa del Día</div>
-      <h2 class="sec-title rv">Itinerario</h2>
+      <div class="eyebrow rv" data-en="Schedule of the Day">Programa del Día</div>
+      <h2 class="sec-title rv" data-en="Itinerary">Itinerario</h2>
       <div class="punt-card tex-card rv">
         <span class="snow-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         <span class="punt-ico" aria-hidden="true">
@@ -819,7 +856,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           </svg>
         </span>
         <p class="punt-txt">Cada momento de esta noche está pensado con mucho cariño.<br>
-        Te agradecemos de corazón <strong>llegar a tiempo</strong> para vivirlos todos juntos.</p>
+        Te agradecemos de corazón <strong data-en="arriving on time">llegar a tiempo</strong> para vivirlos todos juntos.</p>
       </div>
       <div class="timeline">
         <div class="tl-track" aria-hidden="true">
@@ -832,7 +869,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-dot"></div>
           <div class="tl-text">
             <div class="tl-time">4:30 PM</div>
-            <div class="tl-ev">Recepción</div>
+            <div class="tl-ev" data-en="Reception">Recepción</div>
             <div class="tl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V6a1.8 1.8 0 0 1 3.6 0v8"/><path d="M12.6 9.6a1.7 1.7 0 0 1 3.4 0v1.2"/><path d="M16 10.6a1.7 1.7 0 0 1 3.4 0V15a6 6 0 0 1-6 6h-1.6a5 5 0 0 1-4-2l-3-4.2a1.7 1.7 0 0 1 2.7-2l1.5 1.7"/></svg>Toca para abrir</div>
             <div class="tl-body">
               <div class="tl-desc">Les damos la bienvenida. Agradecemos su puntualidad para disfrutar cada momento de esta celebración</div>
@@ -846,7 +883,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-dot"></div>
           <div class="tl-text">
             <div class="tl-time">5:30 PM</div>
-            <div class="tl-ev">Gran Entrada</div>
+            <div class="tl-ev" data-en="Grand Entrance">Gran Entrada</div>
             <div class="tl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V6a1.8 1.8 0 0 1 3.6 0v8"/><path d="M12.6 9.6a1.7 1.7 0 0 1 3.4 0v1.2"/><path d="M16 10.6a1.7 1.7 0 0 1 3.4 0V15a6 6 0 0 1-6 6h-1.6a5 5 0 0 1-4-2l-3-4.2a1.7 1.7 0 0 1 2.7-2l1.5 1.7"/></svg>Toca para abrir</div>
             <div class="tl-body">
               <div class="tl-desc">La celebración da inicio mientras nuestra familia recibe con orgullo a nuestra querida cumpleañera, Mía</div>
@@ -860,7 +897,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-dot"></div>
           <div class="tl-text">
             <div class="tl-time">5:40 PM</div>
-            <div class="tl-ev">Ceremonia de XV</div>
+            <div class="tl-ev" data-en="The XV Ceremony">Ceremonia de XV</div>
             <div class="tl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V6a1.8 1.8 0 0 1 3.6 0v8"/><path d="M12.6 9.6a1.7 1.7 0 0 1 3.4 0v1.2"/><path d="M16 10.6a1.7 1.7 0 0 1 3.4 0V15a6 6 0 0 1-6 6h-1.6a5 5 0 0 1-4-2l-3-4.2a1.7 1.7 0 0 1 2.7-2l1.5 1.7"/></svg>Toca para abrir</div>
             <div class="tl-body">
               <div class="tl-desc">Una hermosa ceremonia llena de tradiciones, emociones y momentos inolvidables</div>
@@ -874,7 +911,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-dot"></div>
           <div class="tl-text">
             <div class="tl-time">6:00 PM</div>
-            <div class="tl-ev">Vals Especiales</div>
+            <div class="tl-ev" data-en="Special Waltzes">Vals Especiales</div>
             <div class="tl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V6a1.8 1.8 0 0 1 3.6 0v8"/><path d="M12.6 9.6a1.7 1.7 0 0 1 3.4 0v1.2"/><path d="M16 10.6a1.7 1.7 0 0 1 3.4 0V15a6 6 0 0 1-6 6h-1.6a5 5 0 0 1-4-2l-3-4.2a1.7 1.7 0 0 1 2.7-2l1.5 1.7"/></svg>Toca para abrir</div>
             <div class="tl-body">
               <div class="tl-desc">Una tradición inolvidable compartida con las personas más importantes en la vida de Mía</div>
@@ -888,7 +925,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-dot"></div>
           <div class="tl-text">
             <div class="tl-time">6:10 PM</div>
-            <div class="tl-ev">Palabras y Brindis</div>
+            <div class="tl-ev" data-en="Words &amp; Toast">Palabras y Brindis</div>
             <div class="tl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V6a1.8 1.8 0 0 1 3.6 0v8"/><path d="M12.6 9.6a1.7 1.7 0 0 1 3.4 0v1.2"/><path d="M16 10.6a1.7 1.7 0 0 1 3.4 0V15a6 6 0 0 1-6 6h-1.6a5 5 0 0 1-4-2l-3-4.2a1.7 1.7 0 0 1 2.7-2l1.5 1.7"/></svg>Toca para abrir</div>
             <div class="tl-body">
               <div class="tl-desc">Mensajes llenos de cariño, gratitud y un brindis para celebrar este día tan especial</div>
@@ -902,7 +939,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-dot"></div>
           <div class="tl-text">
             <div class="tl-time">6:20 PM</div>
-            <div class="tl-ev">Cena</div>
+            <div class="tl-ev" data-en="Dinner">Cena</div>
             <div class="tl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V6a1.8 1.8 0 0 1 3.6 0v8"/><path d="M12.6 9.6a1.7 1.7 0 0 1 3.4 0v1.2"/><path d="M16 10.6a1.7 1.7 0 0 1 3.4 0V15a6 6 0 0 1-6 6h-1.6a5 5 0 0 1-4-2l-3-4.2a1.7 1.7 0 0 1 2.7-2l1.5 1.7"/></svg>Toca para abrir</div>
             <div class="tl-body">
               <div class="tl-desc">Disfrutemos juntos de una velada llena de buena comida y excelente compañía</div>
@@ -916,7 +953,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-dot"></div>
           <div class="tl-text">
             <div class="tl-time">9:30 PM</div>
-            <div class="tl-ev">Celebración de Cumpleaños</div>
+            <div class="tl-ev" data-en="Birthday Celebration">Celebración de Cumpleaños</div>
             <div class="tl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V6a1.8 1.8 0 0 1 3.6 0v8"/><path d="M12.6 9.6a1.7 1.7 0 0 1 3.4 0v1.2"/><path d="M16 10.6a1.7 1.7 0 0 1 3.4 0V15a6 6 0 0 1-6 6h-1.6a5 5 0 0 1-4-2l-3-4.2a1.7 1.7 0 0 1 2.7-2l1.5 1.7"/></svg>Toca para abrir</div>
             <div class="tl-body">
               <div class="tl-desc">Acompáñanos a cantar el Feliz Cumpleaños y celebrar este inolvidable momento</div>
@@ -930,7 +967,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-dot"></div>
           <div class="tl-text">
             <div class="tl-time">10:00 PM</div>
-            <div class="tl-ev">Una Sorpresa Especial</div>
+            <div class="tl-ev" data-en="A Special Surprise">Una Sorpresa Especial</div>
             <div class="tl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V6a1.8 1.8 0 0 1 3.6 0v8"/><path d="M12.6 9.6a1.7 1.7 0 0 1 3.4 0v1.2"/><path d="M16 10.6a1.7 1.7 0 0 1 3.4 0V15a6 6 0 0 1-6 6h-1.6a5 5 0 0 1-4-2l-3-4.2a1.7 1.7 0 0 1 2.7-2l1.5 1.7"/></svg>Toca para abrir</div>
             <div class="tl-body">
               <div class="tl-desc">Porque aún queda un momento mágico por descubrir</div>
@@ -944,12 +981,12 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           <div class="tl-dot"></div>
           <div class="tl-text">
             <div class="tl-time">11:45 PM</div>
-            <div class="tl-ev">Despedida</div>
+            <div class="tl-ev" data-en="Farewell">Despedida</div>
             <div class="tl-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5V6a1.8 1.8 0 0 1 3.6 0v8"/><path d="M12.6 9.6a1.7 1.7 0 0 1 3.4 0v1.2"/><path d="M16 10.6a1.7 1.7 0 0 1 3.4 0V15a6 6 0 0 1-6 6h-1.6a5 5 0 0 1-4-2l-3-4.2a1.7 1.7 0 0 1 2.7-2l1.5 1.7"/></svg>Toca para abrir</div>
             <div class="tl-body">
               <div class="tl-desc">Gracias por acompañarnos y formar parte de esta noche inolvidable</div>
               <div class="tl-desc tl-en">Farewell — Thank you for celebrating this cherished evening with us</div>
-              <div class="tl-gracias">¡Gracias!</div>
+              <div class="tl-gracias" data-en="Thank you!">¡Gracias!</div>
             </div>
           </div>
         </div>
@@ -960,28 +997,28 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
 
   <!-- DRESS CODE -->
   <section class="rv">
-    <div class="eyebrow">Etiqueta</div>
-    <h2 class="sec-title">Código de Vestimenta</h2>
-    <div class="dc-note">Formal</div>
+    <div class="eyebrow" data-en="Dress Code">Etiqueta</div>
+    <h2 class="sec-title" data-en="Dress Code">Código de Vestimenta</h2>
+    <div class="dc-note" data-en="Formal">Formal</div>
     <div class="dc-cards">
       <figure class="dc-card tex-card">
         <span class="snow-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         <img src="./caballero.png" alt="Caballero con traje formal" loading="lazy">
         <figcaption>
-          <span class="dc-card-lbl">Caballeros</span>
-          <span class="dc-card-sub">Traje formal</span>
+          <span class="dc-card-lbl" data-en="Gentlemen">Caballeros</span>
+          <span class="dc-card-sub" data-en="Formal suit">Traje formal</span>
         </figcaption>
       </figure>
       <figure class="dc-card tex-card">
         <span class="snow-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
         <img src="./dama.png" alt="Dama con vestido largo" loading="lazy">
         <figcaption>
-          <span class="dc-card-lbl">Damas</span>
-          <span class="dc-card-sub">Vestido largo</span>
+          <span class="dc-card-lbl" data-en="Ladies">Damas</span>
+          <span class="dc-card-sub" data-en="Long gown">Vestido largo</span>
         </figcaption>
       </figure>
     </div>
-    <p class="dc-reserve" style="font-family:'Cormorant Garamond',serif;font-size:15.5px;color:var(--dark);line-height:1.55;margin-bottom:14px;">Estos colores están <strong>reservados</strong> para la quinceañera</p>
+    <p class="dc-reserve" style="font-family:'Cormorant Garamond',serif;font-size:15.5px;color:var(--dark);line-height:1.55;margin-bottom:14px;">Estos colores están <strong data-en="reserved">reservados</strong> para la quinceañera</p>
     <div class="dc-crown-row">
       <span class="dc-crown" style="background-color:#cbf0ff;" title="Azul cielo"></span>
       <span class="dc-crown" style="background-color:#0056d6;" title="Azul rey"></span>
@@ -993,8 +1030,8 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
   <!-- LLUVIA DE SOBRES -->
   <section id="sgifts">
     <div class="fcontent">
-      <div class="eyebrow rv">Con Cariño</div>
-      <h2 class="sec-title rv">Lluvia de Sobres</h2>
+      <div class="eyebrow rv" data-en="With Love">Con Cariño</div>
+      <h2 class="sec-title rv" data-en="A Shower of Envelopes">Lluvia de Sobres</h2>
       <button class="env-interactive rv" aria-label="Sobre — toca para abrir" aria-expanded="false">
         <div class="env-body">
           <svg class="env-svg" viewBox="0 0 260 200" preserveAspectRatio="none" aria-hidden="true">
@@ -1036,17 +1073,17 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
             <path d="M18 8 Q26 3 34 8"/>
             <rect x="20" y="28" width="12" height="2.5" rx="1.25" fill="currentColor" stroke="none" opacity=".4"/>
           </svg>
-          <p class="env-title">Tu presencia es mi mejor regalo</p>
+          <p class="env-title" data-en="Your presence is my greatest gift">Tu presencia es mi mejor regalo</p>
           <p class="env-desc">El día del evento habrá una urna donde podrás<br>depositar tu sobre con mucho cariño.</p>
         </div>
       </button>
-      <p class="env-tap-hint rv">Toca el sobre</p>
+      <p class="env-tap-hint rv" data-en="Tap the envelope">Toca el sobre</p>
     </div>
   </section>
   <!-- AMAZON GIFT LIST -->
   <section id="samz" class="rv">
-    <div class="eyebrow">Si deseas obsequiarme algo</div>
-    <h2 class="sec-title">Mesa de Regalos</h2>
+    <div class="eyebrow" data-en="If you would like to gift me something">Si deseas obsequiarme algo</div>
+    <h2 class="sec-title" data-en="Gift Registry">Mesa de Regalos</h2>
     <div class="amz-card tex-card">
       <span class="snow-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
       <span class="amz-box" aria-hidden="true">
@@ -1058,8 +1095,8 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
         </svg>
       </span>
       <svg class="amz-logo" viewBox="0 0 603 182" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Amazon"><path fill="#ff9900" d="m 374.00642,142.18404 c -34.99948,25.79739 -85.72909,39.56123 -129.40634,39.56123 -61.24255,0 -116.37656,-22.65135 -158.08757,-60.32496 -3.2771,-2.96252 -0.34083,-6.9999 3.59171,-4.69283 45.01431,26.19064 100.67269,41.94697 158.16623,41.94697 38.774689,0 81.4295,-8.02237 120.6499,-24.67006 5.92501,-2.51683 10.87999,3.88009 5.08607,8.17965"/><path fill="#ff9900" d="m 388.55678,125.53635 c -4.45688,-5.71527 -29.57261,-2.70033 -40.84585,-1.36327 -3.43442,0.41947 -3.95874,-2.56925 -0.86517,-4.71905 20.00346,-14.07844 52.82696,-10.01483 56.65462,-5.2958 3.82764,4.74526 -0.99624,37.64741 -19.79373,53.35128 -2.88385,2.41195 -5.63662,1.12734 -4.35198,-2.07113 4.2209,-10.53917 13.68519,-34.16054 9.20211,-39.90203"/><path fill="#221f1f" d="M 348.49744,20.06598 V 6.38079 c 0,-2.07113 1.57301,-3.46062 3.46062,-3.46062 h 61.26875 c 1.96628,0 3.53929,1.41571 3.53929,3.46062 v 11.71893 c -0.0262,1.96626 -1.67788,4.53551 -4.61418,8.59912 l -31.74859,45.32893 c 11.79759,-0.28837 24.25059,1.46814 34.94706,7.49802 2.41195,1.36327 3.06737,3.35575 3.25089,5.32203 V 99.4506 c 0,1.99248 -2.20222,4.32576 -4.5093,3.1198 -18.84992,-9.88376 -43.887,-10.95865 -64.72939,0.10487 -2.12356,1.15354 -4.35199,-1.15354 -4.35199,-3.14602 V 85.66054 c 0,-2.22843 0.0262,-6.02989 2.25463,-9.41186 l 36.78224,-52.74829 h -32.01076 c -1.96626,0 -3.53927,-1.38948 -3.53927,-3.43441"/><path fill="#221f1f" d="m 124.99883,105.45424 h -18.64017 c -1.78273,-0.13107 -3.19845,-1.46813 -3.32954,-3.17224 V 6.61676 c 0,-1.91383 1.59923,-3.43442 3.59171,-3.43442 h 17.38176 c 1.80898,0.0786 3.25089,1.46814 3.38199,3.19845 v 12.50545 h 0.34082 c 4.53551,-12.08598 13.05597,-17.7226 24.53896,-17.7226 11.66649,0 18.95477,5.63662 24.19814,17.7226 4.5093,-12.08598 14.76008,-17.7226 25.74495,-17.7226 7.81262,0 16.35931,3.22467 21.57646,10.46052 5.89879,8.04857 4.69281,19.74128 4.69281,29.99208 l -0.0262,60.37739 c 0,1.91383 -1.59923,3.46061 -3.59171,3.46061 h -18.61397 c -1.86138,-0.13107 -3.35574,-1.62543 -3.35574,-3.46061 V 51.29025 c 0,-4.03739 0.36702,-14.10466 -0.52434,-17.93233 -1.38949,-6.42311 -5.55797,-8.23209 -10.95865,-8.23209 -4.5093,0 -9.22833,3.01494 -11.14216,7.83885 -1.91383,4.8239 -1.73031,12.89867 -1.73031,18.32557 v 50.70338 c 0,1.91383 -1.59923,3.46061 -3.59171,3.46061 h -18.61395 c -1.88761,-0.13107 -3.35576,-1.62543 -3.35576,-3.46061 L 152.946,51.29025 c 0,-10.67025 1.75651,-26.37415 -11.48298,-26.37415 -13.39682,0 -12.87248,15.31063 -12.87248,26.37415 v 50.70338 c 0,1.91383 -1.59923,3.46061 -3.59171,3.46061"/><path fill="#221f1f" d="m 469.51439,1.16364 c 27.65877,0 42.62858,23.75246 42.62858,53.95427 0,29.17934 -16.54284,52.32881 -42.62858,52.32881 -27.16066,0 -41.94697,-23.75246 -41.94697,-53.35127 0,-29.78234 14.96983,-52.93181 41.94697,-52.93181 m 0.15729,19.53156 c -13.73761,0 -14.60278,18.71881 -14.60278,30.38532 0,11.69271 -0.18352,36.65114 14.44549,36.65114 14.44548,0 15.12712,-20.13452 15.12712,-32.40403 0,-8.07477 -0.34082,-17.72257 -2.779,-25.3779 -2.09735,-6.65906 -6.26581,-9.25453 -12.19083,-9.25453"/><path fill="#221f1f" d="M 548.00762,105.45424 H 529.4461 c -1.86141,-0.13107 -3.35577,-1.62543 -3.35577,-3.46061 l -0.0262,-95.69149 c 0.1573,-1.75653 1.7041,-3.1198 3.59171,-3.1198 h 17.27691 c 1.62543,0.0786 2.96249,1.17976 3.32954,2.67412 v 14.62899 h 0.3408 c 5.21717,-13.0822 12.53165,-19.32181 25.40412,-19.32181 8.36317,0 16.51662,3.01494 21.75999,11.27324 4.87633,7.65532 4.87633,20.5278 4.87633,29.78233 v 60.22011 c -0.20973,1.67786 -1.75653,3.01492 -3.59169,3.01492 h -18.69262 c -1.70411,-0.13107 -3.11982,-1.38948 -3.30332,-3.01492 V 50.47753 c 0,-10.46052 1.20597,-25.77117 -11.66651,-25.77117 -4.5355,0 -8.70399,3.04117 -10.77512,7.65532 -2.62167,5.84637 -2.96249,11.66651 -2.96249,18.11585 v 51.5161 c -0.0262,1.91383 -1.65166,3.46061 -3.64414,3.46061"/><path fill="#221f1f" d="M 55.288261,59.75829 V 55.7209 c -13.475471,0 -27.711211,2.88385 -27.711211,18.77125 0,8.04857 4.16847,13.50169 11.32567,13.50169 5.24337,0 9.93618,-3.22467 12.8987,-8.46805 3.670341,-6.44935 3.486841,-12.50544 3.486841,-19.7675 m 18.79747,45.43378 c -1.23219,1.10111 -3.01495,1.17976 -4.40444,0.4457 -6.18716,-5.1385 -7.28828,-7.52423 -10.69647,-12.42678 -10.224571,10.4343 -17.460401,13.55409 -30.726141,13.55409 -15.67768,0 -27.89471,-9.67401 -27.89471,-29.04824 0,-15.12713 8.20587,-25.43035 19.87236,-30.46398 10.1197,-4.45688 24.25058,-5.24337 35.051931,-6.47556 v -2.41195 c 0,-4.43066 0.34082,-9.67403 -2.25465,-13.50167 -2.280881,-3.43442 -6.632861,-4.85013 -10.460531,-4.85013 -7.10475,0 -13.44924,3.64414 -14.99603,11.19459 -0.31461,1.67789 -1.5468,3.32955 -3.22467,3.4082 L 6.26276,32.67628 C 4.74218,32.33548 3.0643,31.10327 3.48377,28.76999 7.65225,6.85271 27.44596,0.24605 45.16856,0.24605 c 9.071011,0 20.921021,2.41195 28.078221,9.28076 9.07104,8.46804 8.20587,19.7675 8.20587,32.06321 v 29.04826 c 0,8.73022 3.61794,12.55786 7.02613,17.27691 1.20597,1.67786 1.46814,3.69656 -0.05244,4.95497 -3.80144,3.17225 -10.56538,9.07104 -14.28819,12.37436 l -0.05242,-0.0525"/><path fill="#221f1f" transform="translate(244.36719,0)" d="M 55.288261,59.75829 V 55.7209 c -13.475471,0 -27.711211,2.88385 -27.711211,18.77125 0,8.04857 4.16847,13.50169 11.32567,13.50169 5.24337,0 9.93618,-3.22467 12.8987,-8.46805 3.670341,-6.44935 3.486841,-12.50544 3.486841,-19.7675 m 18.79747,45.43378 c -1.23219,1.10111 -3.01495,1.17976 -4.40444,0.4457 -6.18716,-5.1385 -7.28828,-7.52423 -10.69647,-12.42678 -10.224571,10.4343 -17.460401,13.55409 -30.726141,13.55409 -15.67768,0 -27.89471,-9.67401 -27.89471,-29.04824 0,-15.12713 8.20587,-25.43035 19.87236,-30.46398 10.1197,-4.45688 24.25058,-5.24337 35.051931,-6.47556 v -2.41195 c 0,-4.43066 0.34082,-9.67403 -2.25465,-13.50167 -2.280881,-3.43442 -6.632861,-4.85013 -10.460531,-4.85013 -7.10475,0 -13.44924,3.64414 -14.99603,11.19459 -0.31461,1.67789 -1.5468,3.32955 -3.22467,3.4082 L 6.26276,32.67628 C 4.74218,32.33548 3.0643,31.10327 3.48377,28.76999 7.65225,6.85271 27.44596,0.24605 45.16856,0.24605 c 9.071011,0 20.921021,2.41195 28.078221,9.28076 9.07104,8.46804 8.20587,19.7675 8.20587,32.06321 v 29.04826 c 0,8.73022 3.61794,12.55786 7.02613,17.27691 1.20597,1.67786 1.46814,3.69656 -0.05244,4.95497 -3.80144,3.17225 -10.56538,9.07104 -14.28819,12.37436 l -0.05242,-0.0525"/></svg>
-      <p class="amz-sub">Preparé una lista con algunos detalles que me harían muy feliz.</p>
-      <a class="btn btn-lg" id="amzBtn" href="https://www.amazon.com/registries/gl/guest-view/XKNWJAMHN4FT?ref_=cm_sw_r_apin_ggr-subnav-share_HVTT3AY7YH3ZHF591XGK&amp;language=en-US" target="_blank" rel="noopener">Ver mi lista de regalos</a>
+      <p class="amz-sub" data-en="I put together a list of a few things that would make me very happy.">Preparé una lista con algunos detalles que me harían muy feliz.</p>
+      <a class="btn btn-lg" id="amzBtn" href="https://www.amazon.com/registries/gl/guest-view/XKNWJAMHN4FT?ref_=cm_sw_r_apin_ggr-subnav-share_HVTT3AY7YH3ZHF591XGK&amp;language=en-US" target="_blank" rel="noopener" data-en="View my gift list">Ver mi lista de regalos</a>
     </div>
   </section>
 
@@ -1068,7 +1105,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
   <!-- MOMENTOS / GALERÍA -->
   <section id="sgal">
     <div class="cf-frame">
-      <div class="cf-label"><h2 class="sec-title">Momentos</h2></div>
+      <div class="cf-label"><h2 class="sec-title" data-en="Moments">Momentos</h2></div>
       <img class="cf-img" id="cfImg1" src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/238c9d84-28a9-49a1-a7a0-c9026547e76e/1786030278156-0.jpeg" alt="Mia">
       <img class="cf-img" id="cfImg2" src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/238c9d84-28a9-49a1-a7a0-c9026547e76e/1786030496835-1.jpeg" alt="Mia">
       <div class="cf-fade-top"></div>
@@ -1079,11 +1116,12 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
   <!-- CRECIENDO — CARRUSEL 3D -->
   <section class="saga" id="saga">
     <div class="fcontent gallery-head">
-      <div class="eyebrow rv">Así fue creciendo</div>
-      <h2 class="sec-title rv">Mi historia desde el primer día</h2>
-      <div class="gallery-sub rv">De niña a quinceañera</div>
+      <div class="eyebrow rv" data-en="Growing up">Así fue creciendo</div>
+      <h2 class="sec-title rv" data-en="My story from day one">Mi historia desde el primer día</h2>
+      <div class="gallery-sub rv" data-en="From little girl to quinceañera">De niña a quinceañera</div>
     </div>
     <div class="wheel-scene rv" id="wheelScene">
+      <span class="wheel-floor" aria-hidden="true"></span>
       <div class="wheel-ring" id="wheelRing">
           <div class="wheel-card"><img data-src="linea-001.jpg" alt="Mia" /></div>
           <div class="wheel-card"><img data-src="linea-002.jpg" alt="Mia" /></div>
@@ -1149,14 +1187,14 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
     <div class="album-bg"></div>
     <div class="album-veil"></div>
     <div class="album-inner">
-      <h2 class="sec-title rv">Comparte tus Fotos</h2>
+      <h2 class="sec-title rv" data-en="Share your Photos">Comparte tus Fotos</h2>
       <p class="album-sub rv">Ayúdame a crear recuerdos inolvidables. Comparte todas tus fotos en Instagram con el hashtag:</p>
       <div class="album-hash rv">#MiaXV2026</div>
       <div class="album-cam rv"><span class="tl-ic" style="--ic:url('./ic-camara.svg')" role="img" aria-label=""></span></div>
       <p class="album-sub rv">O sube los momentos que captures con tu celular a nuestro álbum compartido escaneando el código:</p>
       <div class="qr-card rv"><img src="./qr-album.png" alt="Código QR del álbum compartido"></div>
-      <p class="album-or rv">¿Lo ves desde el celular? No hace falta escanear:</p>
-      <a class="btn btn-lg album-btn rv" id="albumBtn" href="#" target="_blank" rel="noopener">Abrir el álbum</a>
+      <p class="album-or rv" data-en="On your phone? No need to scan:">¿Lo ves desde el celular? No hace falta escanear:</p>
+      <a class="btn btn-lg album-btn rv" id="albumBtn" href="#" target="_blank" rel="noopener" data-en="Open the album">Abrir el álbum</a>
     </div>
   </section>
 
@@ -1183,10 +1221,10 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
           </g>
         </svg>
 
-        <div class="eyebrow">Confirma tu Asistencia</div>
-        <div class="rsvp-please">Por favor</div>
-        <h2 class="rsvp-title">Tu presencia <em>significa</em> todo</h2>
-        <p class="rsvp-text">Por favor confirma tu asistencia antes del <strong>24 de Octubre de 2026</strong>. Tu confirmación es muy importante para mí.</p>
+        <div class="eyebrow" data-en="RSVP">Confirma tu Asistencia</div>
+        <div class="rsvp-please" data-en="Please">Por favor</div>
+        <h2 class="rsvp-title">Tu presencia <em data-en="means">significa</em> todo</h2>
+        <p class="rsvp-text">Por favor confirma tu asistencia antes del <strong data-en="October 24, 2026">24 de Octubre de 2026</strong>. Tu confirmación es muy importante para mí.</p>
 
         <p id="rsvp-name-display" style="display:none;font-family:'Great Vibes',cursive;font-size:clamp(30px,7vw,44px);color:var(--accent);line-height:1.2;margin:18px auto 4px;"></p>
 
@@ -1197,19 +1235,19 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
         <p id="rsvp-pases-note"></p>
 
         <div class="rsvp-pases-display" id="rsvp-pases-display" style="display:none">
-          <div class="rsvp-pases-label">Pases</div>
+          <div class="rsvp-pases-label" data-en="Passes">Pases</div>
           <div class="rsvp-pases-num" id="rsvp-pases-num">1</div>
         </div>
 
         <div class="rsvp-toggle">
-          <button class="rsvp-toggle-btn" id="btnYes" type="button">Asistiré con gusto</button>
-          <button class="rsvp-toggle-btn" id="btnNo" type="button">No podré asistir</button>
+          <button class="rsvp-toggle-btn" id="btnYes" type="button" data-en="I will gladly attend">Asistiré con gusto</button>
+          <button class="rsvp-toggle-btn" id="btnNo" type="button" data-en="I will not be able to attend">No podré asistir</button>
         </div>
 
         <div class="rsvp-fields" id="rsvp-fields" style="display:none"></div>
 
         <button class="rsvp-btn" id="rsvpBtn" type="button">
-          <span id="rsvp-btn-text">Confirmar Asistencia</span>
+          <span id="rsvp-btn-text" data-en="Confirm Attendance">Confirmar Asistencia</span>
         </button>
 
         <p id="rsvp-feedback"></p>
@@ -1226,15 +1264,15 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
   <section class="closing">
     <div class="closing-bg"></div>
     <div class="closing-veil"></div>
-    <p class="closing-text rv">Este día ha vivido en mis sueños, y hoy la verdadera magia será estar rodeada de quienes han caminado conmigo.</p>
-    <p class="closing-carino rv">Con cariño,</p>
+    <p class="closing-text rv" data-en="This day has lived in my dreams, and today the real magic will be having beside me those who have walked with me.">Este día ha vivido en mis sueños, y hoy la verdadera magia será estar rodeada de quienes han caminado conmigo.</p>
+    <p class="closing-carino rv" data-en="With love,">Con cariño,</p>
     <div class="closing-sign script rv">Mia F. Correa</div>
   </section>
 
   <!-- FOOTER -->
   <footer>
     <div class="fn">Mia F. Correa</div>
-    <div class="fd">19 · Diciembre · 2026</div>
+    <div class="fd" data-en="December 19 · 2026">19 · Diciembre · 2026</div>
     <p class="credit">Diseño por <a href="https://instagram.com/elysium.invitaciones" target="_blank" rel="noopener">@elysium.invitaciones</a></p>
   </footer>
 
@@ -1287,6 +1325,39 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
 window.scrollTo(0,0);
 history.scrollRestoration='manual';
 gsap.registerPlugin(ScrollTrigger);
+
+/* ── IDIOMA ── */
+var LANG='es';
+function applyLang(l){
+  LANG=l;
+  document.documentElement.lang = (l==='en') ? 'en' : 'es';
+  document.body.classList.toggle('lang-en', l==='en');
+  var els=document.querySelectorAll('[data-en]');
+  for(var i=0;i<els.length;i++){
+    var el=els[i];
+    if(!el.dataset.es) el.dataset.es=el.textContent;
+    var txt = (l==='en') ? el.getAttribute('data-en') : el.dataset.es;
+    // los párrafos manuscritos guardan su texto aparte
+    if(el.hasAttribute('data-type')){ el.dataset.full=txt; if(!el.dataset.done) el.textContent=''; else el.textContent=txt; }
+    else el.textContent=txt;
+  }
+}
+(function(){
+  var scr=document.getElementById('lang-screen');
+  if(!scr) return;
+  var pre=(new URLSearchParams(location.search)).get('lang');
+  var go=function(l){
+    applyLang(l);
+    scr.classList.add('is-out');
+    setTimeout(function(){ scr.style.display='none'; },520);
+    window.dispatchEvent(new CustomEvent('lang:ready'));
+  };
+  var bs=scr.querySelectorAll('.lang-b');
+  for(var i=0;i<bs.length;i++){
+    bs[i].addEventListener('click',function(){ go(this.getAttribute('data-lang')); });
+  }
+  if(pre==='en'||pre==='es') go(pre);
+})();
 
 /* ── ENVELOPE ── */
 (function () {
@@ -1586,21 +1657,30 @@ function initSaga(){
   var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var rot=0, vel=0, drag=false, startX=0, startY=0, startRot=0, lastX=0, horiz=null, auto=true, radius=0;
 
-  function apply(){ ring.style.transform='translateZ('+(-radius)+'px) rotateY('+rot+'deg)'; }
+  var TILT=-7;    // grados: deja ver el arco del carrusel desde arriba
+  function apply(){ ring.style.transform='translateZ('+(-radius)+'px) rotateX('+TILT+'deg) rotateY('+rot+'deg)'; }
 
+  var perRow=0, rows=3;
   function layout(){
-    var cw=cards[0].offsetWidth||150;
-    // radio calculado para que las tarjetas NO se traslapen entre sí
-    radius=Math.round((cw/2+10)/Math.tan(Math.PI/n));
-    for(var i=0;i<n;i++) cards[i].style.transform='rotateY('+(360/n*i)+'deg) translateZ('+radius+'px)';
+    var cw=cards[0].offsetWidth||124, ch=cards[0].offsetHeight||166;
+    // Las 54 fotos en un solo aro exigirían un radio enorme y el arco se vería
+    // plano. Se reparten en 3 anillos apilados: el radio baja y la curva se ve.
+    perRow=Math.ceil(n/rows);
+    radius=Math.round((cw/2+3)/Math.tan(Math.PI/perRow));
+    var gap=ch+8, base=-gap*(rows-1)/2;
+    for(var i=0;i<n;i++){
+      var col=i%perRow, row=Math.floor(i/perRow);
+      cards[i].style.transform='rotateY('+(360/perRow*col)+'deg) translateZ('+radius+'px) '+
+                               'translateY('+(base+row*gap)+'px)';
+    }
     apply();
   }
 
   // solo se cargan las fotos cercanas al frente: 54 de golpe sería pesado
   function lazy(){
-    var step=360/n;
+    var step=360/(perRow||n);
     for(var i=0;i<n;i++){
-      var ang=((i*step+rot)%360+360)%360, dd=Math.min(ang,360-ang);
+      var ang=(((i%(perRow||n))*step+rot)%360+360)%360, dd=Math.min(ang,360-ang);
       if(dd<75){
         var img=cards[i].firstElementChild;
         if(img&&!img.src&&img.dataset.src) img.src=img.dataset.src;
