@@ -11,7 +11,7 @@
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Imperial+Script&family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@600;700&family=Imperial+Script&family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <style>
@@ -207,6 +207,8 @@ section{padding:62px 26px;position:relative;}
 .intro-text{position:relative;z-index:2;font-family:'Cormorant Garamond',serif;font-size:18.5px;line-height:1.78;color:var(--ink);text-align:center;font-weight:500;}
 .intro-text .lead::first-letter{font-family:'Great Vibes',cursive;font-size:52px;color:var(--accent);float:left;line-height:.7;padding:8px 8px 0 0;}
 .intro-text p+p{margin-top:16px;}
+.intro-en{font-size:16px;line-height:1.7;color:var(--ink-soft);}
+.intro-en:first-of-type{margin-top:22px;padding-top:20px;border-top:1px solid rgba(201,160,78,.35);}
 
 /* ── FAMILIA / PADRINOS ── */
 .fam-block{text-align:center;}
@@ -214,6 +216,21 @@ section{padding:62px 26px;position:relative;}
 .fam-amp{font-family:'Great Vibes',cursive;font-size:38px;color:var(--gold);display:block;margin:4px 0;}
 .fam-role{font-family:'Cinzel',serif;font-size:13.5px;letter-spacing:5px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;font-weight:600;}
 .fam-sep{width:40px;height:1px;background:var(--light);margin:28px auto;opacity:.6;}
+
+/* ── COUNTDOWN (diseño de referencia) ── */
+.cd-label{font-family:'Great Vibes',cursive;font-size:46px;color:#fff;margin-bottom:18px;display:block;
+  position:relative;z-index:2;text-shadow:0 3px 16px rgba(0,26,86,.55);line-height:1;}
+.cd-wrap{display:flex;align-items:flex-start;justify-content:center;gap:0;position:relative;z-index:2;}
+.cd-seg{display:flex;flex-direction:column;align-items:center;min-width:70px;}
+.cd-num{font-family:'Playfair Display','Cormorant Garamond',serif;font-weight:700;
+  font-size:clamp(46px,13vw,68px);line-height:1;font-variant-numeric:tabular-nums;display:block;color:#fff;
+  text-shadow:0 3px 14px rgba(0,26,86,.5);}
+.cd-lbl{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold-light);margin-top:6px;}
+.cd-colon{font-family:'Playfair Display','Cormorant Garamond',serif;font-size:clamp(38px,11vw,56px);
+  color:rgba(255,255,255,.55);font-weight:400;line-height:1;padding:0 2px;margin-top:2px;}
+.cd-foot{position:relative;z-index:2;margin-top:22px;font-family:'Cinzel',serif;font-size:10px;
+  letter-spacing:4px;text-transform:uppercase;color:var(--gold-light);}
 
 /* ── COUNTDOWN sobre foto ── */
 .cd-hero{position:relative;min-height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:0 24px 40px;padding-top:clamp(168px,38vh,400px);overflow:hidden;}
@@ -627,121 +644,25 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
 
 .rv{will-change:transform,opacity;}
 
-/* ============ CRECIENDO — LÍNEA DE TIEMPO FOTOGRÁFICA ============ */
-.saga{padding:min(14vh,120px) 0 min(8vh,60px);overflow:hidden;position:relative;}
-.saga .gallery-head{margin-bottom:24px;text-align:center;padding:0 26px;}
-.gallery-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;color:var(--dark);margin-top:2px;}
-.saga-stage{position:relative;height:auto;min-height:0;padding:104px 0 26px;display:flex;align-items:center;overflow:hidden}
-.saga-viewport{position:relative;width:100%;height:auto;display:flex;align-items:center;overflow:hidden;
-  cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none}
-.saga-viewport.is-grabbing{cursor:grabbing}
-/* hilo de hielo: núcleo blanco brillante + halo celeste + destello dorado viajero */
-.saga-thread{position:absolute;left:0;right:0;top:50%;height:3px;transform:translateY(-1.5px);
-  background:linear-gradient(to right,transparent 0%,rgba(203,240,255,.25) 5%,
-    rgba(255,255,255,.95) 42%,#ffffff 50%,rgba(255,255,255,.95) 58%,rgba(203,240,255,.25) 95%,transparent 100%);
-  box-shadow:0 0 6px rgba(255,255,255,.95),0 0 16px rgba(203,240,255,.9),
-    0 0 34px rgba(0,86,214,.5),0 0 60px rgba(0,86,214,.22);
-  border-radius:3px;pointer-events:none;z-index:1}
-/* escarcha: capa superpuesta que centellea */
-.saga-thread::before{content:'';position:absolute;inset:-2px 0;border-radius:4px;
-  background:repeating-linear-gradient(90deg,transparent 0 6px,rgba(255,255,255,.75) 6px 8px,transparent 8px 22px);
-  -webkit-mask:linear-gradient(to right,transparent,#000 18%,#000 82%,transparent);
-  mask:linear-gradient(to right,transparent,#000 18%,#000 82%,transparent);
-  opacity:.5;animation:frostshimmer 3.4s linear infinite}
-/* destello dorado que recorre el hilo */
-.saga-thread::after{content:'';position:absolute;top:-3px;bottom:-3px;width:26%;border-radius:6px;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.9) 35%,rgba(233,203,133,.95) 50%,rgba(255,255,255,.9) 65%,transparent);
-  filter:blur(1px);opacity:.85;animation:threadsweep 5.2s ease-in-out infinite}
-@keyframes frostshimmer{to{background-position:44px 0}}
-@keyframes threadsweep{0%{left:-30%}55%,100%{left:104%}}
-.saga-spark{position:absolute;top:50%;left:0;width:19px;height:19px;border-radius:50%;transform:translate(-50%,-50%);
-  background:radial-gradient(circle,#ffffff 0%,#eaf7ff 30%,#cbf0ff 52%,rgba(0,86,214,0) 76%);
-  box-shadow:0 0 10px 2px #fff,0 0 26px 7px rgba(203,240,255,.95),
-    0 0 48px 12px rgba(0,86,214,.45),0 0 14px 3px rgba(212,175,55,.5);
-  pointer-events:none;z-index:2;animation:sparkpulse 2.1s ease-in-out infinite}
-@keyframes sparkpulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.92}50%{transform:translate(-50%,-50%) scale(1.28);opacity:1}}
-@media (prefers-reduced-motion:reduce){
-  .saga-thread::before,.saga-thread::after,.saga-spark{animation:none}
-}
-.saga-track{position:relative;display:flex;align-items:center;gap:clamp(16px,3vw,38px);
-  padding:26px 0;height:auto;will-change:transform;z-index:2}
-.saga-photo{position:relative;flex:0 0 auto;width:clamp(158px,44vw,214px);aspect-ratio:3/4;
-  border-radius:14px;overflow:hidden;background:var(--paper);margin:0;
-  border:2px solid rgba(0,86,214,.28);
-  box-shadow:0 12px 34px rgba(0,26,86,.22);
-  transform:translateY(var(--off,0)) scale(.9);opacity:.82;filter:saturate(.96);
-  transition:transform .55s cubic-bezier(.2,.7,.2,1),opacity .55s,filter .55s,box-shadow .55s,border-color .55s}
-.saga-photo img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
-.saga-photo::after{content:"";position:absolute;inset:0;border:1px solid rgba(255,255,255,.4);border-radius:12px;pointer-events:none}
-.saga-photo.is-focus{transform:translateY(0) scale(1.08);opacity:1;filter:saturate(1.06);
-  border-color:rgba(0,86,214,.85);
-  box-shadow:0 22px 54px rgba(0,26,86,.32),0 0 0 1px rgba(203,240,255,.65),0 0 46px rgba(0,86,214,.28)}
-.saga-year{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
-  width:clamp(96px,20vw,150px);z-index:3;text-align:center}
-.saga-year::before{content:"";width:1px;height:52px;background:linear-gradient(to bottom,transparent,var(--light),transparent);margin-bottom:8px}
-.saga-year-num{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:clamp(38px,7vw,64px);color:var(--accent);line-height:1}
-.saga-year-lbl{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--dark);padding-left:.32em;font-weight:500}
-
-/* ── ÚLTIMA FOTO DE LA LÍNEA: el texto vive dentro de la imagen ── */
-.saga-final{overflow:hidden;}
-.sf-veil{position:absolute;left:0;right:0;top:0;height:34%;pointer-events:none;z-index:2;
-  background:linear-gradient(to bottom,rgba(0,26,86,.72) 0%,rgba(0,26,86,.44) 55%,rgba(0,26,86,0) 100%);}
-.sf-cap{position:absolute;left:0;right:0;top:0;z-index:3;padding:7px 8px 0;text-align:center;line-height:1;}
-.saga-final .sf-crown{width:21px!important;height:auto!important;display:block;margin:0 auto 1px;object-fit:contain;
-  filter:drop-shadow(0 2px 5px rgba(0,0,0,.5));}
-.sf-t{display:block;font-family:'Great Vibes',cursive;font-size:20px;line-height:1;white-space:nowrap;
-  background-image:linear-gradient(100deg,#E8D5A3 0%,#fff6dc 22%,#C9A04E 42%,#fff6dc 62%,#E8D5A3 100%);
-  background-size:300% 100%;-webkit-background-clip:text;background-clip:text;
-  -webkit-text-fill-color:transparent;animation:goldSweep 5s linear infinite;
-  padding:0 .12em;filter:drop-shadow(0 2px 6px rgba(0,0,0,.55));}
-/* al quedar centrada: crece y enciende un resplandor dorado */
-.saga-final{transition:transform .7s cubic-bezier(.2,.8,.25,1),box-shadow .7s,border-color .7s;}
-.saga-final.is-focus{
-  transform:translateY(0) scale(1.22);
-  border-color:rgba(201,160,78,.95);
-  box-shadow:0 26px 60px rgba(0,26,86,.4),0 0 0 2px rgba(232,213,163,.75),
-             0 0 42px 8px rgba(201,160,78,.55),0 0 90px 26px rgba(201,160,78,.3);}
-.saga-final.is-focus .sf-t{font-size:23px;}
-.saga-final.is-focus .sf-crown{width:24px!important;}
-@media (prefers-reduced-motion:reduce){.sf-t{animation:none;background-position:60% center;}}
-
-/* ── CARDS DE APERTURA Y CIERRE DE LA LÍNEA ── */
-.saga-card{
-  position:relative;flex:0 0 auto;width:210px;height:280px;margin:0;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
-  padding:26px 20px;border-radius:14px;text-align:center;
-  background:linear-gradient(160deg,rgba(255,255,255,.97),rgba(226,244,255,.92));
-  background-image:url('./textura-card.png'),linear-gradient(160deg,rgba(255,255,255,.97),rgba(226,244,255,.92));
-  background-size:260px 260px,cover;
-  border:1px solid rgba(201,160,78,.45);
-  box-shadow:0 10px 34px rgba(0,86,214,.16);
-}
-.saga-card-orn img{width:56px;height:auto;opacity:.9;}
-.saga-card-t{
-  font-family:'Great Vibes',cursive;font-size:30px;line-height:1.2;
-  background-image:linear-gradient(100deg,#6B4F1C 0%,#8A6A28 20%,#C9A04E 32%,#A8822F 40%,#6B4F1C 58%,#B98F3C 80%,#6B4F1C 100%);
-  background-size:300% 100%;
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  animation:goldSweep 6s linear infinite;
-  padding:0 .14em;
-}
-.saga-card--end .saga-card-t{font-size:36px;}
-.saga-hud{position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:5;text-align:center;pointer-events:none}
-.saga-hud-year{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;font-size:clamp(26px,4.5vw,40px);color:var(--dark);line-height:1}
-.saga-hud-days{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;color:var(--ink-soft);margin-top:8px;font-weight:500;text-transform:uppercase}
-.saga-hud-days b{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--accent);font-size:1.5em;font-weight:600}
-.wheel-hint{text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;letter-spacing:.06em;color:var(--ink-soft);opacity:.75;}
-.saga-hint{margin-top:14px}
-/* Fallback sin pin (reduced-motion): tira horizontal con snap */
-.saga-fallback .saga-stage{height:auto;min-height:0;display:block}
-.saga-fallback .saga-viewport{overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;padding:24px 0 30px}
-.saga-fallback .saga-track{padding:0 16px;height:auto;transform:none!important}
-.saga-fallback .saga-photo{scroll-snap-align:center;transform:scale(1);opacity:1;filter:none}
-.saga-fallback .saga-hud,.saga-fallback .saga-spark,.saga-fallback .saga-thread{display:none}
-@media (max-width:520px){
-  .saga-stage{min-height:540px}
-  .saga-track{gap:14px}
-  .saga-photo{width:min(60vw,240px)}
+/* ============ CRECIENDO — CARRUSEL 3D ============ */
+.saga{padding:min(12vh,90px) 0 min(8vh,54px);position:relative;overflow:hidden}
+.wheel-scene{position:relative;width:100%;height:400px;margin:26px auto 0;
+  perspective:1200px;transform-style:preserve-3d;overflow:hidden}
+.wheel-ring{position:absolute;inset:0;transform-style:preserve-3d;cursor:grab;touch-action:pan-y}
+.wheel-ring.dragging{cursor:grabbing}
+.wheel-card{position:absolute;left:50%;top:50%;width:150px;height:200px;
+  margin-left:-75px;margin-top:-100px;border-radius:14px;overflow:hidden;
+  border:2px solid rgba(0,86,214,.32);box-shadow:0 12px 34px rgba(0,26,86,.24);
+  background:var(--paper);user-select:none;-webkit-user-select:none;backface-visibility:hidden}
+.wheel-card img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.gallery-head{text-align:center}
+.gallery-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--ink-soft);margin-top:2px}
+.wheel-hint{text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:14px;letter-spacing:2px;color:var(--accent);margin-top:20px;opacity:.85}
+.saga-hint{margin-top:20px}
+@media (max-width:400px){
+  .wheel-scene{height:340px}
+  .wheel-card{width:124px;height:166px;margin-left:-62px;margin-top:-83px}
 }
 </style>
 </head>
@@ -808,6 +729,8 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
       <div class="intro-text">
         <p class="lead handwriting" data-type>Con el corazón lleno de ilusión y una sonrisa que no puedo ocultar, llega un día que soñé desde niña. Un día rodeado de amor, abrazos sinceros y momentos que se quedarán guardados para siempre.</p>
         <p data-type>Hoy quiero que seas parte de esta alegría tan especial y que celebremos juntos mis quince años, el comienzo de una nueva etapa llena de sueños por cumplir.</p>
+        <p class="intro-en" data-type>With a heart full of excitement and a smile I can't hide, the day I have dreamed of since I was a little girl has finally arrived. A day surrounded by love, heartfelt hugs, and moments that will be cherished forever.</p>
+        <p class="intro-en" data-type>Today, I want you to be part of this very special joy and celebrate with me as I turn fifteen, marking the beginning of a new chapter filled with dreams waiting to come true.</p>
       </div>
     </div>
   </section>
@@ -839,17 +762,20 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
   </section>
 
   <!-- COUNTDOWN -->
-  <section class="cd-hero rv">
+  <section id="scd" class="cd-hero rv">
     <div class="cd-hero-bg"></div>
     <div class="cd-hero-veil"></div>
-    <div class="cd-pre script">Tan sólo faltan</div>
-    <div class="cd-row">
-      <div class="cd-box"><div class="cd-num" id="cdD">000</div><div class="cd-lbl">Días</div></div>
-      <div class="cd-box"><div class="cd-num" id="cdH">00</div><div class="cd-lbl">Horas</div></div>
-      <div class="cd-box"><div class="cd-num" id="cdM">00</div><div class="cd-lbl">Minutos</div></div>
-      <div class="cd-box"><div class="cd-num" id="cdS">00</div><div class="cd-lbl">Segundos</div></div>
+    <span class="cd-label">¡Tan solo faltan!</span>
+    <div class="cd-wrap">
+      <div class="cd-seg"><span class="cd-num" id="cdD">000</span><span class="cd-lbl">Días</span></div>
+      <span class="cd-colon">:</span>
+      <div class="cd-seg"><span class="cd-num" id="cdH">00</span><span class="cd-lbl">Horas</span></div>
+      <span class="cd-colon">:</span>
+      <div class="cd-seg"><span class="cd-num" id="cdM">00</span><span class="cd-lbl">Min</span></div>
+      <span class="cd-colon">:</span>
+      <div class="cd-seg"><span class="cd-num" id="cdS">00</span><span class="cd-lbl">Seg</span></div>
     </div>
-    <div class="cd-post script">Para mi gran día</div>
+    <div class="cd-foot">Para este día tan especial</div>
   </section>
 
   <!-- CUÁNDO Y DÓNDE -->
@@ -1040,16 +966,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
     <div class="dc-cards">
       <figure class="dc-card tex-card">
         <span class="snow-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-        <span class="dc-ic" aria-hidden="true">
-          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M23 8c3.4 2.6 5.9 3.9 9 3.9S37.6 10.6 41 8"/>
-            <path d="M23 8 15 12a5 5 0 0 0-2.7 4.5V24"/>
-            <path d="M41 8l8 4a5 5 0 0 1 2.7 4.5V24"/>
-            <path d="M32 11.9 27.5 17l2.2 3.4L32 22l2.3-1.6 2.2-3.4z"/>
-            <path d="M29.7 20.4 27 36.6a3 3 0 0 0 .7 2.5l3.2 3.6a1.5 1.5 0 0 0 2.2 0l3.2-3.6a3 3 0 0 0 .7-2.5l-2.7-16.2z"/>
-            <path d="M17.5 20c-1.2 8.5-1.6 17.4-1.2 26.5M46.5 20c1.2 8.5 1.6 17.4 1.2 26.5"/>
-          </svg>
-        </span>
+        <img src="./caballero.png" alt="Caballero con traje formal" loading="lazy">
         <figcaption>
           <span class="dc-card-lbl">Caballeros</span>
           <span class="dc-card-sub">Traje formal</span>
@@ -1057,19 +974,7 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
       </figure>
       <figure class="dc-card tex-card">
         <span class="snow-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-        <span class="dc-ic" aria-hidden="true">
-          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M25 10c1.9 2.2 4.2 3.3 7 3.3S37.1 12.2 39 10"/>
-            <path d="M25 10c-2.6 1.4-4 3.4-4 5.9 0 2.3 1.3 3.9 3.6 5"/>
-            <path d="M39 10c2.6 1.4 4 3.4 4 5.9 0 2.3-1.3 3.9-3.6 5"/>
-            <path d="M24.6 20.9 26 31h12l1.4-10.1"/>
-            <path d="M26 31c-.9 3-3.3 5-6.6 6.4"/>
-            <path d="M38 31c.9 3 3.3 5 6.6 6.4"/>
-            <path d="M26 31 14.6 51.4A2.4 2.4 0 0 0 16.7 55h30.6a2.4 2.4 0 0 0 2.1-3.6L38 31"/>
-            <path d="M20.5 46c3.4 2.2 6.9 3.3 11.5 3.3S39.1 48.2 43.5 46"/>
-            <path d="M32 13.3V31"/>
-          </svg>
-        </span>
+        <img src="./dama.png" alt="Dama con vestido largo" loading="lazy">
         <figcaption>
           <span class="dc-card-lbl">Damas</span>
           <span class="dc-card-sub">Vestido largo</span>
@@ -1157,20 +1062,6 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
       <a class="btn btn-lg" id="amzBtn" href="https://www.amazon.com/registries/gl/guest-view/XKNWJAMHN4FT?ref_=cm_sw_r_apin_ggr-subnav-share_HVTT3AY7YH3ZHF591XGK&amp;language=en-US" target="_blank" rel="noopener">Ver mi lista de regalos</a>
     </div>
   </section>
-  <!-- SOLO ADULTOS -->
-  <section class="rv">
-    <div class="kids">
-      <div class="kids-icon">
-        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="20" cy="20" r="18" stroke="var(--accent)" stroke-width="1.5" opacity="0.7"/>
-          <circle cx="20" cy="13" r="4" stroke="var(--ink-soft)" stroke-width="1.5" fill="none"/>
-          <path d="M12 31c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="var(--ink-soft)" stroke-width="1.5" fill="none"/>
-          <line x1="7" y1="7" x2="33" y2="33" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
-        </svg>
-      </div>
-      <p class="kids-text">Esta celebración es <strong>exclusivamente para adultos</strong>.<br>Agradecemos tu comprensión al no traer niños al evento.</p>
-    </div>
-  </section>
 
 
 
@@ -1185,223 +1076,72 @@ footer .fd{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14
     </div>
   </section>
 
-  <!-- CRECIENDO — LÍNEA DE TIEMPO FOTOGRÁFICA -->
+  <!-- CRECIENDO — CARRUSEL 3D -->
   <section class="saga" id="saga">
     <div class="fcontent gallery-head">
       <div class="eyebrow rv">Así fue creciendo</div>
       <h2 class="sec-title rv">Mi historia desde el primer día</h2>
       <div class="gallery-sub rv">De niña a quinceañera</div>
     </div>
-
-    <div class="saga-stage" id="sagaStage">
-      <div class="saga-hud" aria-hidden="true">
-        <div class="saga-hud-year"><span id="sagaYear">Recién llegada</span></div>
-        <div class="saga-hud-days"><b id="sagaDays">0</b> años de recuerdos</div>
-      </div>
-      <div class="saga-viewport" id="sagaViewport">
-        <div class="saga-thread" aria-hidden="true"></div>
-        <div class="saga-spark" id="sagaSpark" aria-hidden="true"></div>
-        <div class="saga-track" id="sagaTrack">
-        <figure class="saga-card saga-card--start" data-year="Un recorrido" data-edad="XV años de recuerdos">
-          <span class="snow-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-          <span class="saga-card-orn" aria-hidden="true"><img src="./copo-esquina.png" alt=""></span>
-          <span class="saga-card-t">Un recorrido por<br>XV años de recuerdos</span>
-        </figure>
-        <div class="saga-year" aria-hidden="true">
-          <span class="saga-year-num">0-2</span>
-          <span class="saga-year-lbl">Recién llegada</span>
-        </div>
-        <figure class="saga-photo" data-year="Recién llegada" data-edad="0-2 años" style="--off:-30px">
-          <img src="linea-001.jpg" alt="Mia · Recién llegada" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Recién llegada" data-edad="0-2 años" style="--off:26px">
-          <img src="linea-002.jpg" alt="Mia · Recién llegada" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Recién llegada" data-edad="0-2 años" style="--off:-16px">
-          <img src="linea-003.jpg" alt="Mia · Recién llegada" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Recién llegada" data-edad="0-2 años" style="--off:30px">
-          <img src="linea-004.jpg" alt="Mia · Recién llegada" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Recién llegada" data-edad="0-2 años" style="--off:-24px">
-          <img src="linea-009.jpg" alt="Mia · Recién llegada" width="210" height="280" loading="lazy">
-        </figure>
-        <div class="saga-year" aria-hidden="true">
-          <span class="saga-year-num">3</span>
-          <span class="saga-year-lbl">Mis primeros pasos</span>
-        </div>
-        <figure class="saga-photo" data-year="Mis primeros pasos" data-edad="3 años" style="--off:18px">
-          <img src="linea-005.jpg" alt="Mia · Mis primeros pasos" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Mis primeros pasos" data-edad="3 años" style="--off:-30px">
-          <img src="linea-006.jpg" alt="Mia · Mis primeros pasos" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Mis primeros pasos" data-edad="3 años" style="--off:26px">
-          <img src="linea-007.jpg" alt="Mia · Mis primeros pasos" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Mis primeros pasos" data-edad="3 años" style="--off:-16px">
-          <img src="linea-008.jpg" alt="Mia · Mis primeros pasos" width="210" height="280" loading="lazy">
-        </figure>
-        <div class="saga-year" aria-hidden="true">
-          <span class="saga-year-num">4-6</span>
-          <span class="saga-year-lbl">Mi mundo de princesas</span>
-        </div>
-        <figure class="saga-photo" data-year="Mi mundo de princesas" data-edad="4-6 años" style="--off:30px">
-          <img src="linea-010.jpg" alt="Mia · Mi mundo de princesas" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Mi mundo de princesas" data-edad="4-6 años" style="--off:-24px">
-          <img src="linea-011.jpg" alt="Mia · Mi mundo de princesas" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Mi mundo de princesas" data-edad="4-6 años" style="--off:18px">
-          <img src="linea-012.jpg" alt="Mia · Mi mundo de princesas" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Mi mundo de princesas" data-edad="4-6 años" style="--off:-30px">
-          <img src="linea-013.jpg" alt="Mia · Mi mundo de princesas" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Mi mundo de princesas" data-edad="4-6 años" style="--off:26px">
-          <img src="linea-014.jpg" alt="Mia · Mi mundo de princesas" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Mi mundo de princesas" data-edad="4-6 años" style="--off:-16px">
-          <img src="linea-015.jpg" alt="Mia · Mi mundo de princesas" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Mi mundo de princesas" data-edad="4-6 años" style="--off:30px">
-          <img src="linea-031.jpg" alt="Mia · Mi mundo de princesas" width="210" height="280" loading="lazy">
-        </figure>
-        <div class="saga-year" aria-hidden="true">
-          <span class="saga-year-num">7-9</span>
-          <span class="saga-year-lbl">Niña soñadora</span>
-        </div>
-        <figure class="saga-photo" data-year="Niña soñadora" data-edad="7-9 años" style="--off:-24px">
-          <img src="linea-016.jpg" alt="Mia · Niña soñadora" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Niña soñadora" data-edad="7-9 años" style="--off:18px">
-          <img src="linea-017.jpg" alt="Mia · Niña soñadora" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Niña soñadora" data-edad="7-9 años" style="--off:-30px">
-          <img src="linea-018.jpg" alt="Mia · Niña soñadora" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Niña soñadora" data-edad="7-9 años" style="--off:26px">
-          <img src="linea-019.jpg" alt="Mia · Niña soñadora" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Niña soñadora" data-edad="7-9 años" style="--off:-16px">
-          <img src="linea-020.jpg" alt="Mia · Niña soñadora" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Niña soñadora" data-edad="7-9 años" style="--off:30px">
-          <img src="linea-021.jpg" alt="Mia · Niña soñadora" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Niña soñadora" data-edad="7-9 años" style="--off:-24px">
-          <img src="linea-022.jpg" alt="Mia · Niña soñadora" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Niña soñadora" data-edad="7-9 años" style="--off:18px">
-          <img src="linea-023.jpg" alt="Mia · Niña soñadora" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Niña soñadora" data-edad="7-9 años" style="--off:-30px">
-          <img src="linea-024.jpg" alt="Mia · Niña soñadora" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Niña soñadora" data-edad="7-9 años" style="--off:26px">
-          <img src="linea-025.jpg" alt="Mia · Niña soñadora" width="210" height="280" loading="lazy">
-        </figure>
-        <div class="saga-year" aria-hidden="true">
-          <span class="saga-year-num">10-12</span>
-          <span class="saga-year-lbl">Espíritu aventurero</span>
-        </div>
-        <figure class="saga-photo" data-year="Espíritu aventurero" data-edad="10-12 años" style="--off:-16px">
-          <img src="linea-026.jpg" alt="Mia · Espíritu aventurero" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Espíritu aventurero" data-edad="10-12 años" style="--off:30px">
-          <img src="linea-027.jpg" alt="Mia · Espíritu aventurero" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Espíritu aventurero" data-edad="10-12 años" style="--off:-24px">
-          <img src="linea-028.jpg" alt="Mia · Espíritu aventurero" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Espíritu aventurero" data-edad="10-12 años" style="--off:18px">
-          <img src="linea-029.jpg" alt="Mia · Espíritu aventurero" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Espíritu aventurero" data-edad="10-12 años" style="--off:-30px">
-          <img src="linea-030.jpg" alt="Mia · Espíritu aventurero" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Espíritu aventurero" data-edad="10-12 años" style="--off:26px">
-          <img src="linea-032.jpg" alt="Mia · Espíritu aventurero" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Espíritu aventurero" data-edad="10-12 años" style="--off:-16px">
-          <img src="linea-033.jpg" alt="Mia · Espíritu aventurero" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Espíritu aventurero" data-edad="10-12 años" style="--off:30px">
-          <img src="linea-034.jpg" alt="Mia · Espíritu aventurero" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Espíritu aventurero" data-edad="10-12 años" style="--off:-24px">
-          <img src="linea-035.jpg" alt="Mia · Espíritu aventurero" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Espíritu aventurero" data-edad="10-12 años" style="--off:18px">
-          <img src="linea-036.jpg" alt="Mia · Espíritu aventurero" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Espíritu aventurero" data-edad="10-12 años" style="--off:-30px">
-          <img src="linea-037.jpg" alt="Mia · Espíritu aventurero" width="210" height="280" loading="lazy">
-        </figure>
-        <div class="saga-year" aria-hidden="true">
-          <span class="saga-year-num">13-14</span>
-          <span class="saga-year-lbl">Casi señorita</span>
-        </div>
-        <figure class="saga-photo" data-year="Casi señorita" data-edad="13-14 años" style="--off:26px">
-          <img src="linea-038.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Casi señorita" data-edad="13-14 años" style="--off:-16px">
-          <img src="linea-039.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Casi señorita" data-edad="13-14 años" style="--off:30px">
-          <img src="linea-040.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Casi señorita" data-edad="13-14 años" style="--off:-24px">
-          <img src="linea-041.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Casi señorita" data-edad="13-14 años" style="--off:18px">
-          <img src="linea-042.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Casi señorita" data-edad="13-14 años" style="--off:-30px">
-          <img src="linea-043.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Casi señorita" data-edad="13-14 años" style="--off:26px">
-          <img src="linea-044.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Casi señorita" data-edad="13-14 años" style="--off:-16px">
-          <img src="linea-045.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Casi señorita" data-edad="13-14 años" style="--off:30px">
-          <img src="linea-046.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Casi señorita" data-edad="13-14 años" style="--off:-24px">
-          <img src="linea-047.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Casi señorita" data-edad="13-14 años" style="--off:18px">
-          <img src="linea-048.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Casi señorita" data-edad="13-14 años" style="--off:-30px">
-          <img src="linea-049.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Casi señorita" data-edad="13-14 años" style="--off:26px">
-          <img src="linea-050.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Casi señorita" data-edad="13-14 años" style="--off:-16px">
-          <img src="linea-051.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Casi señorita" data-edad="13-14 años" style="--off:30px">
-          <img src="linea-052.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo" data-year="Casi señorita" data-edad="13-14 años" style="--off:-24px">
-          <img src="linea-053.jpg" alt="Mia · Casi señorita" width="210" height="280" loading="lazy">
-        </figure>
-        <figure class="saga-photo saga-final" data-year="Y aquí estoy" data-edad="" style="--off:0px">
-          <img src="linea-final.jpg" alt="Mia" width="210" height="280" loading="lazy">
-          <span class="sf-veil" aria-hidden="true"></span>
-          <figcaption class="sf-cap">
-            <img class="sf-crown" src="./corona.png" alt="" aria-hidden="true">
-            <span class="sf-t">Y aquí estoy</span>
-          </figcaption>
-        </figure>
-        </div>
+    <div class="wheel-scene rv" id="wheelScene">
+      <div class="wheel-ring" id="wheelRing">
+          <div class="wheel-card"><img data-src="linea-001.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-002.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-003.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-004.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-009.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-005.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-006.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-007.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-008.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-010.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-011.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-012.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-013.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-014.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-015.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-031.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-016.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-017.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-018.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-019.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-020.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-021.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-022.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-023.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-024.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-025.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-026.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-027.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-028.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-029.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-030.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-032.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-033.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-034.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-035.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-036.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-037.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-038.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-039.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-040.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-041.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-042.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-043.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-044.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-045.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-046.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-047.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-048.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-049.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-050.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-051.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-052.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-053.jpg" alt="Mia" /></div>
+          <div class="wheel-card"><img data-src="linea-final.jpg" alt="Mia" /></div>
       </div>
     </div>
-    <p class="wheel-hint saga-hint">&larr;&nbsp; Arrastra para recorrer los recuerdos &nbsp;&rarr;</p>
+    <p class="wheel-hint saga-hint">&larr;&nbsp; Arrastra para girar los recuerdos &nbsp;&rarr;</p>
   </section>
 
   <!-- ÁLBUM COMPARTIDO -->
@@ -1839,153 +1579,84 @@ function initCrossfade(){
 
 /* ── CRECIENDO — LÍNEA DE TIEMPO (pinneada cinematográfica) ── */
 function initSaga(){
-  var saga    = document.getElementById('saga');
-  var stage   = document.getElementById('sagaStage');
-  var viewport= document.getElementById('sagaViewport');
-  var track   = document.getElementById('sagaTrack');
-  var spark   = document.getElementById('sagaSpark');
-  var yearEl  = document.getElementById('sagaYear');
-  var daysEl  = document.getElementById('sagaDays');
-  if(!saga || !stage || !track) return;
+  var scene=document.getElementById('wheelScene'), ring=document.getElementById('wheelRing');
+  if(!scene||!ring) return;
+  var cards=[].slice.call(ring.querySelectorAll('.wheel-card'));
+  var n=cards.length; if(!n) return;
+  var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var rot=0, vel=0, drag=false, startX=0, startY=0, startRot=0, lastX=0, horiz=null, auto=true, radius=0;
 
-  var photos = Array.prototype.slice.call(track.querySelectorAll('.saga-photo,.saga-card'));
-  if(!photos.length) return;
+  function apply(){ ring.style.transform='translateZ('+(-radius)+'px) rotateY('+rot+'deg)'; }
 
-  var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  var all = photos;
-
-  /* La línea tiene principio y fin: minX es el tope izquierdo (última foto) y
-     0 el tope derecho (primera foto). No se repite ni da la vuelta. */
-  var minX = 0;
-  function measure(){
-    minX = Math.min(0, viewport.clientWidth - track.scrollWidth);
+  function layout(){
+    var cw=cards[0].offsetWidth||150;
+    // radio calculado para que las tarjetas NO se traslapen entre sí
+    radius=Math.round((cw/2+10)/Math.tan(Math.PI/n));
+    for(var i=0;i<n;i++) cards[i].style.transform='rotateY('+(360/n*i)+'deg) translateZ('+radius+'px)';
+    apply();
   }
 
-  var x = 0;                           // posición actual del riel
-  var SPEED = 44;                      // px por segundo
-  var dragging=false, paused=false, lastT=0, vel=0, targetX=0, atEnd=false;
-  var setX = gsap.quickSetter(track,'x','px');
-
-  // se frena en los extremos en vez de saltar al otro lado
-  function clamp(v){ return v < minX ? minX : (v > 0 ? 0 : v); }
-
-  var lastFocus=null;
-  function paint(){
-    setX(x);
-    // la foto en foco es la más cercana al centro de la pantalla
-    var cx = window.innerWidth/2, best=null, bestD=1e9;
-    for(var i=0;i<all.length;i++){
-      var r = all[i].getBoundingClientRect();
-      if(r.right < -80 || r.left > window.innerWidth+80) continue;   // fuera de vista
-      var d = Math.abs(r.left + r.width/2 - cx);
-      if(d<bestD){ bestD=d; best=all[i]; }
-    }
-    if(best && best!==lastFocus){
-      if(lastFocus) lastFocus.classList.remove('is-focus');
-      best.classList.add('is-focus');
-      lastFocus=best;
-      var y=best.getAttribute('data-year');
-      if(y && yearEl) yearEl.textContent=y;
-      if(daysEl){
-        var e=best.getAttribute('data-edad');
-        daysEl.textContent = e || '';
+  // solo se cargan las fotos cercanas al frente: 54 de golpe sería pesado
+  function lazy(){
+    var step=360/n;
+    for(var i=0;i<n;i++){
+      var ang=((i*step+rot)%360+360)%360, dd=Math.min(ang,360-ang);
+      if(dd<75){
+        var img=cards[i].firstElementChild;
+        if(img&&!img.src&&img.dataset.src) img.src=img.dataset.src;
       }
     }
-    if(spark && minX) spark.style.left = ((x/minX)*100).toFixed(2) + '%';
   }
-
-  function tick(t){
-    if(!lastT) lastT=t;
-    var dt = Math.min(0.05,(t-lastT)/1000); lastT=t;
-    if(!dragging && vel){
-      // inercia al soltar el arrastre
-      x = clamp(x + vel*dt);
-      vel *= 0.945;
-      if(Math.abs(vel)<8 || x===minX || x===0) vel=0;
-    }else if(!dragging && !paused && !prefersReduced && !atEnd){
-      x = clamp(x - SPEED*dt);
-      if(x===minX) atEnd = true;          // llegó al final: se queda ahí
-    }
-    // el arrastre persigue el dedo con suavizado, para que no se sienta trabado
-    if(dragging){ x += (targetX - x)*Math.min(1, dt*22); }
-    paint();
-    requestAnimationFrame(tick);
-  }
-
-  /* ── ARRASTRE lateral (mouse y touch) ─────────────────────────────
-     touch-action:pan-y deja que el gesto vertical siga haciendo scroll
-     en la página; solo se captura el movimiento horizontal.            */
-  var startX=0, startPos=0, lastMoveX=0, lastMoveT=0, horiz=null, startY=0;
 
   function down(e){
-    var pt = e.touches ? e.touches[0] : e;
-    dragging=false; horiz=null; vel=0;
-    startX=lastMoveX=pt.clientX; startY=pt.clientY; startPos=x; targetX=x; atEnd=false;
-    lastMoveT=performance.now();
-    viewport.classList.add('is-grabbing');
+    var pt=e.touches?e.touches[0]:e;
+    drag=false; horiz=null; vel=0; auto=false;
+    startX=lastX=pt.clientX; startY=pt.clientY; startRot=rot;
   }
   function move(e){
-    var pt = e.touches ? e.touches[0] : e;
-    var dx = pt.clientX-startX, dy = pt.clientY-startY;
+    var pt=e.touches?e.touches[0]:e;
+    var dx=pt.clientX-startX, dy=pt.clientY-startY;
     if(horiz===null){
-      if(Math.abs(dx)<5 && Math.abs(dy)<5) return;       // umbral, evita arrastres accidentales
-      horiz = Math.abs(dx) > Math.abs(dy);
-      if(!horiz){ viewport.classList.remove('is-grabbing'); return; }  // es scroll vertical: no interferir
-      dragging=true;
+      if(Math.abs(dx)<5&&Math.abs(dy)<5) return;
+      horiz=Math.abs(dx)>Math.abs(dy);
+      if(!horiz) return;               // gesto vertical: la página sigue scrolleando
+      drag=true; ring.classList.add('dragging');
     }
     if(!horiz) return;
     if(e.cancelable) e.preventDefault();
-    var raw = startPos + dx;
-    // resistencia al pasarse de los topes: se siente el límite sin trabarse
-    if(raw > 0)         raw = raw * 0.35;
-    else if(raw < minX) raw = minX + (raw - minX) * 0.35;
-    targetX = raw;
-    var now=performance.now(), dt=(now-lastMoveT)/1000;
-    if(dt>0) vel = (pt.clientX-lastMoveX)/dt;
-    lastMoveX=pt.clientX; lastMoveT=now;
+    rot=startRot+dx*0.38;
+    vel=(pt.clientX-lastX)*0.35; lastX=pt.clientX;
+    apply(); lazy();
   }
   function up(){
     if(horiz===false){ horiz=null; return; }
-    dragging=false; horiz=null;
-    // si quedó fuera de los topes, regresa suave
-    if(x>0 || x<minX){ vel=0; gsap.to({v:x},{v:clamp(x),duration:.42,ease:'power2.out',
-      onUpdate:function(){ x=this.targets()[0].v; paint(); }}); }
-    viewport.classList.remove('is-grabbing');
+    drag=false; horiz=null; ring.classList.remove('dragging');
   }
-
-  viewport.addEventListener('mousedown',down);
+  ring.addEventListener('mousedown',function(e){e.preventDefault();down(e);});
   window.addEventListener('mousemove',move);
   window.addEventListener('mouseup',up);
-  viewport.addEventListener('touchstart',down,{passive:true});
-  viewport.addEventListener('touchmove',move,{passive:false});
-  viewport.addEventListener('touchend',up);
-  viewport.addEventListener('touchcancel',up);
+  ring.addEventListener('touchstart',down,{passive:true});
+  ring.addEventListener('touchmove',move,{passive:false});
+  ring.addEventListener('touchend',up);
+  ring.addEventListener('touchcancel',up);
 
-  // al pasar el cursor por encima se detiene, para poder mirar una foto
-  viewport.addEventListener('mouseenter',function(){ paused=true; });
-  viewport.addEventListener('mouseleave',function(){ paused=false; });
-
-  // fuera de pantalla no se anima, para no gastar batería
+  var visible=true;
   if('IntersectionObserver' in window){
-    new IntersectionObserver(function(es){
-      es.forEach(function(en){ paused = !en.isIntersecting; });
-    },{threshold:0}).observe(stage);
+    new IntersectionObserver(function(es){es.forEach(function(e){visible=e.isIntersecting;});},
+      {threshold:0}).observe(scene);
   }
 
-  window.addEventListener('resize',function(){ measure(); x=clamp(x); paint(); });
+  (function spin(){
+    if(visible&&!drag){
+      if(auto&&!reduced) rot+=0.09;                 // giro lento hasta el primer arrastre
+      else if(vel){ rot+=vel; vel*=0.95; if(Math.abs(vel)<0.02) vel=0; }
+      apply(); lazy();
+    }
+    requestAnimationFrame(spin);
+  })();
 
-  // las imágenes cambian el ancho al cargar: se vuelve a medir
-  var imgs = track.querySelectorAll('img');
-  var pend = imgs.length;
-  function ready(){ if(--pend<=0){ measure(); paint(); } }
-  for(var i=0;i<imgs.length;i++){
-    if(imgs[i].complete) ready();
-    else{ imgs[i].addEventListener('load',ready); imgs[i].addEventListener('error',ready); }
-  }
-
-  measure(); paint();
-  requestAnimationFrame(tick);
+  window.addEventListener('resize',layout);
+  layout(); lazy();
 }
 
 /* ── COUNTDOWN ── */
