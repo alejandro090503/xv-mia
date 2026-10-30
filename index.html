@@ -1274,7 +1274,7 @@ body:not(.lang-en) .tl-desc.tl-en{display:none;}
         <div class="eyebrow" data-en="RSVP">Confirma tu Asistencia</div>
         <div class="rsvp-please" data-en="Please">Por favor</div>
         <h2 class="rsvp-title" data-en-html="Your presence <em>means</em> everything">Tu presencia <em data-en="means">significa</em> todo</h2>
-        <p class="rsvp-text" data-en-html="Please confirm your attendance before <strong>October 24, 2026</strong>. Your confirmation means a lot to me.">Por favor confirma tu asistencia antes del <strong data-en="October 24, 2026">24 de Octubre de 2026</strong>. Tu confirmación es muy importante para mí.</p>
+        <p class="rsvp-text" data-en-html="Please confirm your attendance before <strong>November 5, 2026</strong>. Your confirmation means a lot to me.">Por favor confirma tu asistencia antes del <strong data-en="November 5, 2026">5 de Noviembre de 2026</strong>. Tu confirmación es muy importante para mí.</p>
 
         <p id="rsvp-name-display" style="display:none;font-family:'Great Vibes',cursive;font-size:clamp(30px,7vw,44px);color:var(--accent);line-height:1.2;margin:18px auto 4px;"></p>
 
@@ -1315,7 +1315,7 @@ body:not(.lang-en) .tl-desc.tl-en{display:none;}
 
         <div class="rsvp-deadline">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm.5 5v5.25l4.5 2.67-.75 1.23L11 13V7h1.5z"/></svg>
-          <span data-en="RSVP deadline · October 24, 2026">Fecha límite · 24 de Octubre 2026</span>
+          <span data-en="RSVP deadline · November 5, 2026">Fecha límite · 5 de Noviembre 2026</span>
         </div>
       </div>
     </div>
@@ -1870,7 +1870,7 @@ function initSaga(){
 (function(){
   const PANEL_API = 'https://panel-invitados.vercel.app/api/confirmar';
   const URL_INV   = 'https://xv-mia-psi.vercel.app';
-  const DEADLINE  = new Date(2026, 9, 24, 23, 59, 59, 999); // 24 oct 2026
+  const DEADLINE  = new Date(2026, 10, 5, 23, 59, 59, 999); // 5 nov 2026
   const frozen    = Date.now() > DEADLINE.getTime();
   const params    = new URLSearchParams(location.search);
   const urlPara   = (params.get('para') || '').trim();
